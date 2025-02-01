@@ -5,123 +5,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Paiement Crypto - Finova</title>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Montserrat', sans-serif;
-        }
-
-        body {
-            background: #121212;
-            color: white;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-        }
-
-        .container {
-            text-align: center;
-            max-width: 800px;
-        }
-
-        h1 {
-            font-size: 2em;
-            margin-bottom: 20px;
-            color: #00FFD1;
-        }
-
-        .packs {
-            display: flex;
-            justify-content: space-around;
-            gap: 20px;
-        }
-
-        .pack {
-            background: #1E1E1E;
-            padding: 20px;
-            border-radius: 15px;
-            box-shadow: 0 4px 10px rgba(0, 255, 209, 0.2);
-            width: 200px;
-            text-align: center;
-            transition: transform 0.3s;
-        }
-
-        .pack:hover {
-            transform: scale(1.05);
-        }
-
-        .pack img {
-            width: 100%;
-            border-radius: 10px;
-        }
-
-        .pack h2 {
-            font-size: 1.5em;
-            margin: 10px 0;
-        }
-
-        .pack p {
-            font-size: 1.2em;
-            color: #00FFD1;
-        }
-
-        .btn {
-            background: #00FFD1;
-            color: black;
-            border: none;
-            padding: 10px 20px;
-            font-size: 1em;
-            cursor: pointer;
-            border-radius: 5px;
-            margin-top: 10px;
-            transition: background 0.3s;
-        }
-
-        .btn:hover {
-            background: #00cca3;
-        }
-
-        #error-message {
-            margin: 20px 0;
-            padding: 10px;
-            border-radius: 8px;
-            background-color: #ff4d4d;
-            color: white;
-            font-size: 1.2em;
-            text-align: center;
-            display: none;
-            transition: opacity 0.3s ease;
-        }
-
-        #success-message {
-            background-color: #4CAF50;
-        }
-
-        #payment-info {
-            margin-top: 30px;
-            padding: 20px;
-            background: #1E1E1E;
-            border-radius: 10px;
-            box-shadow: 0 4px 10px rgba(0, 255, 209, 0.2);
-        }
-
-        .address {
-            font-size: 1.2em;
-            color: #fff;
-            font-weight: bold;
-            margin-top: 10px;
-        }
-
-        .amount {
-            font-size: 1.2em;
-            color: #fff;
-        }
-    </style>
+    <!-- Intégration de Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/style_index.css" rel="stylesheet">
 </head>
 
 <body>
@@ -132,22 +18,67 @@
         <div id="success-message" style="display:none;"></div>
         <div class="packs">
             <div class="pack">
-                <img src="https://via.placeholder.com/200" alt="Pack Basic">
-                <h2>Basic</h2>
-                <p>10 000 FCFA / mois</p>
-                <button class="btn" onclick="payer(10000, 'Basic')">Payer</button>
+                <div class="icon">✨</div>
+                <h2>Miner Basic 1</h2>
+                <p>6 000 FCFA</p>
+                <div class="stars">
+                    ★★★☆☆
+                </div>
+                <button class="btn" onclick="payer(6000, 'Basic 1')">Payer</button>
             </div>
             <div class="pack">
-                <img src="https://via.placeholder.com/200" alt="Pack Pro">
-                <h2>Pro</h2>
-                <p>25 000 FCFA / mois</p>
-                <button class="btn" onclick="payer(25000, 'Pro')">Payer</button>
+                <div class="icon">🚀</div>
+                <h2>Miner Basic 2</h2>
+                <p>8 000 FCFA</p>
+                <div class="stars">
+                    ★★★★☆
+                </div>
+                <button class="btn" onclick="payer(8000, 'Basic 2')">Payer</button>
             </div>
             <div class="pack">
-                <img src="https://via.placeholder.com/200" alt="Pack Premium">
-                <h2>Premium</h2>
-                <p>50 000 FCFA / mois</p>
-                <button class="btn" onclick="payer(50000, 'Premium')">Payer</button>
+                <div class="icon">🔥</div>
+                <h2>Miner Basic 3</h2>
+                <p>10 000 FCFA</p>
+                <div class="stars">
+                    ★★★★★
+                </div>
+                <button class="btn" onclick="payer(10000, 'Basic 3')">Payer</button>
+            </div>
+            <div class="pack">
+                <div class="icon">💎</div>
+                <h2>Miner Basic 4</h2>
+                <p>15 000 FCFA</p>
+                <div class="stars">
+                    ★★★★★
+                </div>
+                <button class="btn" onclick="payer(15000, 'Basic 4')">Payer</button>
+            </div>
+            <div class="pack">
+                <div class="icon">🌟</div>
+                <h2>Miner Pro 1</h2>
+                <p>30 000 FCFA</p>
+                <div class="stars">
+                    ★★★★★
+                </div>
+                <button class="btn" onclick="payer(30000, 'Pro 1')">Payer</button>
+            </div>
+            <div class="pack">
+                <div class="icon">💼</div>
+                <h2>Miner Pro 2</h2>
+                <p>60 000 FCFA</p>
+                <div class="stars">
+                    ★★★★★
+                </div>
+                <button class="btn" onclick="payer(60000, 'Pro 2')">Payer</button>
+            </div>
+            <div class="pack">
+                <div class="icon">🏆</div>
+                <h2>Miner Pro 3</h2>
+                <p>100 000 FCFA</p>
+                <div class="stars">
+                    ★★★★★
+                </div>
+                <button class="btn" onclick="payer(100000, 'Pro 3')">Payer</button>
             </div>
         </div>
 
@@ -241,6 +172,8 @@
         }
     </script>
 
+    <!-- Intégration de Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>
