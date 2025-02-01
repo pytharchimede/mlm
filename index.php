@@ -106,6 +106,11 @@
                 selectedPack.style.display = 'block';
             }
 
+            // Désactiver le bouton et afficher un indicateur de chargement
+            const btn = selectedPack.querySelector('button');
+            btn.disabled = true;
+            btn.innerHTML = 'Chargement... <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>';
+
             // Faire l'appel pour la création du paiement
             fetch('request/create_paiement.php', {
                     method: 'POST',
@@ -123,7 +128,6 @@
                 })
                 .then(response => response.json())
                 .then(data => {
-                    console.log(data);
                     if (data.pay_address && data.pay_amount) {
                         // Affichage des informations de paiement
                         document.getElementById('payment-info').style.display = 'block';
@@ -139,6 +143,11 @@
                     console.error("Erreur:", error);
                     document.getElementById('error-message').innerText = "Une erreur s'est produite.";
                     document.getElementById('error-message').style.display = 'block';
+                })
+                .finally(() => {
+                    // Réactiver le bouton et enlever l'indicateur de chargement
+                    btn.disabled = false;
+                    btn.innerHTML = 'Payer';
                 });
         }
 
