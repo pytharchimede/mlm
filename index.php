@@ -88,22 +88,38 @@
 
         #error-message {
             margin: 20px 0;
-            /* Ajout de marge au-dessus et en-dessous */
             padding: 10px;
             border-radius: 8px;
             background-color: #ff4d4d;
-            /* Couleur de fond pour les erreurs */
             color: white;
             font-size: 1.2em;
             text-align: center;
             display: none;
-            /* Cacher le message par défaut */
             transition: opacity 0.3s ease;
         }
 
         #success-message {
             background-color: #4CAF50;
-            /* Couleur de fond pour le succès */
+        }
+
+        #payment-info {
+            margin-top: 30px;
+            padding: 20px;
+            background: #1E1E1E;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 255, 209, 0.2);
+        }
+
+        .address {
+            font-size: 1.2em;
+            color: #fff;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+
+        .amount {
+            font-size: 1.2em;
+            color: #fff;
         }
     </style>
 </head>
@@ -134,6 +150,15 @@
                 <button class="btn" onclick="payer(50000, 'Premium')">Payer</button>
             </div>
         </div>
+
+        <!-- Informations de paiement -->
+        <div id="payment-info" style="display: none;">
+            <h3>Effectuez votre paiement en crypto</h3>
+            <p class="amount">Montant à payer : <span id="amount-to-pay"></span> USDT</p>
+            <p>Envoyez à l'adresse suivante :</p>
+            <p class="address" id="payment-address"></p>
+            <button class="btn" onclick="verifier_paiement()">J'ai payé</button>
+        </div>
     </div>
 
     <script>
@@ -152,30 +177,72 @@
                         cancel_url: "https://ifmap.ci/test/cancel.php"
                     })
                 })
-                .then(response => response.text())
+                .then(response => response.json())
                 .then(data => {
                     console.log(data);
-                    try {
-                        const jsonData = JSON.parse(data);
-                        if (jsonData.invoice_url) {
-                            window.location.href = jsonData.invoice_url;
-                        } else {
-                            if (jsonData.error) {
-                                document.getElementById('error-message').innerText = jsonData.error;
-                                document.getElementById('error-message').style.display = 'block';
-                                document.getElementById('success-message').style.display = 'none'; // Cacher le message de succès
-                            } else if (jsonData.success) {
-                                document.getElementById('success-message').innerText = jsonData.success;
-                                document.getElementById('success-message').style.display = 'block';
-                                document.getElementById('error-message').style.display = 'none'; // Cacher le message d'erreur
-                            }
-                        }
-                    } catch (error) {
-                        console.error('Erreur de parsing JSON:', error);
+                    if (data.pay_address && data.pay_amount) {
+                        // Affichage des informations de paiement
+                        document.getElementById('payment-info').style.display = 'block';
+                        document.getElementById('amount-to-pay').innerText = data.pay_amount;
+                        document.getElementById('payment-address').innerText = data.pay_address;
+                    } else {
+                        document.getElementById('error-message').innerText = data.error || "Erreur inconnue.";
+                        document.getElementById('error-message').style.display = 'block';
+                        document.getElementById('success-message').style.display = 'none';
                     }
                 })
-                .catch(error => console.error("Erreur:", error));
+                .catch(error => {
+                    console.error("Erreur:", error);
+                    document.getElementById('error-message').innerText = "Une erreur s'est produite.";
+                    document.getElementById('error-message').style.display = 'block';
+                });
         }
+
+        function verifier_paiement(order_id, payment_id, payment_status, amount_received, pay_amount) {
+            // Appel de l'API de vérification du paiement
+            fetch('request/verif_paiement.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        order_id: order_id,
+                        payment_id: payment_id,
+                        payment_status: payment_status,
+                        amount_received: amount_received,
+                        amount_expected: pay_amount // Montant attendu
+                    })
+                })
+                .then(response => response.json()) // Décodage de la réponse JSON
+                .then(data => {
+                    if (data.status === 'success') {
+                        document.getElementById('success-message').innerText = data.message;
+                        document.getElementById('success-message').style.display = 'block';
+                        document.getElementById('error-message').style.display = 'none';
+                    } else {
+                        document.getElementById('error-message').innerText = data.message;
+                        document.getElementById('error-message').style.display = 'block';
+                        document.getElementById('success-message').style.display = 'none';
+                    }
+                })
+                .catch(error => {
+                    console.error("Erreur lors de la vérification du paiement:", error);
+                    document.getElementById('error-message').innerText = "Une erreur s'est produite lors de la vérification du paiement.";
+                    document.getElementById('error-message').style.display = 'block';
+                });
+        }
+
+
+        // Exemple d'appel à la fonction après avoir récupéré les données des logs
+        // Ces données viendraient normalement de la réponse de l'API
+        const order_id = "Basic_1738448416020";
+        const payment_id = "6303737247";
+        const payment_status = "waiting";
+        const amount_received = 11.972603;
+        const pay_amount = 15.832085;
+
+        // Appel de la fonction pour vérifier le paiement
+        verifier_paiement(order_id, payment_id, payment_status, amount_received, pay_amount);
     </script>
 
 </body>

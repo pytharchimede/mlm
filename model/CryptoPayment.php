@@ -19,32 +19,28 @@ class CryptoPayment
     // 🔹 Créer une commande de paiement
     public function createPayment($amount, $currency = "XOF", $crypto = "usdttrc20", $orderId = null, $successUrl = "", $cancelUrl = "")
     {
-        // Convertir XOF en USD si nécessaire
+        // 🔹 Conversion XOF → USD si nécessaire
         if ($currency === "XOF") {
             $rate = $this->getExchangeRate("XOF", "USD");
             if (!$rate) {
-                return ["error" => "Impossible de récupérer le taux de change pour le XOF."];
+                return ["error" => "Impossible de récupérer le taux de change XOF -> USD."];
             }
             $amount = $amount * $rate;
-
             $currency = "USD";
         }
 
-        // Vérifier le montant minimal requis
-        $minAmount = $this->getMinimalAmount($crypto, "XOF"); // XOF = Devise de réception
+        // 🔹 Vérifier montant minimal pour la crypto choisie
+        $minAmount = $this->getMinimalAmount($crypto, "XOF");
 
         if (isset($minAmount['error'])) {
-            return $minAmount; // Retourne l'erreur
+            return $minAmount;
         }
 
         if ($amount < $minAmount['min_amount']) {
-            return ["error" => "Le montant est trop bas. Montant minimum requis : " . $minAmount['min_amount'] . " $crypto"];
+            return ["error" => "Le montant est trop bas. Min requis : " . $minAmount['min_amount'] . " $crypto"];
         }
 
-        if ($minAmount && $amount < $minAmount['min_amount']) {
-            return ["error" => "Le montant est trop bas. Montant minimum requis : " . $minAmount['min_amount'] . " $crypto"];
-        }
-
+        // 🔹 Génération de l'ID de commande
         $orderId = $orderId ?? "CMD_" . time();
         $data = [
             "price_amount" => $amount,
@@ -58,6 +54,7 @@ class CryptoPayment
 
         return $this->sendRequest("payment", $data);
     }
+
 
     // 🔹 Vérifier le statut d'un paiement
     public function checkPaymentStatus($paymentId)
