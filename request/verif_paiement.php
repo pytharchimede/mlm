@@ -2,6 +2,17 @@
 // Récupérer les données JSON envoyées par la requête
 $data = json_decode(file_get_contents('php://input'), true);
 
+
+// Données simulées pour le test
+// Tableau de données simulées
+// $data = [
+//     'order_id' => 'Basic_1738448416020',
+//     'payment_id' => '6303737247',
+//     'payment_status' => 'success',  // Forcer le statut du paiement comme "success"
+//     'amount_received' => 15.832085,  // Montant reçu simulé
+//     'amount_expected' => 15.832085,  // Montant attendu simulé
+// ];
+
 // Vérification des paramètres envoyés dans le corps JSON
 if (isset($data['order_id']) && isset($data['payment_status'])) {
     $order_id = $data['order_id']; // Identifiant de la commande

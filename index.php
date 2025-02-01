@@ -216,13 +216,21 @@
                 .then(response => response.json()) // Décodage de la réponse JSON
                 .then(data => {
                     if (data.status === 'success') {
+                        // Affichage du message de succès
                         document.getElementById('success-message').innerText = data.message;
                         document.getElementById('success-message').style.display = 'block';
                         document.getElementById('error-message').style.display = 'none';
+
+                        // Redirection vers success.php
+                        window.location.href = 'success.php';
                     } else {
+                        // Affichage du message d'erreur
                         document.getElementById('error-message').innerText = data.message;
                         document.getElementById('error-message').style.display = 'block';
                         document.getElementById('success-message').style.display = 'none';
+
+                        // Redirection vers cancel.php
+                        window.location.href = 'cancel.php';
                     }
                 })
                 .catch(error => {
@@ -231,18 +239,6 @@
                     document.getElementById('error-message').style.display = 'block';
                 });
         }
-
-
-        // // Exemple d'appel à la fonction après avoir récupéré les données des logs
-        // // Ces données viendraient normalement de la réponse de l'API
-        // const order_id = "Basic_1738448416020";
-        // const payment_id = "6303737247";
-        // const payment_status = "waiting";
-        // const amount_received = 11.972603;
-        // const pay_amount = 15.832085;
-
-        // // Appel de la fonction pour vérifier le paiement
-        // verifier_paiement(order_id, payment_id, payment_status, amount_received, pay_amount);
     </script>
 
 </body>
