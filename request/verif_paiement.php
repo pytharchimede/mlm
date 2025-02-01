@@ -1,13 +1,16 @@
 <?php
-// Vérification des paramètres envoyés
-if (isset($_POST['order_id']) && isset($_POST['payment_status'])) {
-    $order_id = $_POST['order_id']; // Identifiant de la commande
-    $payment_status = $_POST['payment_status']; // Statut du paiement
-    $payment_id = $_POST['payment_id']; // Identifiant du paiement
-    $amount_received = $_POST['amount_received']; // Montant reçu
-    $amount_expected = $_POST['amount_expected']; // Montant attendu
+// Récupérer les données JSON envoyées par la requête
+$data = json_decode(file_get_contents('php://input'), true);
 
-    // Vérification du paiement (cette logique est à adapter selon l'API que tu utilises)
+// Vérification des paramètres envoyés dans le corps JSON
+if (isset($data['order_id']) && isset($data['payment_status'])) {
+    $order_id = $data['order_id']; // Identifiant de la commande
+    $payment_status = $data['payment_status']; // Statut du paiement
+    $payment_id = $data['payment_id']; // Identifiant du paiement
+    $amount_received = $data['amount_received']; // Montant reçu
+    $amount_expected = $data['amount_expected']; // Montant attendu
+
+    // Vérification du paiement
     if ($payment_status === 'success' && $amount_received >= $amount_expected) {
         // Le paiement est valide
         $response = [

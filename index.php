@@ -233,16 +233,16 @@
         }
 
 
-        // Exemple d'appel à la fonction après avoir récupéré les données des logs
-        // Ces données viendraient normalement de la réponse de l'API
-        const order_id = "Basic_1738448416020";
-        const payment_id = "6303737247";
-        const payment_status = "waiting";
-        const amount_received = 11.972603;
-        const pay_amount = 15.832085;
+        // // Exemple d'appel à la fonction après avoir récupéré les données des logs
+        // // Ces données viendraient normalement de la réponse de l'API
+        // const order_id = "Basic_1738448416020";
+        // const payment_id = "6303737247";
+        // const payment_status = "waiting";
+        // const amount_received = 11.972603;
+        // const pay_amount = 15.832085;
 
-        // Appel de la fonction pour vérifier le paiement
-        verifier_paiement(order_id, payment_id, payment_status, amount_received, pay_amount);
+        // // Appel de la fonction pour vérifier le paiement
+        // verifier_paiement(order_id, payment_id, payment_status, amount_received, pay_amount);
     </script>
 
 </body>
