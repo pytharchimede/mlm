@@ -85,6 +85,26 @@
         .btn:hover {
             background: #00cca3;
         }
+
+        #error-message {
+            margin: 20px 0;
+            /* Ajout de marge au-dessus et en-dessous */
+            padding: 10px;
+            border-radius: 8px;
+            background-color: #ff4d4d;
+            /* Couleur de fond pour les erreurs */
+            color: white;
+            font-size: 1.2em;
+            text-align: center;
+            display: none;
+            /* Cacher le message par défaut */
+            transition: opacity 0.3s ease;
+        }
+
+        #success-message {
+            background-color: #4CAF50;
+            /* Couleur de fond pour le succès */
+        }
     </style>
 </head>
 
@@ -93,6 +113,7 @@
     <div class="container">
         <h1>Choisissez votre pack</h1>
         <div id="error-message"></div>
+        <div id="success-message" style="display:none;"></div>
         <div class="packs">
             <div class="pack">
                 <img src="https://via.placeholder.com/200" alt="Pack Basic">
@@ -125,22 +146,28 @@
                     body: JSON.stringify({
                         price_amount: amount,
                         price_currency: "XOF",
-                        pay_currency: "BTC",
+                        pay_currency: "usdttrc20",
                         order_id: packName + "_" + Date.now(),
                         success_url: "https://ifmap.ci/test/success.php",
                         cancel_url: "https://ifmap.ci/test/cancel.php"
                     })
                 })
-                .then(response => response.text()) // Utilisation de .text() pour récupérer le texte brut
+                .then(response => response.text())
                 .then(data => {
-                    console.log(data); // Affiche la réponse brute
+                    console.log(data);
                     try {
-                        const jsonData = JSON.parse(data); // Tente de convertir la réponse en JSON
+                        const jsonData = JSON.parse(data);
                         if (jsonData.invoice_url) {
                             window.location.href = jsonData.invoice_url;
                         } else {
                             if (jsonData.error) {
                                 document.getElementById('error-message').innerText = jsonData.error;
+                                document.getElementById('error-message').style.display = 'block';
+                                document.getElementById('success-message').style.display = 'none'; // Cacher le message de succès
+                            } else if (jsonData.success) {
+                                document.getElementById('success-message').innerText = jsonData.success;
+                                document.getElementById('success-message').style.display = 'block';
+                                document.getElementById('error-message').style.display = 'none'; // Cacher le message d'erreur
                             }
                         }
                     } catch (error) {

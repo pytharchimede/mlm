@@ -5,8 +5,9 @@ require_once "../model/Config.php";
 
 $apiKey = Config::get('API_KEY');
 $ipnSecret = Config::get('IPN_SECRET');
+$exchangeApiKey = Config::get('EXCHANGE_API_KEY');
 
-$payment = new CryptoPayment($apiKey, $ipnSecret);
+$payment = new CryptoPayment($apiKey, $ipnSecret, $exchangeApiKey);
 
 // 🔹 Lire le JSON envoyé par NOWPayments
 $payload = file_get_contents("php://input");

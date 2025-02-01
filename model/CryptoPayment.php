@@ -1,18 +1,23 @@
 <?php
+include_once 'Config.php';
+
 class CryptoPayment
 {
     private $apiKey;
     private $ipnSecret;
     private $apiUrl = "https://api.nowpayments.io/v1/";
 
-    public function __construct($apiKey, $ipnSecret)
+    private $exchangeApiKey; // Propriété correctement déclarée
+
+    public function __construct($apiKey, $ipnSecret, $exchangeApiKey)
     {
-        $this->apiKey = $apiKey;
+        $this->apiKey = $apiKey ? $apiKey : Config::get("API_KEY");
+        $this->exchangeApiKey = $exchangeApiKey ? $exchangeApiKey : Config::get("EXCHANGE_API_KEY"); // Affectation correcte
         $this->ipnSecret = $ipnSecret;
     }
 
     // 🔹 Créer une commande de paiement
-    public function createPayment($amount, $currency = "XOF", $crypto = "BTC", $orderId = null, $successUrl = "", $cancelUrl = "")
+    public function createPayment($amount, $currency = "XOF", $crypto = "usdttrc20", $orderId = null, $successUrl = "", $cancelUrl = "")
     {
         // Convertir XOF en USD si nécessaire
         if ($currency === "XOF") {
@@ -131,32 +136,44 @@ class CryptoPayment
     // 🔹 Obtenir le montant minimal pour une crypto
     private function getMinimalAmount($currency_from, $currency_to)
     {
-        $url = "https://api.nowpayments.io/v1/min-amount?currency_from={$currency_from}&currency_to={$currency_to}";
+        $url = "https://api.nowpayments.io/v1/min-amount?currency_from={$currency_from}&currency_to={$currency_to}&fiat_equivalent=usd&is_fixed_rate=False&is_fee_paid_by_user=False";
 
-        $options = [
-            "http" => [
-                "header" => "x-api-key: {$this->apiKey}\r\nContent-Type: application/json\r\n",
-                "method" => "GET",
-            ],
-        ];
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, [
+            "x-api-key: {$this->apiKey}",
+            "Content-Type: application/json"
+        ]);
 
-        $context = stream_context_create($options);
-        $response = file_get_contents($url, false, $context);
+        $response = curl_exec($ch);
+        $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
 
+        // Vérifier si la requête cURL a échoué
+        if (curl_errno($ch)) {
+            $error_msg = curl_error($ch);
+            curl_close($ch);
+            return ["error" => "Erreur cURL: " . $error_msg];
+        }
+
+        curl_close($ch);
+
+        // Vérifier la réponse HTTP
+        if ($httpCode != 200) {
+            return ["error" => "Erreur HTTP : $httpCode. Impossible de récupérer le montant minimum requis."];
+        }
+
+        // Vérifier si la réponse est vide
         if (!$response) {
-            return ["error" => "Impossible de récupérer le montant minimum requis."];
+            return ["error" => "Aucune réponse reçue de l'API."];
         }
 
         $data = json_decode($response, true);
 
-        // 🚀 DEBUG : Enregistre la réponse pour comprendre l'erreur
-        file_put_contents("debug_nowpayments.txt", print_r($data, true));
-
+        // Vérifier si les données contiennent la clé 'min_amount'
         if (!is_array($data) || !isset($data['min_amount'])) {
             return ["error" => "Donnée 'min_amount' non trouvée.", "api_response" => $data];
         }
-
-        // error_log("NowPayments - Minimal amount: {$data['min_amount']}");
 
         return $data;
     }
@@ -164,7 +181,7 @@ class CryptoPayment
     // 🔹 Obtenir le taux de change entre XOF et USD
     function getExchangeRate($from, $to)
     {
-        $apiKey = "fda4059eaac38fee088d2eb5"; // Remplace par ta clé API
+        $apiKey = $this->exchangeApiKey; // Remplace par ta clé API
         $url = "https://v6.exchangerate-api.com/v6/$apiKey/latest/$from";
 
         // Récupération des données avec file_get_contents

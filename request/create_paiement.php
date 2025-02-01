@@ -9,8 +9,9 @@ error_reporting(E_ALL);
 // Récupérer les clés API depuis la configuration
 $apiKey = Config::get('API_KEY'); // À obtenir ou simuler
 $ipnSecret = Config::get('IPN_SECRET'); // À obtenir ou simuler
+$exchangeApiKey = Config::get('EXCHANGE_API_KEY');
 
-$payment = new CryptoPayment($apiKey, $ipnSecret);
+$payment = new CryptoPayment($apiKey, $ipnSecret, $exchangeApiKey);
 
 // Lire la requête JSON envoyée par JavaScript
 $data = json_decode(file_get_contents("php://input"), true);
@@ -40,30 +41,30 @@ if (isset($response['error'])) {
     exit;
 }
 
-// Si la création du paiement est réussie, renvoyer l'URL de la facture
-if (isset($response['invoice_url'])) {
-    echo json_encode([
-        "success" => true,
-        "invoice_url" => $response['invoice_url']
-    ]);
-    exit;
-}
+// Vérifier la réponse du code HTTP
+if (isset($response['http_code']) && $response['http_code'] == 201) {
+    // Décoder la réponse API
+    $jsonResponse = $response['response'];
 
-// Si la réponse contient un message d'erreur avec HTTP 201
-if (isset($response['error']) && strpos($response['error'], 'HTTP 201 -') !== false) {
-    // Décoder la partie JSON du message d'erreur
-    preg_match('/HTTP 201 - (.*)/', $response['error'], $matches);
-    $jsonResponse = json_decode($matches[1], true);
-    // Réponse structurée
+    // Vérification des informations retournées
     if (isset($jsonResponse['payment_id'])) {
         echo json_encode([
             "success" => true,
             "payment_id" => $jsonResponse["payment_id"],
             "payment_status" => $jsonResponse["payment_status"],
             "pay_address" => $jsonResponse["pay_address"],
+            "price_amount" => $jsonResponse["price_amount"],
+            "price_currency" => $jsonResponse["price_currency"],
             "pay_amount" => $jsonResponse["pay_amount"],
+            "amount_received" => $jsonResponse["amount_received"],
             "pay_currency" => $jsonResponse["pay_currency"],
-            "valid_until" => $jsonResponse["valid_until"]
+            "order_id" => $jsonResponse["order_id"],
+            "order_description" => $jsonResponse["order_description"],
+            "ipn_callback_url" => $jsonResponse["ipn_callback_url"],
+            "created_at" => $jsonResponse["created_at"],
+            "valid_until" => $jsonResponse["valid_until"],
+            "type" => $jsonResponse["type"],
+            "network" => $jsonResponse["network"]
         ]);
     } else {
         echo json_encode([
@@ -74,7 +75,9 @@ if (isset($response['error']) && strpos($response['error'], 'HTTP 201 -') !== fa
 } else {
     echo json_encode([
         "success" => false,
-        "error" => "Réponse inattendue de l'API."
+        "error" => "Réponse inattendue de l'API ou code HTTP erroné.",
+        "http_code" => isset($response['http_code']) ? $response['http_code'] : 'Non spécifié',
+        "response" => $response['response'] ?? 'Aucune réponse'
     ]);
 }
 
