@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Paiement Crypto - Abonnement</title>
+    <title>Paiement Crypto - Finova</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
 
@@ -92,50 +92,59 @@
 
     <div class="container">
         <h1>Choisissez votre pack</h1>
+        <div id="error-message"></div>
         <div class="packs">
             <div class="pack">
                 <img src="https://via.placeholder.com/200" alt="Pack Basic">
                 <h2>Basic</h2>
                 <p>10 000 FCFA / mois</p>
-                <button class="btn" onclick="payer(10, 'Basic')">Payer</button>
+                <button class="btn" onclick="payer(10000, 'Basic')">Payer</button>
             </div>
             <div class="pack">
                 <img src="https://via.placeholder.com/200" alt="Pack Pro">
                 <h2>Pro</h2>
                 <p>25 000 FCFA / mois</p>
-                <button class="btn" onclick="payer(25, 'Pro')">Payer</button>
+                <button class="btn" onclick="payer(25000, 'Pro')">Payer</button>
             </div>
             <div class="pack">
                 <img src="https://via.placeholder.com/200" alt="Pack Premium">
                 <h2>Premium</h2>
                 <p>50 000 FCFA / mois</p>
-                <button class="btn" onclick="payer(50, 'Premium')">Payer</button>
+                <button class="btn" onclick="payer(50000, 'Premium')">Payer</button>
             </div>
         </div>
     </div>
 
     <script>
         function payer(amount, packName) {
-            fetch('create_payment.php', {
+            fetch('request/create_paiement.php', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json'
                     },
                     body: JSON.stringify({
                         price_amount: amount,
-                        price_currency: "USD",
+                        price_currency: "XOF",
                         pay_currency: "BTC",
                         order_id: packName + "_" + Date.now(),
-                        success_url: "https://tonsite.com/success.php",
-                        cancel_url: "https://tonsite.com/cancel.php"
+                        success_url: "https://ifmap.ci/test/success.php",
+                        cancel_url: "https://ifmap.ci/test/cancel.php"
                     })
                 })
-                .then(response => response.json())
+                .then(response => response.text()) // Utilisation de .text() pour récupérer le texte brut
                 .then(data => {
-                    if (data.invoice_url) {
-                        window.location.href = data.invoice_url;
-                    } else {
-                        alert("Erreur: " + (data.message || "Impossible de créer le paiement."));
+                    console.log(data); // Affiche la réponse brute
+                    try {
+                        const jsonData = JSON.parse(data); // Tente de convertir la réponse en JSON
+                        if (jsonData.invoice_url) {
+                            window.location.href = jsonData.invoice_url;
+                        } else {
+                            if (jsonData.error) {
+                                document.getElementById('error-message').innerText = jsonData.error;
+                            }
+                        }
+                    } catch (error) {
+                        console.error('Erreur de parsing JSON:', error);
                     }
                 })
                 .catch(error => console.error("Erreur:", error));

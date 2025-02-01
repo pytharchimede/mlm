@@ -1,8 +1,10 @@
 <?php
 require_once "../model/CryptoPayment.php";
+require_once "../model/Config.php";
 
-$apiKey = "TON_API_KEY";
-$ipnSecret = "TON_SECRET_IPN";
+
+$apiKey = Config::get('API_KEY');
+$ipnSecret = Config::get('IPN_SECRET');
 
 $payment = new CryptoPayment($apiKey, $ipnSecret);
 
