@@ -17,7 +17,7 @@
         <div id="error-message"></div>
         <div id="success-message" style="display:none;"></div>
         <div class="packs">
-            <div class="pack">
+            <div class="pack" data-pack="Basic 1">
                 <div class="icon">✨</div>
                 <h2>Miner Basic 1</h2>
                 <p>6 000 FCFA</p>
@@ -26,7 +26,7 @@
                 </div>
                 <button class="btn" onclick="payer(6000, 'Basic 1')">Payer</button>
             </div>
-            <div class="pack">
+            <div class="pack" data-pack="Basic 2">
                 <div class="icon">🚀</div>
                 <h2>Miner Basic 2</h2>
                 <p>8 000 FCFA</p>
@@ -35,7 +35,7 @@
                 </div>
                 <button class="btn" onclick="payer(8000, 'Basic 2')">Payer</button>
             </div>
-            <div class="pack">
+            <div class="pack" data-pack="Basic 3">
                 <div class="icon">🔥</div>
                 <h2>Miner Basic 3</h2>
                 <p>10 000 FCFA</p>
@@ -44,7 +44,7 @@
                 </div>
                 <button class="btn" onclick="payer(10000, 'Basic 3')">Payer</button>
             </div>
-            <div class="pack">
+            <div class="pack" data-pack="Basic 4">
                 <div class="icon">💎</div>
                 <h2>Miner Basic 4</h2>
                 <p>15 000 FCFA</p>
@@ -53,7 +53,7 @@
                 </div>
                 <button class="btn" onclick="payer(15000, 'Basic 4')">Payer</button>
             </div>
-            <div class="pack">
+            <div class="pack" data-pack="Pro 1">
                 <div class="icon">🌟</div>
                 <h2>Miner Pro 1</h2>
                 <p>30 000 FCFA</p>
@@ -62,7 +62,7 @@
                 </div>
                 <button class="btn" onclick="payer(30000, 'Pro 1')">Payer</button>
             </div>
-            <div class="pack">
+            <div class="pack" data-pack="Pro 2">
                 <div class="icon">💼</div>
                 <h2>Miner Pro 2</h2>
                 <p>60 000 FCFA</p>
@@ -71,7 +71,7 @@
                 </div>
                 <button class="btn" onclick="payer(60000, 'Pro 2')">Payer</button>
             </div>
-            <div class="pack">
+            <div class="pack" data-pack="Pro 3">
                 <div class="icon">🏆</div>
                 <h2>Miner Pro 3</h2>
                 <p>100 000 FCFA</p>
@@ -94,6 +94,19 @@
 
     <script>
         function payer(amount, packName) {
+            // Masquer tous les packs
+            const packs = document.querySelectorAll('.pack');
+            packs.forEach(pack => {
+                pack.style.display = 'none';
+            });
+
+            // Afficher uniquement le pack sélectionné
+            const selectedPack = document.querySelector(`.pack[data-pack="${packName}"]`);
+            if (selectedPack) {
+                selectedPack.style.display = 'block';
+            }
+
+            // Faire l'appel pour la création du paiement
             fetch('request/create_paiement.php', {
                     method: 'POST',
                     headers: {
