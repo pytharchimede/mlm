@@ -147,7 +147,7 @@
             <p class="amount">Montant à payer : <span id="amount-to-pay"></span> USDT</p>
             <p>Envoyez à l'adresse suivante :</p>
             <p class="address" id="payment-address"></p>
-            <button class="btn" onclick="verifier_paiement()">J'ai payé</button>
+            <button class="btn" onclick="window.location.href='verif_payment.php'">J'ai payé</button>
         </div>
     </div>
 

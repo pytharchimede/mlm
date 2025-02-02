@@ -1,0 +1,101 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Montserrat', sans-serif;
+}
+
+body {
+    background: #181818; /* Fond encore plus sombre pour l'effet dark */
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
+    flex-direction: column;
+}
+
+h1 {
+    font-size: 3em;
+    font-weight: bold;
+    text-align: center;
+    color: #00A3FF; /* Couleur bleue pour le titre */
+    text-shadow: 3px 3px 15px rgba(0, 255, 209, 0.7); /* Ombre légèrement plus douce */
+    margin-bottom: 30px;
+}
+
+p.lead {
+    font-size: 1.4em;
+    color: #e1e1e1;
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.packs {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    transition: transform 0.3s ease;
+}
+
+.pack {
+    background: linear-gradient(145deg, #1f1f1f, #333333); /* Fond sombre avec dégradé subtil */
+    border-radius: 15px;
+    width: 280px;
+    padding: 40px;
+    text-align: center;
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
+    box-shadow: 0px 8px 20px rgba(0, 255, 209, 0.2); /* Ombre plus douce */
+    overflow: hidden;
+    position: relative;
+}
+
+.pack:hover {
+    transform: translateY(-10px);
+    box-shadow: 0px 15px 30px rgba(0, 255, 209, 0.4); /* Ombre un peu plus intense sur hover */
+    background: linear-gradient(145deg, #333333, #1f1f1f); /* Changement de dégradé au survol */
+}
+
+.pack .icon img {
+    width: 80px;
+    height: 80px;
+    margin-bottom: 20px;
+    transition: transform 0.3s ease;
+}
+
+.pack:hover .icon img {
+    transform: scale(1.1);
+}
+
+.pack h2 {
+    font-size: 2em;
+    color: #fff;
+    margin-bottom: 15px;
+}
+
+.pack p.description {
+    font-size: 1.1em;
+    color: #e1e1e1; /* Légèrement plus clair pour améliorer la lisibilité */
+    margin-bottom: 25px;
+}
+
+@media (max-width: 767px) {
+    .packs {
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .pack {
+        width: 100%;
+        padding: 30px;
+    }
+}
+
+
+.container{
+    margin-top: 80px;
+}

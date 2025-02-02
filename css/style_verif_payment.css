@@ -1,0 +1,96 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Montserrat', sans-serif;
+}
+
+body {
+    background: #f5f5f5; /* Fond clair */
+    color: #333333; /* Texte sombre pour une bonne lisibilité */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
+    flex-direction: column;
+}
+
+h1 {
+    font-size: 3em;
+    font-weight: bold;
+    text-align: center;
+    color: #00A3FF; /* Couleur bleue pour le titre */
+    text-shadow: 3px 3px 15px rgba(0, 255, 209, 0.4); /* Ombre plus douce */
+    margin-bottom: 30px;
+}
+
+p.lead {
+    font-size: 1.4em;
+    color: #555555; /* Texte légèrement plus clair pour le sous-titre */
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.packs {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    transition: transform 0.3s ease;
+}
+
+.pack {
+    background: linear-gradient(145deg, #FFFFFF, #f0f0f0); /* Fond clair avec un léger dégradé */
+    border-radius: 15px;
+    width: 280px;
+    padding: 40px;
+    text-align: center;
+    cursor: pointer;
+    transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
+    box-shadow: 0px 8px 20px rgba(0, 0, 0, 0.1); /* Ombre légère */
+    overflow: hidden;
+    position: relative;
+}
+
+.pack:hover {
+    transform: translateY(-10px);
+    box-shadow: 0px 15px 30px rgba(0, 0, 0, 0.2); /* Ombre plus marquée au survol */
+    background: linear-gradient(145deg, #f0f0f0, #FFFFFF); /* Changement de dégradé au survol */
+}
+
+.pack .icon img {
+    width: 80px;
+    height: 80px;
+    margin-bottom: 20px;
+    transition: transform 0.3s ease;
+}
+
+.pack:hover .icon img {
+    transform: scale(1.1);
+}
+
+.pack h2 {
+    font-size: 2em;
+    color: #333333; /* Couleur sombre pour les titres */
+    margin-bottom: 15px;
+}
+
+.pack p.description {
+    font-size: 1.1em;
+    color: #666666; /* Couleur plus claire pour les descriptions */
+    margin-bottom: 25px;
+}
+
+@media (max-width: 767px) {
+    .packs {
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .pack {
+        width: 100%;
+        padding: 30px;
+    }
+}

@@ -1,0 +1,45 @@
+/* Styles pour un modal sombre */
+.modal-content {
+    background-color: #2c2c2c; /* Fond sombre pour le contenu du modal */
+    color: #e1e1e1; /* Texte clair pour la lisibilité */
+    border-radius: 10px; /* Coins arrondis */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); /* Ombre douce */
+}
+
+.modal-header {
+    border-bottom: none; /* Supprimer la bordure du header */
+    background-color: #333333; /* Fond sombre pour le header */
+    color: #fff; /* Texte clair dans le header */
+}
+
+.modal-title {
+    font-weight: bold;
+    font-size: 1.5em;
+}
+
+.modal-body {
+    background-color: #2c2c2c; /* Même fond sombre que le contenu */
+}
+
+.modal-footer {
+    background-color: #333333; /* Fond sombre pour le footer */
+}
+
+.modal-footer .btn {
+    background-color: #00A3FF; /* Couleur de fond des boutons */
+    border: none;
+    color: white;
+    border-radius: 5px;
+}
+
+.modal-footer .btn:hover {
+    background-color: #0090cc; /* Changer la couleur au survol */
+}
+
+/* Boutons de fermeture */
+.btn-close {
+    background-color: transparent;
+    border: none;
+    color: #fff;
+    font-size: 1.5em;
+}
