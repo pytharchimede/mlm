@@ -265,3 +265,7 @@ body {
     padding-top: 100px;
     /* Pour que le contenu n'entre pas sous la barre fixe */
 }
+
+#payment-title{
+    color: #121212;
+}
