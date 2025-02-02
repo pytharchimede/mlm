@@ -24,7 +24,7 @@
                 <div class="stars">
                     ★★★☆☆
                 </div>
-                <button class="btn" onclick="payer(6000, 'Basic 1')">Payer</button>
+                <button class="btn" onclick="payer(6000, 'Basic 1')">Acheter un mineur</button>
             </div>
             <div class="pack" data-pack="Basic 2">
                 <div class="icon">🚀</div>
@@ -33,7 +33,7 @@
                 <div class="stars">
                     ★★★★☆
                 </div>
-                <button class="btn" onclick="payer(8000, 'Basic 2')">Payer</button>
+                <button class="btn" onclick="payer(8000, 'Basic 2')">Acheter un mineur</button>
             </div>
             <div class="pack" data-pack="Basic 3">
                 <div class="icon">🔥</div>
@@ -42,7 +42,7 @@
                 <div class="stars">
                     ★★★★★
                 </div>
-                <button class="btn" onclick="payer(10000, 'Basic 3')">Payer</button>
+                <button class="btn" onclick="payer(10000, 'Basic 3')">Acheter un mineur</button>
             </div>
             <div class="pack" data-pack="Basic 4">
                 <div class="icon">💎</div>
@@ -51,7 +51,7 @@
                 <div class="stars">
                     ★★★★★
                 </div>
-                <button class="btn" onclick="payer(15000, 'Basic 4')">Payer</button>
+                <button class="btn" onclick="payer(15000, 'Basic 4')">Acheter un mineur</button>
             </div>
             <div class="pack" data-pack="Pro 1">
                 <div class="icon">🌟</div>
@@ -60,7 +60,7 @@
                 <div class="stars">
                     ★★★★★
                 </div>
-                <button class="btn" onclick="payer(30000, 'Pro 1')">Payer</button>
+                <button class="btn" onclick="payer(30000, 'Pro 1')">Acheter un mineur</button>
             </div>
             <div class="pack" data-pack="Pro 2">
                 <div class="icon">💼</div>
@@ -69,7 +69,7 @@
                 <div class="stars">
                     ★★★★★
                 </div>
-                <button class="btn" onclick="payer(60000, 'Pro 2')">Payer</button>
+                <button class="btn" onclick="payer(60000, 'Pro 2')">Acheter un mineur</button>
             </div>
             <div class="pack" data-pack="Pro 3">
                 <div class="icon">🏆</div>
@@ -78,7 +78,7 @@
                 <div class="stars">
                     ★★★★★
                 </div>
-                <button class="btn" onclick="payer(100000, 'Pro 3')">Payer</button>
+                <button class="btn" onclick="payer(100000, 'Pro 3')">Acheter un mineur</button>
             </div>
         </div>
 
@@ -147,7 +147,7 @@
                 .finally(() => {
                     // Réactiver le bouton et enlever l'indicateur de chargement
                     btn.disabled = false;
-                    btn.innerHTML = 'Payer';
+                    btn.innerHTML = 'Regénérer lien de paiement';
                 });
         }
 
