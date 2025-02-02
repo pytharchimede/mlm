@@ -203,4 +203,78 @@ class CryptoPayment
 
         return $data["conversion_rates"][$to];
     }
+
+    // 🔹 Vérifier une transaction avec son payment_id
+    public function verifyTransaction($paymentId)
+    {
+        $response = $this->sendRequest("payment/$paymentId", [], "GET");
+
+        if (isset($response['error'])) {
+            return ["error" => "Erreur lors de la récupération du paiement : " . $response['error']];
+        }
+
+        // Vérification des données essentielles dans la réponse
+        if (!isset($response['payment_status']) || !isset($response['pay_amount'])) {
+            return ["error" => "Réponse API invalide. Vérifiez le Payment ID."];
+        }
+
+        // Retourner toutes les données de la transaction
+        return [
+            "payment_id"            => $response['payment_id'] ?? null,
+            "status"                => $response['payment_status'],
+            "pay_address"           => $response['pay_address'] ?? null,
+            "price_amount"          => $response['price_amount'] ?? null,
+            "price_currency"        => $response['price_currency'] ?? null,
+            "pay_amount"            => $response['pay_amount'],
+            "actual_amount_received" => $response['actual_amount_received'] ?? null,
+            "pay_currency"          => $response['pay_currency'],
+            "created_at"            => $response['created_at'] ?? null,
+            "updated_at"            => $response['updated_at'] ?? null,
+            "order_id"              => $response['order_id'] ?? null,
+            "purchase_id"           => $response['purchase_id'] ?? null,
+            "network"               => $response['network'] ?? null,
+            "is_final"              => $response['is_final'] ?? false
+        ];
+    }
+
+    public function verifyTrc20Transaction($txid)
+    {
+        $url = "https://apilist.tronscanapi.com/api/transaction-info?hash=$txid";
+        $response = file_get_contents($url);
+        $data = json_decode($response, true);
+
+        if (!$data || isset($data['error'])) {
+            return ["error" => "Transaction TRC20 introuvable ou erreur API."];
+        }
+
+        // Taux de change fictif USDT -> XOF, à remplacer par un taux réel ou une API
+        $usdtToXofRate = 700; // Exemple de taux de change (1 USDT = 700 XOF)
+
+        // Extraction des informations
+        $transactionData = [
+            "status" => $data['confirmed'] ? "Confirmed" : "Pending",
+            "from" => $data['ownerAddress'] ?? null,
+            "to" => $data['toAddress'] ?? null,
+            "amount" => isset($data['trc20TransferInfo'][0]['amount_str'])
+                ? $data['trc20TransferInfo'][0]['amount_str'] / 1e6 // Conversion en USDT (6 décimales)
+                : null,
+            "amount_str" => $data['trc20TransferInfo'][0]['amount_str'] ?? null, // Montant en raw
+            "symbol" => $data['trc20TransferInfo'][0]['symbol'] ?? null, // Symbole de la crypto (par exemple USDT)
+            "from_address" => $data['trc20TransferInfo'][0]['from_address'] ?? null,
+            "to_address" => $data['trc20TransferInfo'][0]['to_address'] ?? null,
+            "contract_address" => $data['trc20TransferInfo'][0]['contract_address'] ?? null,
+            "block_number" => $data['block'] ?? null,
+            "timestamp" => isset($data['timestamp']) ? date("Y-m-d H:i:s", $data['timestamp'] / 1000) : null, // Timestamp converti
+            "txid" => $txid,
+            "icon_url" => $data['trc20TransferInfo'][0]['icon_url'] ?? null, // URL de l'icône de la crypto
+            "contract_info" => $data['contractInfo'] ?? null, // Infos sur le contrat
+            "confirmed" => $data['confirmed'] ?? null, // Confirmation de la transaction
+            "fee" => $data['cost']['fee'] ?? null, // Frais de la transaction
+        ];
+
+        // Ajout de la conversion en XOF
+        $transactionData["amount_xof"] = $transactionData["amount"] * $usdtToXofRate;
+
+        return $transactionData;
+    }
 }
