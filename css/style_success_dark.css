@@ -1,0 +1,83 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Montserrat', sans-serif;
+}
+
+body {
+    background: #121212; /* Fond sombre */
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    text-align: center;
+}
+
+.container {
+    max-width: 800px;
+    padding: 20px;
+    background: #1E1E1E; /* Légèrement plus clair pour contraste */
+    border-radius: 15px;
+    box-shadow: 0 4px 10px rgba(0, 255, 209, 0.3);
+}
+
+h1 {
+    font-size: 2em;
+    margin-bottom: 20px;
+    color: #00FFD1; /* Couleur principale */
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+}
+
+p {
+    font-size: 1.2em;
+    margin-bottom: 20px;
+    color: #CCCCCC; /* Gris clair pour meilleure lisibilité */
+}
+
+.btn {
+    background: #00FFD1;
+    color: black;
+    border: none;
+    padding: 12px 25px;
+    font-size: 1em;
+    cursor: pointer;
+    border-radius: 8px;
+    transition: background 0.3s, transform 0.2s;
+    font-weight: 700;
+}
+
+.btn:hover {
+    background: #00cca3;
+    transform: scale(1.05);
+}
+
+/* Effet de brillance */
+.btn:active {
+    transform: scale(0.98);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .container {
+        max-width: 90%;
+        padding: 15px;
+    }
+
+    h1 {
+        font-size: 1.8em;
+    }
+
+    p {
+        font-size: 1.1em;
+    }
+
+    .btn {
+        font-size: 0.9em;
+        padding: 10px 20px;
+    }
+}
