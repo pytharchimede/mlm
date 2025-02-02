@@ -12,73 +12,91 @@
 
 <body>
 
+    <!-- Barre fixe avec le logo et les boutons de contact -->
+    <header class="header-fixed">
+        <div class="logo-container">
+            <img src="assets/img/source_plan_clair_petit.png" alt="Logo">
+        </div>
+        <div class="contact-buttons">
+            <!-- Remplacez les liens par vos liens réels -->
+            <a href="https://wa.me/123456789" target="_blank" class="whatsapp-button">
+                <img src="assets/icons_svg/whatsapp.svg" alt="WhatsApp" width="30">
+            </a>
+            <a href="https://t.me/yourusername" target="_blank" class="telegram-button">
+                <img src="assets/icons_svg/telegram.svg" alt="Telegram" width="30">
+            </a>
+            <!-- Vous pouvez ajouter d'autres boutons ici -->
+        </div>
+    </header>
+
+
     <div class="container">
-        <h1>Choisissez votre pack</h1>
+        <h1>Acheter un miner</h1>
         <div id="error-message"></div>
         <div id="success-message" style="display:none;"></div>
         <div class="packs">
             <div class="pack" data-pack="Basic 1">
-                <div class="icon">✨</div>
+                <!-- <div class="icon">✨</div> -->
                 <h2>Miner Basic 1</h2>
                 <p>6 000 FCFA</p>
                 <div class="stars">
                     ★★★☆☆
                 </div>
-                <button class="btn" onclick="payer(6000, 'Basic 1')">Acheter un mineur</button>
+                <button class="btn" onclick="payer(6000, 'Basic 1')">Payer</button>
             </div>
             <div class="pack" data-pack="Basic 2">
-                <div class="icon">🚀</div>
+                <!-- <div class="icon">🚀</div> -->
                 <h2>Miner Basic 2</h2>
                 <p>8 000 FCFA</p>
                 <div class="stars">
                     ★★★★☆
                 </div>
-                <button class="btn" onclick="payer(8000, 'Basic 2')">Acheter un mineur</button>
+                <button class="btn" onclick="payer(8000, 'Basic 2')">Payer</button>
             </div>
             <div class="pack" data-pack="Basic 3">
-                <div class="icon">🔥</div>
+                <!-- <div class="icon">🔥</div> -->
                 <h2>Miner Basic 3</h2>
                 <p>10 000 FCFA</p>
                 <div class="stars">
                     ★★★★★
                 </div>
-                <button class="btn" onclick="payer(10000, 'Basic 3')">Acheter un mineur</button>
+                <button class="btn" onclick="payer(10000, 'Basic 3')">Payer</button>
             </div>
             <div class="pack" data-pack="Basic 4">
-                <div class="icon">💎</div>
+                <!-- <div class="icon">💎</div> -->
                 <h2>Miner Basic 4</h2>
                 <p>15 000 FCFA</p>
                 <div class="stars">
                     ★★★★★
                 </div>
-                <button class="btn" onclick="payer(15000, 'Basic 4')">Acheter un mineur</button>
+                <button class="btn" onclick="payer(15000, 'Basic 4')">Payer</button>
             </div>
             <div class="pack" data-pack="Pro 1">
-                <div class="icon">🌟</div>
+                <!-- <div class="icon">🌟</div> -->
                 <h2>Miner Pro 1</h2>
                 <p>30 000 FCFA</p>
                 <div class="stars">
                     ★★★★★
                 </div>
-                <button class="btn" onclick="payer(30000, 'Pro 1')">Acheter un mineur</button>
+                <button class="btn" onclick="payer(30000, 'Pro 1')">Payer</button>
             </div>
             <div class="pack" data-pack="Pro 2">
-                <div class="icon">💼</div>
+                <!-- <div class="icon">💼</div> -->
                 <h2>Miner Pro 2</h2>
                 <p>60 000 FCFA</p>
                 <div class="stars">
                     ★★★★★
                 </div>
-                <button class="btn" onclick="payer(60000, 'Pro 2')">Acheter un mineur</button>
+                <button class="btn" onclick="payer(60000, 'Pro 2')">Payer</button>
             </div>
             <div class="pack" data-pack="Pro 3">
-                <div class="icon">🏆</div>
+                <!-- <div class="icon">🏆</div> -->
                 <h2>Miner Pro 3</h2>
                 <p>100 000 FCFA</p>
                 <div class="stars">
                     ★★★★★
                 </div>
-                <button class="btn" onclick="payer(100000, 'Pro 3')">Acheter un mineur</button>
+                <button class="btn" onclick="payer(100000, 'Pro 3')">Payer</button>
             </div>
         </div>
 
@@ -91,6 +109,13 @@
             <button class="btn" onclick="verifier_paiement()">J'ai payé</button>
         </div>
     </div>
+
+    <!-- <footer class="footer">
+        <div class="logo-container">
+            <img src="assets/img/source_plan_clair_petit.png" alt="Logo" class="logo">
+        </div>
+    </footer> -->
+
 
     <script>
         function payer(amount, packName) {
