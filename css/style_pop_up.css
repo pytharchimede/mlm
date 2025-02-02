@@ -1,0 +1,198 @@
+/* Popup Container */
+.popup-container {
+    display: none;
+    position: fixed; /* Utilisation de fixed pour garantir qu'il reste au même endroit */
+    top: 50%; /* Centré verticalement */
+    left: 50%; /* Centré horizontalement */
+    transform: translate(-50%, -50%); /* Centrage parfait */
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    width: 300px;
+    z-index: 1000; /* Assurez-vous que le pop-up soit au-dessus des autres éléments */
+}
+
+.popup-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 15px;
+}
+
+.popup-header img {
+    cursor: pointer;
+    display: flex; /* Utilisation de flex pour centrer l'image */
+    justify-content: center; /* Centrer horizontalement */
+    align-items: center; /* Centrer verticalement */
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    background-color: #f1f1f1;
+    transition: background-color 0.3s;
+}
+
+
+/* Titre du pop-up */
+.popup-container h2 {
+    font-size: 20px;
+    margin: 0;
+}
+
+/* Paragraphe de description */
+.popup-container p {
+    font-size: 16px;
+    color: #555;
+}
+
+/* Conteneur pour le numéro de dépôt */
+.copy-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #f1f1f1;
+    padding: 10px;
+    border-radius: 8px;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+/* Texte du numéro de dépôt */
+.copy-container span {
+    font-weight: bold;
+    color: #010101;
+    font-size: 20px;
+}
+
+/* Icône de copie */
+.copy-container img {
+    width: 20px;
+    height: 20px;
+}
+
+/* Bouton de fermeture */
+.popup-button {
+    background: #007bff;
+    color: white;
+    padding: 10px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    margin-top: 15px;
+    width: 100%;
+}
+
+.popup-button:hover {
+    background: #0056b3;
+}
+
+/* Overlay */
+.overlay {
+    display: none; /* Initialement masqué */
+    position: fixed; /* Position fixe pour couvrir toute la page */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5); /* Fond semi-transparent */
+    z-index: 999; /* S'assurer que l'overlay soit sous le pop-up */
+}
+
+/* Réajustement des modes de paiement pour éviter tout chevauchement */
+.payment-options {
+    display: flex;
+    gap: 10px; /* Espacement entre les modes de paiement */
+    flex-wrap: wrap; /* Permet d'afficher les éléments sur plusieurs lignes si nécessaire */
+}
+
+.payment-card {
+    display: inline-block;
+    text-align: center;
+}
+
+.payment-card input {
+    display: none; /* Masquer les boutons radio */
+}
+
+.payment-card label {
+    cursor: pointer;
+    display: inline-block;
+    padding: 10px;
+    border-radius: 8px;
+    background-color: #f1f1f1;
+    transition: background-color 0.3s;
+}
+
+.payment-card label:hover {
+    background-color: #ddd;
+}
+
+.payment-card input:checked + label {
+    background-color: #007bff;
+    color: white;
+}
+
+.payment-card img {
+    width: 40px;
+    height: 40px;
+    margin-bottom: 5px;
+}
+
+/* Réajustement des modes de paiement pour un affichage plus centré et circulaire */
+.payment-options {
+    display: flex;
+    justify-content: center; /* Centrer horizontalement */
+    gap: 20px; /* Espacement entre les modes de paiement */
+    flex-wrap: wrap; /* Permet d'afficher les éléments sur plusieurs lignes si nécessaire */
+    margin-top: 20px;
+}
+
+/* Carte de paiement circulaire */
+.payment-card {
+    display: inline-block;
+    text-align: center;
+}
+
+/* Masquer les boutons radio, mais garder leur fonctionnalité */
+.payment-card input {
+    display: none;
+}
+
+/* Donner une forme circulaire aux labels */
+.payment-card label {
+    cursor: pointer;
+    display: inline-block;
+    padding: 20px;
+    width: 80px; /* Largeur spécifique pour la forme circulaire */
+    height: 80px; /* Hauteur spécifique pour la forme circulaire */
+    border-radius: 50%; /* Forme circulaire */
+    background-color: #f1f1f1;
+    transition: background-color 0.3s;
+    text-align: center; /* Centrer le texte/image à l'intérieur */
+}
+
+.payment-card label:hover {
+    background-color: #ddd; /* Effet hover plus visible */
+}
+
+/* Lorsqu'un mode de paiement est sélectionné */
+.payment-card input:checked + label {
+    background-color: #007bff;
+    color: white;
+}
+
+/* Icône de paiement dans la carte circulaire */
+.payment-card img {
+    width: 40px;
+    height: 40px;
+    margin-bottom: 5px;
+}
+
+/* Texte sous l'icône, s'il y en a */
+.payment-card span {
+    display: block;
+    margin-top: 5px;
+    font-size: 14px;
+    margin-top: 25px;
+}

@@ -7,6 +7,7 @@
     <title>Paiement Crypto - Finova</title>
     <!-- Intégration de Bootstrap -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/style_pop_up.css" rel="stylesheet">
     <link href="css/style_index.css" rel="stylesheet">
 </head>
 
@@ -102,6 +103,44 @@
 
         <!-- Informations de paiement -->
         <div id="payment-info" style="display: none;">
+            <!-- Choix du mode de paiement -->
+            <div class="mb-3">
+                <h3 for="mode_paiement" class="control-label">Choisissez un mode de paiement</h3>
+                <div class="payment-options">
+                    <div class="payment-card">
+                        <input type="radio" id="orange_money" name="mode_paiement" value="Orange Money" required />
+                        <label for="orange_money">
+                            <img src="payment_icon/logo_om.png" alt="Orange Money" />
+                            <span>OM</span>
+                        </label>
+                    </div>
+
+                    <div class="payment-card">
+                        <input type="radio" id="mtn_money" name="mode_paiement" value="MTN Money" required />
+                        <label for="mtn_money">
+                            <img src="payment_icon/logo_momo.png" alt="MTN Money" />
+                            <span>Momo</span>
+                        </label>
+                    </div>
+
+                    <div class="payment-card">
+                        <input type="radio" id="moov_money" name="mode_paiement" value="Moov Money" required />
+                        <label for="moov_money">
+                            <img src="payment_icon/logo_flooz.png" alt="Moov Money" />
+                            <span>Flooz</span>
+                        </label>
+                    </div>
+
+                    <div class="payment-card">
+                        <input type="radio" id="wave" name="mode_paiement" value="Wave" required />
+                        <label for="wave">
+                            <img src="payment_icon/logo_wave.png" alt="Wave" />
+                            <span>Wave</span>
+                        </label>
+                    </div>
+                </div>
+            </div>
+
             <h3>Effectuez votre paiement en crypto</h3>
             <p class="amount">Montant à payer : <span id="amount-to-pay"></span> USDT</p>
             <p>Envoyez à l'adresse suivante :</p>
@@ -110,12 +149,24 @@
         </div>
     </div>
 
-    <!-- <footer class="footer">
-        <div class="logo-container">
-            <img src="assets/img/source_plan_clair_petit.png" alt="Logo" class="logo">
-        </div>
-    </footer> -->
 
+    <!-- Overlay -->
+    <div class="overlay" id="overlay"></div>
+
+    <!-- Pop-up -->
+    <div class="popup-container" id="popup">
+        <div class="popup-header">
+            <img id="payment-icon" src="" alt="Mode de paiement">
+            <h2 id="payment-title"></h2>
+        </div>
+        <p>Montant : <strong id="amount"></strong></p>
+        <p>Numéro de dépôt :</p>
+        <div class="copy-container" onclick="copyDepositNumber()">
+            <span id="deposit-number"></span>
+            <img src="https://cdn-icons-png.flaticon.com/512/1621/1621635.png" alt="Copier">
+        </div>
+        <button class="popup-button" onclick="closePopup()">Fermer</button>
+    </div>
 
     <script>
         function payer(amount, packName) {
@@ -217,6 +268,79 @@
                     document.getElementById('error-message').style.display = 'block';
                 });
         }
+
+        function openPopup(mode, amount, depositNumber) {
+            const paymentDetails = {
+                "Orange Money": {
+                    "icon": "payment_icon/logo_om.png",
+                    "phone": "+225 07 00 00 00"
+                },
+                "MTN Money": {
+                    "icon": "payment_icon/logo_momo.png",
+                    "phone": "+225 05 00 00 00"
+                },
+                "Moov Money": {
+                    "icon": "payment_icon/logo_flooz.png",
+                    "phone": "+225 01 00 00 00"
+                },
+                "Wave": {
+                    "icon": "payment_icon/logo_wave.png",
+                    "phone": "+225 08 00 00 00"
+                }
+            };
+
+            // Vérifie si le mode de paiement existe dans les détails
+            if (paymentDetails[mode]) {
+                document.getElementById("payment-icon").src = paymentDetails[mode].icon || "https://cdn-icons-png.flaticon.com/512/1781/1781106.png";
+                document.getElementById("payment-title").textContent = mode;
+                document.getElementById("amount").textContent = amount + " FCFA";
+                // document.getElementById("deposit-number").textContent = depositNumber;
+                document.getElementById("deposit-number").textContent = paymentDetails[mode].phone; // Valeur statique de test
+
+                // Affichage du pop-up
+                document.getElementById("popup").style.display = "block";
+                document.getElementById("overlay").style.display = "block";
+
+                // Log des détails du paiement dans la console
+                console.log("Mode de paiement : " + mode);
+                console.log("Montant : " + amount + " FCFA");
+                console.log("Numéro de dépôt : " + depositNumber);
+                console.log("Icône : " + paymentDetails[mode].icon);
+                console.log("Numéro téléphone : " + paymentDetails[mode].phone);
+            }
+        }
+
+        function closePopup() {
+            document.getElementById("popup").style.display = "none";
+            document.getElementById("overlay").style.display = "none";
+        }
+
+        function copyDepositNumber() {
+            const text = document.getElementById("deposit-number").textContent;
+            navigator.clipboard.writeText(text).then(() => {
+                alert("Numéro copié : " + text);
+            });
+        }
+
+        document.addEventListener("DOMContentLoaded", function() {
+            const paymentOptions = document.querySelectorAll(".payment-card input");
+
+            paymentOptions.forEach(option => {
+                option.addEventListener("change", function() {
+                    if (this.checked) {
+                        const mode = this.value;
+                        const amount = 5000; // Exemples de montant
+                        const depositNumber = "123456789"; // Exemple de numéro de dépôt
+                        openPopup(mode, amount, depositNumber);
+                    }
+                });
+            });
+
+            // Fermer le popup lorsqu'on clique sur l'overlay
+            document.getElementById("overlay").addEventListener("click", function() {
+                closePopup();
+            });
+        });
     </script>
 
     <!-- Intégration de Bootstrap JS -->
