@@ -1,0 +1,45 @@
+#logo{
+    height: 50px;
+    width: auto;
+}
+
+/* Fixer le header en haut de la page */
+header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+}
+
+/* Ajouter un espace sous le header pour éviter que le contenu ne soit caché */
+body {
+    padding-top: 100px;
+}      
+
+.parallax-video {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: -1;
+    transform: translateZ(0);
+    will-change: transform;
+}
+
+/* Parallax effect on scroll */
+.parallax-video {
+    transform: translateY(-20%);
+    transition: transform 0.2s ease-out;
+}
+
+/* Effet parallax lors du défilement */
+.parallax-video:hover {
+    transform: translateY(0%);
+}
+
+.px-5 {
+    background-color: rgba(17, 24, 39, 0.8);
+}

@@ -8,8 +8,8 @@
 }
 
 body {
-    background: #121212; /* Fond sombre */
-    color: white;
+    background: #1f2937; /* Fond gris foncé Tailwind */
+    color: #e5e7eb; /* Texte gris clair Tailwind */
     display: flex;
     justify-content: center;
     align-items: flex-start;
@@ -31,7 +31,7 @@ h1 {
     font-size: 2.5em;
     font-weight: bold;
     text-align: center;
-    background: linear-gradient(90deg, #2c2c2c, #000000);
+    background: linear-gradient(90deg, #3b82f6, #2563eb); /* Dégradé bleu Tailwind */
     color: #ffffff;
     text-shadow: 2px 2px 10px rgba(0, 255, 209, 0.5);
     margin-bottom: 20px;
@@ -47,7 +47,7 @@ h1 {
 }
 
 .pack {
-    background: #2C2C2C; /* Fond sombre avec un peu de lumière pour contraster */
+    background: #374151; /* Fond gris foncé Tailwind */
     padding: 15px;
     border-radius: 10px;
     box-shadow: 0 4px 10px rgba(0, 255, 209, 0.2);
@@ -60,32 +60,32 @@ h1 {
 
 .pack .icon {
     font-size: 2.5em;
-    color: #00FFD1;
+    color: #10b981; /* Vert Tailwind */
     margin-bottom: 8px;
 }
 
 .pack h2 {
     font-size: 1.5em;
     margin: 8px 0;
-    color: #7bd447;
+    color: #34d399; /* Vert clair Tailwind */
     font-weight: bold;
 }
 
 .pack p {
     font-size: 1.1em;
-    color: #E0E0E0; /* Texte plus clair pour un meilleur contraste */
+    color: #d1d5db; /* Gris clair Tailwind */
     font-weight: bold;
 }
 
 .stars {
     margin-top: 10px;
-    color: gold;
+    color: #fbbf24; /* Or Tailwind */
     font-size: 1.3em;
 }
 
 .btn {
-    background: #7bd447;
-    color: black;
+    background: #10b981; /* Vert Tailwind */
+    color: white;
     border: none;
     padding: 10px 20px;
     font-size: 1.1em;
@@ -96,14 +96,14 @@ h1 {
 }
 
 .btn:hover {
-    background: #00cca3;
+    background: #14b8a6; /* Vert plus clair Tailwind */
 }
 
 #error-message {
     margin: 20px 0;
     padding: 10px;
     border-radius: 8px;
-    background-color: #ff4d4d;
+    background-color: #f87171; /* Rouge Tailwind */
     color: white;
     font-size: 1.2em;
     text-align: center;
@@ -111,7 +111,7 @@ h1 {
 }
 
 #success-message {
-    background-color: #4CAF50;
+    background-color: #4ade80; /* Vert clair Tailwind */
     color: white;
     font-size: 1.2em;
     padding: 10px;
@@ -123,7 +123,7 @@ h1 {
 #payment-info {
     margin-top: 30px;
     padding: 20px;
-    background: #1E1E1E;
+    background: #1f2937; /* Fond gris foncé Tailwind */
     border-radius: 10px;
     box-shadow: 0 4px 10px rgba(0, 255, 209, 0.2);
 }
@@ -244,11 +244,11 @@ h1 {
     color: #fff;
     padding: 10px;
     border-radius: 50%;
-    background-color: #7bd447;
+    background-color: #10b981; /* Vert Tailwind */
 }
 
 .contact-buttons a:hover {
-    background-color: #00cca3;
+    background-color: #14b8a6; /* Vert plus clair Tailwind */
 }
 
 body {
