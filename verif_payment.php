@@ -5,13 +5,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Vérification du Paiement</title>
-    <!-- Lien vers Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="css/style_index_dark.css">
-    <!-- Lien vers le CSS personnalisé -->
     <link rel="stylesheet" href="css/style_verif_payment_dark.css">
     <style>
-        /* Ajoutez le style sombre ici */
         .modal-content {
             background-color: #2c2c2c;
             color: #e1e1e1;
@@ -49,7 +46,6 @@
             background-color: #0090cc;
         }
 
-        /* Boutons de fermeture */
         .btn-close {
             background-color: transparent;
             border: none;
@@ -62,12 +58,17 @@
             height: 1.5rem;
             border-width: 0.2em;
         }
+
+        .response-message {
+            margin-top: 15px;
+            font-size: 1.1em;
+            color: #00A3FF;
+        }
     </style>
 </head>
 
 <body>
 
-    <!-- Barre fixe avec le logo et les boutons de contact -->
     <header class="header-fixed">
         <div class="logo-container">
             <a href="index.php">
@@ -84,12 +85,10 @@
         </div>
     </header>
 
-    <!-- Contenu principal de la page -->
     <div class="container">
         <h1>Vérification du Paiement</h1>
         <p class="lead">Sélectionnez votre mode de paiement :</p>
 
-        <!-- Options de paiement -->
         <div class="packs">
             <div class="pack" onclick="showCryptoPopup()">
                 <div class="icon">
@@ -124,24 +123,25 @@
                         <button type="submit" class="btn btn-primary" id="verifyButton">
                             Vérifier
                         </button>
+                        <div id="resultContainer" style="display: none;">
+                            <div id="verificationResult" class="result-popup"></div>
+                        </div>
                     </form>
+                    <div class="response-message" id="responseMessage"></div>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- Inclusion de Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 
     <script>
-        // Fonction pour afficher le popup
         function showCryptoPopup() {
             var myModal = new bootstrap.Modal(document.getElementById('cryptoPopup'));
             myModal.show();
         }
 
-        // Gérer la soumission du formulaire
         document.getElementById('cryptoForm').addEventListener('submit', function(event) {
             event.preventDefault();
 
@@ -149,23 +149,70 @@
             var transactionHashInput = document.getElementById('transactionHash');
             var transactionHash = transactionHashInput.value;
 
-            // Désactiver le bouton de vérification et changer le texte
+            // Désactiver le bouton pendant la vérification
             verifyButton.disabled = true;
             verifyButton.innerHTML = 'Vérification en cours... <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>';
-
-            // Mettre l'input en readonly
             transactionHashInput.readOnly = true;
 
-            // Simulation d'un délai de vérification
-            setTimeout(function() {
-                // Réactiver le bouton et afficher le texte original après la simulation
-                verifyButton.disabled = false;
-                verifyButton.innerHTML = 'Vérifier';
-                transactionHashInput.readOnly = false;
+            $.ajax({
+                url: 'request/verif_transaction_crypto.php',
+                method: 'POST',
+                data: {
+                    hash: transactionHash
+                },
+                dataType: 'json', // Spécifier que la réponse est en JSON
+                success: function(response) {
+                    var resultHtml = '';
 
-                // Afficher un message ou effectuer une autre action ici
-                alert("Vérification terminée pour le hash : " + transactionHash);
-            }, 3000); // Simuler 3 secondes de vérification
+                    // Affichage du résultat
+                    if (response.status === 'success') {
+
+                        verifyButton.disabled = true;
+                        verifyButton.innerHTML = 'Vérification terminée <i class="fa fa-checked"></i>';
+
+                        // Affichage du paiement réussi
+                        resultHtml = `
+                    <h5 class="result-title">Paiement Confirmé</h5>
+                    <p class="result-message">${response.message}</p>
+                    <div class="result-details">
+                        <label for="timestamp"><strong>Date:</strong></label>
+                        <p class="result-message">${response.details.timestamp}</p>
+                    </div>
+                `;
+                    } else {
+                        // Affichage de l'erreur
+                        resultHtml = `
+                    <h5 class="result-title">Paiement échoué</h5>
+                    <p class="result-message">${response.message}</p>
+                `;
+                    }
+
+                    // Vérifier si l'élément existe avant d'ajouter du contenu
+                    var resultContainer = document.getElementById('verificationResult');
+                    if (resultContainer) {
+                        resultContainer.innerHTML = resultHtml;
+                        document.getElementById('resultContainer').style.display = 'block';
+                    }
+
+                    // Réactiver le bouton et rétablir le champ de saisie
+                    verifyButton.disabled = false;
+                    verifyButton.innerHTML = 'Vérifier';
+                    transactionHashInput.readOnly = false;
+                },
+                error: function() {
+                    // Erreur en cas d'échec de la requête AJAX
+                    var resultContainer = document.getElementById('verificationResult');
+                    if (resultContainer) {
+                        resultContainer.innerHTML = 'Une erreur est survenue lors de la vérification.';
+                        document.getElementById('resultContainer').style.display = 'block';
+                    }
+
+                    // Réactiver le bouton et rétablir le champ de saisie
+                    verifyButton.disabled = false;
+                    verifyButton.innerHTML = 'Vérifier';
+                    transactionHashInput.readOnly = false;
+                }
+            });
         });
     </script>
 
