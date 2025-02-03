@@ -46,8 +46,8 @@ class Tracabilite
             $this->obtenirGeolocalisation();
 
             // Préparation de la requête SQL
-            $sql = "INSERT INTO tracabilite_performance 
-                    (ip_tracabilite_performance, libelle_tracabilite, port_tracabilite_performance, user_agent, date_tracabilite, heure_tracabilite, matricule, latitude, longitude)
+            $sql = "INSERT INTO tracabilite 
+                    (ip_tracabilite, libelle_tracabilite, port_tracabilite, user_agent, date_tracabilite, heure_tracabilite, matricule, latitude, longitude)
                     VALUES (:ip, :libelle, :port, :user_agent, :date_tracabilite, :heure_tracabilite, :matricule, :latitude, :longitude)";
 
             $stmt = $this->pdo->prepare($sql);

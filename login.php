@@ -66,15 +66,18 @@
                     type: 'POST',
                     url: 'api/api_login.php',
                     data: formData,
+                    dataType: 'json', // Demander une réponse en JSON
                     success: function(response) {
-                        var data = JSON.parse(response);
-                        if (data.status === 'success') {
+                        console.log(response); // Affiche la réponse du serveur
+
+                        if (response.status === 'success') {
                             window.location.href = 'app/dashboard.php'; // Rediriger vers le tableau de bord
                         } else {
-                            alert(data.message); // Afficher l'erreur si la connexion échoue
+                            alert(response.message); // Afficher l'erreur si la connexion échoue
                         }
                     },
-                    error: function() {
+                    error: function(xhr, status, error) {
+                        console.log('Erreur AJAX:', error);
                         alert('Une erreur est survenue. Veuillez réessayer.');
                     }
                 });
