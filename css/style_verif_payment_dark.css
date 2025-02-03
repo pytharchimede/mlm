@@ -99,3 +99,59 @@ p.lead {
 .container{
     margin-top: 80px;
 }
+
+.modal-content {
+    background-color: #2c2c2c;
+    color: #e1e1e1;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+.modal-header {
+    border-bottom: none;
+    background-color: #333333;
+    color: #fff;
+}
+
+.modal-title {
+    font-weight: bold;
+    font-size: 1.5em;
+}
+
+.modal-body {
+    background-color: #2c2c2c;
+}
+
+.modal-footer {
+    background-color: #333333;
+}
+
+.modal-footer .btn {
+    background-color: #00A3FF;
+    border: none;
+    color: white;
+    border-radius: 5px;
+}
+
+.modal-footer .btn:hover {
+    background-color: #0090cc;
+}
+
+.btn-close {
+    background-color: transparent;
+    border: none;
+    color: #fff;
+    font-size: 1.5em;
+}
+
+.spinner-border {
+    width: 1.5rem;
+    height: 1.5rem;
+    border-width: 0.2em;
+}
+
+.response-message {
+    margin-top: 15px;
+    font-size: 1.1em;
+    color: #00A3FF;
+}
