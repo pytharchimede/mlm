@@ -133,17 +133,55 @@
 
     <section id="inscription" class="bg-gray-800 p-10 text-center">
         <h3 class="text-2xl font-bold mb-4">Créez votre compte dès aujourd'hui</h3>
-        <form class="max-w-md mx-auto">
-            <input type="text" placeholder="Nom complet" class="w-full mb-4 px-4 py-2 rounded bg-gray-700 text-white">
-            <input type="email" placeholder="Email" class="w-full mb-4 px-4 py-2 rounded bg-gray-700 text-white">
-            <input type="password" placeholder="Mot de passe" class="w-full mb-4 px-4 py-2 rounded bg-gray-700 text-white">
+        <form id="inscriptionForm" class="max-w-md mx-auto">
+            <input type="text" name="nom" placeholder="Nom complet" class="w-full mb-4 px-4 py-2 rounded bg-gray-700 text-white" required>
+            <input type="email" name="email" placeholder="Email" class="w-full mb-4 px-4 py-2 rounded bg-gray-700 text-white" required>
+            <input type="password" name="mot_de_passe" placeholder="Mot de passe" class="w-full mb-4 px-4 py-2 rounded bg-gray-700 text-white" required>
+            <input type="password" name="confirmer_mot_de_passe" placeholder="Confirmer le mot de passe" class="w-full mb-4 px-4 py-2 rounded bg-gray-700 text-white" required>
             <button type="submit" class="bg-blue-500 w-full py-3 rounded text-lg">S'inscrire</button>
         </form>
     </section>
 
+
     <footer class="bg-gray-800 p-5 text-center mt-10">
         <p class="text-gray-400">&copy; 2025 Finova. Tous droits réservés.</p>
     </footer>
+    <script>
+        document.getElementById("inscriptionForm").addEventListener("submit", function(event) {
+            event.preventDefault(); // Empêche le formulaire de se soumettre de manière traditionnelle
+
+            var formData = new FormData(this); // Récupère les données du formulaire
+
+            // Vérifier que les mots de passe correspondent
+            if (formData.get("mot_de_passe") !== formData.get("confirmer_mot_de_passe")) {
+                alert("Les mots de passe ne correspondent pas.");
+                return;
+            }
+
+            console.log('Données soumises : ' + formData);
+
+            // Envoyer la requête AJAX
+            fetch("../request/insert_utilisateur.php", {
+                    method: "POST",
+                    body: formData
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        alert("Inscription réussie. Un email de confirmation a été envoyé.");
+                        console.log(data);
+                        window.location.href = "success_register.php"; // Redirige vers la page de succès
+                    } else {
+                        alert("Erreur lors de l'inscription. Essayez à nouveau.");
+                    }
+                })
+                .catch(error => {
+                    console.error("Erreur:", error);
+                    alert("Une erreur est survenue. Veuillez réessayer.");
+                });
+        });
+    </script>
+
 </body>
 
 </html>
