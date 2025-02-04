@@ -86,6 +86,15 @@ class Utilisateur
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
+    // Récupérer les informations de l'utilisateur par l'email
+    public function getUserById($id_utilisateur)
+    {
+        $stmt = $this->pdo->prepare('SELECT * FROM utilisateur WHERE id_utilisateur = :id_utilisateur');
+        $stmt->execute([':id_utilisateur' => $id_utilisateur]);
+
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
     // Activer un utilisateur (valider l'inscription)
     public function activateUser($email_utilisateur)
     {

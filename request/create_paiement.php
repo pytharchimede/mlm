@@ -1,4 +1,7 @@
 <?php
+
+session_start();
+
 include_once '../model/Config.php';
 include_once '../model/CryptoPayment.php';
 
@@ -10,6 +13,15 @@ if (!isset($input['price_amount'], $input['price_currency'], $input['pay_currenc
     echo json_encode(["error" => "Données incomplètes"]);
     exit;
 }
+
+$packId = $input['pack_id'];
+
+if ($packId == 0) {
+    echo json_encode(["error" => "Pack invalide"]);
+    exit;
+}
+
+$_SESSION['packId'] = $packId;
 
 $amount = (float) $input['price_amount'];
 $currency = $input['price_currency'];

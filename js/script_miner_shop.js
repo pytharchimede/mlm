@@ -1,69 +1,43 @@
 document.addEventListener("DOMContentLoaded", function () {
-  const packs = [
-    {
-      name: "Basic 1",
-      price: 6000,
-      rating: 3,
-    },
-    {
-      name: "Basic 2",
-      price: 8000,
-      rating: 4,
-    },
-    {
-      name: "Basic 3",
-      price: 10000,
-      rating: 5,
-    },
-    {
-      name: "Basic 4",
-      price: 15000,
-      rating: 5,
-    },
-    {
-      name: "Pro 1",
-      price: 30000,
-      rating: 5,
-    },
-    {
-      name: "Pro 2",
-      price: 60000,
-      rating: 5,
-    },
-    {
-      name: "Pro 3",
-      price: 100000,
-      rating: 5,
-    },
-  ];
+  fetch("../api/api_get_pack.php")
+    .then((response) => response.json())
+    .then((data) => {
+      const packs = data.map((pack) => ({
+        id: pack.id,
+        name: pack.name,
+        price: pack.price,
+        rating: pack.rating,
+      }));
 
-  const packsContainer = document.getElementById("packs-container");
+      console.log("Packs formatés :", packs);
 
-  packs.forEach((pack) => {
-    const packElement = document.createElement("div");
-    packElement.classList.add(
-      "pack",
-      "bg-gray-800",
-      "p-6",
-      "rounded-lg",
-      "shadow-lg",
-      "text-center"
+      // Sélectionner le conteneur HTML
+      const container = document.getElementById("packs-container");
+
+      // Injecter les packs dans la page avec un bouton payer
+      container.innerHTML = packs
+        .map(
+          (pack) => `
+          <div class="pack bg-gray-800 p-6 rounded-lg shadow-lg text-center" data-pack="${
+            pack.name
+          }">
+              <h3 class="text-xl font-bold">${pack.name}</h3>
+              <p class="text-gray-400">${pack.price} FCFA</p>
+              <p class="text-yellow-400">${"⭐".repeat(pack.rating)}</p>
+              <button class="mt-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                  onclick='payer(${pack.id}, ${pack.price}, "${
+            pack.name
+          }")'>Payer</button>
+          </div>
+      `
+        )
+        .join("");
+    })
+    .catch((error) =>
+      console.error("Erreur lors de la récupération des packs :", error)
     );
-    packElement.dataset.pack = pack.name;
-
-    let stars = "★".repeat(pack.rating) + "☆".repeat(5 - pack.rating);
-    packElement.innerHTML = `
-            <h2 class='text-xl font-bold'>${pack.name}</h2>
-            <p class='text-gray-400'>${pack.price} FCFA</p>
-            <div class='text-yellow-400 text-lg'>${stars}</div>
-            <button class='mt-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded' 
-                onclick='payer(${pack.price}, "${pack.name}")'>Payer</button>
-        `;
-    packsContainer.appendChild(packElement);
-  });
 });
-
-function payer(amount, packName) {
+function payer(id, amount, packName) {
   // Masquer tous les packs
   document.querySelectorAll(".pack").forEach((pack) => {
     pack.style.display = "none";
@@ -89,6 +63,7 @@ function payer(amount, packName) {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
+      pack_id: id,
       price_amount: amount,
       price_currency: "XOF",
       pay_currency: "usdttrc20",
