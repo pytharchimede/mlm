@@ -43,7 +43,7 @@ $user = [
 
     <div class="flex items-center justify-center min-h-screen">
         <div class="bg-gray-800 p-8 rounded-lg shadow-lg text-center w-96">
-            <img src="../assets/img/source_plan_clair_petit.png" alt="Logo Finova" class="mx-auto mb-4 max-w-full h-auto">
+            <!-- <img src="../assets/img/source_plan_clair_petit.png" alt="Logo Finova" class="mx-auto mb-4 max-w-full h-auto"> -->
 
             <!-- Affichage des informations utilisateur -->
             <h1 class="text-2xl font-bold mb-4 text-green-400">Bienvenue, <?= $user['nom_utilisateur']; ?>!</h1>
