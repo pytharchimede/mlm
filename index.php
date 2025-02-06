@@ -1,3 +1,3 @@
 <?php
 
-header('Location: miner_grid.php');
+header('Location: website/index.php');
