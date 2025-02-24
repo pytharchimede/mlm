@@ -43,14 +43,16 @@
     </header>
 
     <section class="text-center py-20 px-5">
-        <h2 class="text-4xl font-bold mb-4">Investissez dans la Crypto & Développez Votre Réseau</h2>
-        <p class="text-lg text-gray-300 mb-6">Gagnez des revenus passifs grâce à notre plateforme de trading avec MLM. Rejoignez-nous et maximisez vos gains !</p>
+        <h2 class="text-4xl font-bold mb-4">Rejoignez la Révolution Financière</h2>
+        <p class="text-lg text-gray-300 mb-6">Commencez avec seulement 15$</p>
         <a href="#inscription" class="bg-green-500 px-6 py-3 text-xl font-semibold rounded-lg">Rejoindre Maintenant</a>
     </section>
 
     <section id="comment-ca-marche" class="bg-gray-800 p-10 text-center relative">
         <h2 class="text-3xl font-bold mb-4">Comment ça marche ?</h2>
-        <p class="text-lg text-gray-300 mb-6">Découvrez les étapes simples pour commencer à investir et gagner des revenus passifs.</p>
+        <p class="text-lg text-gray-300 mb-6">
+            Découvrez les étapes simples pour commencer à investir et gagner des revenus passifs.
+        </p>
 
         <!-- Vidéo avec effet Parallax -->
         <div class="absolute top-0 left-0 w-full h-full overflow-hidden">
@@ -66,8 +68,8 @@
                 <p>Créez votre compte gratuitement en remplissant le formulaire.</p>
             </div>
             <div class="bg-gray-700 p-6 rounded-lg w-64">
-                <h3 class="text-xl font-semibold">2. Choisissez un Pack</h3>
-                <p>Investissez dans l'un de nos packs selon vos objectifs financiers.</p>
+                <h3 class="text-xl font-semibold">2. Souscrivez</h3>
+                <p>Avec seulement 15$, activez vos gains.</p>
             </div>
             <div class="bg-gray-700 p-6 rounded-lg w-64">
                 <h3 class="text-xl font-semibold">3. Parrainez et Gagnez</h3>
@@ -81,61 +83,63 @@
         <!-- <img src="assets/img/diagramme_how_it_works.png" alt="Diagramme explicatif" class="mt-6 mx-auto w-2/3"> -->
     </section>
 
+
+    <section>
+        <!-- Tableau RSI -->
+        <div class="container mx-auto px-6 py-12">
+            <h2 class="text-3xl font-bold text-center text-gray-800 mb-6">Tableau des Gains</h2>
+            <table class="w-full text-left bg-white shadow-lg rounded-lg overflow-hidden">
+                <thead class="bg-blue-600 text-white">
+                    <tr>
+                        <th class="py-4 px-6">Niveau</th>
+                        <th class="py-4 px-6">Participants</th>
+                        <th class="py-4 px-6">Gains ($)</th>
+                        <th class="py-4 px-6">Produits Offerts</th>
+                    </tr>
+                </thead>
+                <tbody class="text-gray-700">
+                    <tr class="border-b">
+                        <td class="py-4 px-6">1</td>
+                        <td class="py-4 px-6">5</td>
+                        <td class="py-4 px-6">25</td>
+                        <td class="py-4 px-6">Montre + Sardines</td>
+                    </tr>
+                    <tr class="border-b bg-gray-100">
+                        <td class="py-4 px-6">2</td>
+                        <td class="py-4 px-6">25</td>
+                        <td class="py-4 px-6">100</td>
+                        <td class="py-4 px-6">Sac de riz + Huile</td>
+                    </tr>
+                    <tr class="border-b">
+                        <td class="py-4 px-6">3</td>
+                        <td class="py-4 px-6">125</td>
+                        <td class="py-4 px-6">500</td>
+                        <td class="py-4 px-6">Palette d'eau + Poisson</td>
+                    </tr>
+                    <tr class="border-b bg-gray-100">
+                        <td class="py-4 px-6">4</td>
+                        <td class="py-4 px-6">625</td>
+                        <td class="py-4 px-6">3000</td>
+                        <td class="py-4 px-6">Pomme de terre + Poulet</td>
+                    </tr>
+                    <tr>
+                        <td class="py-4 px-6">5</td>
+                        <td class="py-4 px-6">3125</td>
+                        <td class="py-4 px-6">30 000</td>
+                        <td class="py-4 px-6">Voyage Tanzanie</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
     <section class="bg-gray-900 p-10 text-center">
-        <h2 class="text-3xl font-bold mb-4">Nos packs d'investissement</h2>
-        <div class="packs grid grid-cols-2 md:grid-cols-3 gap-6">
+        <h2 class="text-3xl font-bold mb-4">Investissement unique</h2>
+        <div class="packs grid grid-cols-1 md:grid-cols-1 gap-1">
             <div class="pack bg-gray-700 p-4 rounded" data-pack="Basic 1">
                 <!-- <div class="icon">✨</div> -->
-                <h2>Miner Basic 1</h2>
-                <p>6 000 FCFA</p>
-                <div class="stars">
-                    ★★★☆☆
-                </div>
-            </div>
-            <div class="pack bg-gray-700 p-4 rounded" data-pack="Basic 2">
-                <!-- <div class="icon">🚀</div> -->
-                <h2>Miner Basic 2</h2>
-                <p>8 000 FCFA</p>
-                <div class="stars">
-                    ★★★★☆
-                </div>
-            </div>
-            <div class="pack bg-gray-700 p-4 rounded" data-pack="Basic 3">
-                <!-- <div class="icon">🔥</div> -->
-                <h2>Miner Basic 3</h2>
-                <p>10 000 FCFA</p>
-                <div class="stars">
-                    ★★★★★
-                </div>
-            </div>
-            <div class="pack bg-gray-700 p-4 rounded" data-pack="Basic 4">
-                <!-- <div class="icon">💎</div> -->
-                <h2>Miner Basic 4</h2>
-                <p>15 000 FCFA</p>
-                <div class="stars">
-                    ★★★★★
-                </div>
-            </div>
-            <div class="pack bg-gray-700 p-4 rounded" data-pack="Pro 1">
-                <!-- <div class="icon">🌟</div> -->
-                <h2>Miner Pro 1</h2>
-                <p>30 000 FCFA</p>
-                <div class="stars">
-                    ★★★★★
-                </div>
-            </div>
-            <div class="pack bg-gray-700 p-4 rounded" data-pack="Pro 2">
-                <!-- <div class="icon">💼</div> -->
-                <h2>Miner Pro 2</h2>
-                <p>60 000 FCFA</p>
-                <div class="stars">
-                    ★★★★★
-                </div>
-            </div>
-            <div class="pack bg-gray-700 p-4 rounded" data-pack="Pro 3">
-                <!-- <div class="icon">🏆</div> -->
-                <h2>Miner Pro 3</h2>
-                <p>100 000 FCFA</p>
+                <h2>PACK UNIQUE</h2>
+                <p>15 $</p>
                 <div class="stars">
                     ★★★★★
                 </div>
@@ -157,7 +161,7 @@
 
 
     <footer class="bg-gray-800 p-5 text-center mt-10">
-        <p class="text-gray-400">&copy; 2025 Finova. Tous droits réservés.</p>
+        <p class="text-gray-400">&copy; 2025 CMDB. Tous droits réservés.</p>
     </footer>
     <script>
         document.getElementById("inscriptionForm").addEventListener("submit", function(event) {
