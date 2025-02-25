@@ -27,7 +27,7 @@
 
 <body class="bg-gray-900 text-white">
     <header class="bg-gray-800 p-5 flex justify-between items-center">
-        <!-- <img id="logo" src="../assets/img/source_plan_clair_petit.png" class="w-32"> -->
+        <img id="logo" src="../assets/img/logo.png" class="w-32">
 
         <div class="flex items-center space-x-4">
             <a href="../login.php" class="bg-blue-500 px-4 py-2 rounded-lg flex items-center space-x-2 text-white">
@@ -42,11 +42,16 @@
 
     </header>
 
-    <section class="text-center py-20 px-5">
-        <h2 class="text-4xl font-bold mb-4">Rejoignez la Révolution Financière</h2>
-        <p class="text-lg text-gray-300 mb-6">Commencez avec seulement 15$</p>
-        <a href="#inscription" class="bg-green-500 px-6 py-3 text-xl font-semibold rounded-lg">Rejoindre Maintenant</a>
+    <section class="relative text-center py-20 px-5 bg-cover bg-center" style="background-image: url('../assets/img/community_1.jpg');">
+        <div class="absolute inset-0 bg-black bg-opacity-50"></div> <!-- Overlay sombre pour améliorer la lisibilité -->
+
+        <div class="relative z-10">
+            <h2 class="text-4xl font-bold text-white mb-4">Rejoignez la Révolution Financière</h2>
+            <p class="text-lg text-gray-200 mb-6">Commencez avec seulement 15$</p>
+            <a href="#inscription" class="bg-green-500 px-6 py-3 text-xl font-semibold rounded-lg">Rejoindre Maintenant</a>
+        </div>
     </section>
+
 
     <section id="comment-ca-marche" class="bg-gray-800 p-10 text-center relative">
         <h2 class="text-3xl font-bold mb-4">Comment ça marche ?</h2>
@@ -55,12 +60,12 @@
         </p>
 
         <!-- Vidéo avec effet Parallax -->
-        <div class="absolute top-0 left-0 w-full h-full overflow-hidden">
+        <!-- <div class="absolute top-0 left-0 w-full h-full overflow-hidden">
             <video autoplay muted loop class="w-full h-full object-cover parallax-video">
                 <source src="../assets/video/explication_video.mp4" type="video/mp4">
                 Votre navigateur ne supporte pas la balise vidéo.
             </video>
-        </div>
+        </div> -->
 
         <div class="flex flex-col md:flex-row justify-center items-center space-y-4 md:space-x-10 relative z-10">
             <div class="bg-gray-700 p-6 rounded-lg w-64">
@@ -84,12 +89,11 @@
     </section>
 
 
-    <section>
-        <!-- Tableau RSI -->
-        <div class="container mx-auto px-6 py-12">
-            <h2 class="text-3xl font-bold text-center text-gray-800 mb-6">Tableau des Gains</h2>
-            <table class="w-full text-left bg-white shadow-lg rounded-lg overflow-hidden">
-                <thead class="bg-blue-600 text-white">
+    <section class="bg-gray-900 py-12">
+        <div class="container mx-auto px-6">
+            <h2 class="text-3xl font-bold text-center text-white mb-6">Tableau des Gains</h2>
+            <table class="w-full text-left bg-gray-800 shadow-lg rounded-lg overflow-hidden">
+                <thead class="bg-blue-500 text-white">
                     <tr>
                         <th class="py-4 px-6">Niveau</th>
                         <th class="py-4 px-6">Participants</th>
@@ -97,26 +101,26 @@
                         <th class="py-4 px-6">Produits Offerts</th>
                     </tr>
                 </thead>
-                <tbody class="text-gray-700">
-                    <tr class="border-b">
+                <tbody class="text-gray-300">
+                    <tr class="border-b border-gray-700">
                         <td class="py-4 px-6">1</td>
                         <td class="py-4 px-6">5</td>
                         <td class="py-4 px-6">25</td>
                         <td class="py-4 px-6">Montre + Sardines</td>
                     </tr>
-                    <tr class="border-b bg-gray-100">
+                    <tr class="border-b border-gray-700 bg-gray-700">
                         <td class="py-4 px-6">2</td>
                         <td class="py-4 px-6">25</td>
                         <td class="py-4 px-6">100</td>
                         <td class="py-4 px-6">Sac de riz + Huile</td>
                     </tr>
-                    <tr class="border-b">
+                    <tr class="border-b border-gray-700">
                         <td class="py-4 px-6">3</td>
                         <td class="py-4 px-6">125</td>
                         <td class="py-4 px-6">500</td>
                         <td class="py-4 px-6">Palette d'eau + Poisson</td>
                     </tr>
-                    <tr class="border-b bg-gray-100">
+                    <tr class="border-b border-gray-700 bg-gray-700">
                         <td class="py-4 px-6">4</td>
                         <td class="py-4 px-6">625</td>
                         <td class="py-4 px-6">3000</td>
@@ -132,6 +136,7 @@
             </table>
         </div>
     </section>
+
 
     <section class="bg-gray-900 p-10 text-center">
         <h2 class="text-3xl font-bold mb-4">Investissement unique</h2>

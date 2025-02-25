@@ -14,7 +14,7 @@
 
     <div class="flex items-center justify-center min-h-screen">
         <div class="bg-gray-800 p-8 rounded-lg shadow-lg text-center w-96">
-            <img src="assets/img/source_plan_clair_petit.png" alt="Logo CMDB" class="mx-auto mb-4 max-w-full h-auto">
+            <img src="assets/img/logo.png" alt="Logo CMDB" class="mx-auto mb-4 max-w-full h-auto">
 
             <h1 class="text-2xl font-bold mb-4 flex items-center justify-center">
                 <i class="fa fa-sign-in-alt text-2xl text-green-400 mr-2"></i>

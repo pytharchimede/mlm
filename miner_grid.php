@@ -17,7 +17,7 @@
     <header class="header-fixed">
         <div class="logo-container">
             <a href="index.php">
-                <img src="assets/img/source_plan_clair_petit.png" alt="Logo">
+                <img src="assets/img/logo.png" alt="Logo">
             </a>
         </div>
         <div class="contact-buttons">
@@ -40,7 +40,7 @@
         <div class="packs">
             <div class="pack" data-pack="Pro 3">
                 <!-- <div class="icon">🏆</div> -->
-                <h2>Miner Pro 3</h2>
+                <h2>Pack Unique</h2>
                 <p>15 $</p>
                 <div class="stars">
                     ★★★★★
