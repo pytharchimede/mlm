@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Connexion - Finova</title>
+    <title>Connexion - CMDB</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
@@ -14,7 +14,7 @@
 
     <div class="flex items-center justify-center min-h-screen">
         <div class="bg-gray-800 p-8 rounded-lg shadow-lg text-center w-96">
-            <img src="assets/img/source_plan_clair_petit.png" alt="Logo Finova" class="mx-auto mb-4 max-w-full h-auto">
+            <img src="assets/img/source_plan_clair_petit.png" alt="Logo CMDB" class="mx-auto mb-4 max-w-full h-auto">
 
             <h1 class="text-2xl font-bold mb-4 flex items-center justify-center">
                 <i class="fa fa-sign-in-alt text-2xl text-green-400 mr-2"></i>

@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard - Finova</title>
+    <title>Dashboard - CMDB</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 </head>
@@ -13,7 +13,7 @@
     <div class="min-h-screen flex flex-col items-center justify-center p-6">
         <div class="bg-gray-800 p-6 rounded-2xl shadow-xl w-full max-w-lg">
             <div class="flex justify-center mb-4">
-                <img src="../assets/img/source_plan_clair_petit.png" alt="Logo Finova" class="h-16">
+                <img src="../assets/img/source_plan_clair_petit.png" alt="Logo CMDB" class="h-16">
             </div>
             <h1 class="text-2xl font-bold text-green-400 text-center">Bienvenue, <?= $user['nom_utilisateur']; ?>!</h1>
             <p class="text-center text-gray-300 mt-2">Email : <?= $user['email_utilisateur']; ?></p>

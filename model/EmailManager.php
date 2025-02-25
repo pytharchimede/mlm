@@ -28,7 +28,7 @@ class EmailManager
         $this->mailer->SMTPSecure = "ssl";
         $this->mailer->Port = 465;
         $this->mailer->From = "support@ifmap.ci";
-        $this->mailer->FromName = "SUPPORT FINOVA";
+        $this->mailer->FromName = "SUPPORT CMDB";
     }
 
     public function sendEmail($subject, $body, $recipients = [], $cc = [], $bcc = [])

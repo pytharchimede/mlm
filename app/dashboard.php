@@ -62,7 +62,7 @@
 
     <!-- Navbar -->
     <nav class="bg-gray-800 p-4 flex justify-between items-center">
-        <h1 class="text-xl font-bold">Finova</h1>
+        <h1 class="text-xl font-bold">CMDB</h1>
         <div class="flex items-center gap-4">
             <span class="text-sm">Utilisateur: <strong>Ulrich AMANI</strong></span>
             <button class="bg-red-500 px-4 py-2 rounded">Déconnexion</button>
