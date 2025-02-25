@@ -22,6 +22,12 @@
             transform: scale(1.05);
         }
 
+        .cta-button:active {
+            transform: scale(0.95);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+        }
+
+
         .swiper-slide img {
             width: 100%;
             height: 200px;
@@ -62,6 +68,16 @@
         .bottom-nav a.active {
             color: #10b981;
             /* Vert */
+        }
+
+        .bottom-nav a:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+        }
+
+
+        #profileMenu {
+            transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
         }
     </style>
 </head>
@@ -194,9 +210,11 @@
                 effect: "fade"
             });
         });
-
         document.getElementById("menuToggle").addEventListener("click", function() {
-            document.getElementById("profileMenu").classList.toggle("hidden");
+            let menu = document.getElementById("profileMenu");
+            menu.classList.toggle("hidden");
+            menu.classList.toggle("opacity-100");
+            menu.classList.toggle("scale-100");
         });
     </script>
 </body>
