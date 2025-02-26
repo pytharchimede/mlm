@@ -1,5 +1,5 @@
 <?php
-include 'headers/header_verif_payment.php';
+include '../headers/header_verif_payment.php';
 ?>
 <!DOCTYPE html>
 <html lang="fr">

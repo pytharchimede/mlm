@@ -10,18 +10,24 @@ if (!isset($_SESSION['user_id'])) {
 // Inclure les fichiers nécessaires
 include '../model/Database.php';
 include '../model/Pack.php';
+include '../model/Utilisateur.php';
 
 // Créer une instance de la base de données et de la classe Pack
 $databaseObj = new Database();
 $pdo = $databaseObj->getConnection();
 
 $packObj = new Pack($pdo);
+$utilisateurObj = new Utilisateur();
 
 // Vérifier si l'utilisateur est connecté
 $secur = isset($_SESSION['secur']) ? $_SESSION['secur'] : '';
 $packDetails = null;
 $is_active = false;
 $solde = 0;
+
+
+//Liste des filleuls
+$filleuls = $utilisateurObj->getFilleulsByReferal($secur);
 
 // Si l'utilisateur est connecté, vérifier l'abonnement actif
 if ($secur) {

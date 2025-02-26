@@ -3,9 +3,13 @@ session_start();
 // Inclure le fichier de connexion à la base de données
 require_once '../model/Database.php';
 require_once '../model/Pack.php';
+require_once '../model/Utilisateur.php';
+
 
 $databaseObj = new Database();
 $pdo = $databaseObj->getConnection();
+
+$utilisateurObj = new Utilisateur();
 
 header('Content-Type: application/json');
 
@@ -27,6 +31,15 @@ if (isset($_POST['pack_id'], $_POST['date_souscription'])) {
 
     // Retourner la réponse en JSON
     if ($success) {
+
+        $abonne = $utilisateurObj->getUserBySecur($abonne_secur);
+        $secur_parrain = $abonne['referal_utilisateur'];
+
+        //Mettre a jour le solde du parrain
+        $updateSoldeParrain = $utilisateurObj->mettreAJourSolde($secur_parrain);
+
+        error_log($updateSoldeParrain);
+
         echo json_encode(['success' => true]);
         exit;
     } else {

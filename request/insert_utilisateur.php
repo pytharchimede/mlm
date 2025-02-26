@@ -1,4 +1,5 @@
 <?php
+session_start();
 // Inclure les classes nécessaires
 require_once '../model/Database.php';
 require_once '../model/EmailManager.php';

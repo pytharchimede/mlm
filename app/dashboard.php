@@ -9,10 +9,10 @@ include '../headers/header_dashboard.php';
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard Réseau</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/js/all.min.js"></script>
+    <script defer src="../plugins/js/fontawesome-all.min.js"></script>
     <!-- Swiper.js -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
-    <script defer src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <link rel="stylesheet" href="../plugins/css/swiper-bundle.min.css" />
+    <script defer src="../plugins/js/swiper-bundle.min.js"></script>
     <link rel="stylesheet" href="../css/style_dashboard.css" />
 </head>
 
@@ -31,7 +31,7 @@ include '../headers/header_dashboard.php';
     </nav>
 
     <!-- Slider -->
-    <!-- <div class="swiper mySwiper w-full mt-4">
+    <div class="swiper mySwiper w-full mt-4">
         <div class="swiper-wrapper">
             <div class="swiper-slide">
                 <img src="../slide/slide_1.jpg" alt="Slide 1">
@@ -43,7 +43,7 @@ include '../headers/header_dashboard.php';
                 <img src="../slide/slide_3.jpg" alt="Slide 3">
             </div>
         </div>
-    </div> -->
+    </div>
 
     <!-- Contenu principal -->
     <div class="p-6">
@@ -106,7 +106,7 @@ include '../headers/header_dashboard.php';
                 </a>
                 <a href="javascript:void();" class="flex flex-col items-center p-6 bg-gray-800 rounded-lg">
                     <i class="fas fa-university text-5xl text-gray-300"></i>
-                    <div class="mt-3 text-lg font-semibold">Banque</div>
+                    <div class="mt-3 text-lg font-semibold">Comptes</div>
                 </a>
                 <a href="javascript:void();" class="flex flex-col items-center p-6 bg-gray-800 rounded-lg">
                     <i class="fas fa-dollar-sign text-5xl text-gray-300"></i>
@@ -122,62 +122,30 @@ include '../headers/header_dashboard.php';
                 <button class="popup-close" id="closePopupButton">X</button>
                 <h2 class="text-2xl font-bold text-white mb-4">Liste des Héritiers</h2>
                 <div class="heir-list">
-                    <!-- Héritier 1 -->
-                    <div class="heir-item">
-                        <div class="heir-avatar"></div>
-                        <div class="heir-details">
-                            <h3 class="heir-name">Héritier 1</h3>
-                            <p class="heir-text">Actifs : 2</p>
-                            <p class="heir-text">Solde : 5000€</p>
-                        </div>
-                        <div class="contact-btn-container">
-                            <a href="https://wa.me/+1234567890" target="_blank" class="contact-btn">
-                                <i class="fab fa-whatsapp"></i> WhatsApp
-                            </a>
-                            <a href="https://t.me/username" target="_blank" class="contact-btn">
-                                <i class="fab fa-telegram"></i> Telegram
-                            </a>
-                        </div>
-                    </div>
 
-                    <!-- Héritier 2 -->
-                    <div class="heir-item">
-                        <div class="heir-avatar"></div>
-                        <div class="heir-details">
-                            <h3 class="heir-name">Héritier 2</h3>
-                            <p class="heir-text">Actifs : 1</p>
-                            <p class="heir-text">Solde : 3000€</p>
+                    <?php
+                    foreach ($filleuls as $index => $filleul) :
+                    ?>
+                        <div class="heir-item">
+                            <div class="heir-avatar"></div>
+                            <div class="heir-details">
+                                <h3 class="heir-name"><?= htmlspecialchars($filleul['nom_utilisateur']) ?></h3>
+                                <p class="heir-text">Filleuls Actifs : 2</p>
+                                <p class="heir-text">Solde : 5000 $</p>
+                            </div>
+                            <div class="contact-btn-container">
+                                <a href="https://wa.me/<?= empty($filleul['whatsapp_utilisateur']) ? 'empty_number' : $filleul['telephone_utilisateur'] ?>" target="_blank" class="contact-btn">
+                                    <i class="fab fa-whatsapp"></i> WhatsApp
+                                </a>
+                                <a href="https://t.me/<?= urlencode($filleul['telegram_utilisateur']) ?>" target="_blank" class="contact-btn">
+                                    <i class="fab fa-telegram"></i> Telegram
+                                </a>
+                            </div>
                         </div>
-                        <div class="contact-btn-container">
-                            <a href="https://wa.me/+1234567891" target="_blank" class="contact-btn">
-                                <i class="fab fa-whatsapp"></i> WhatsApp
-                            </a>
-                            <a href="https://t.me/username2" target="_blank" class="contact-btn">
-                                <i class="fab fa-telegram"></i> Telegram
-                            </a>
-                        </div>
-                    </div>
+                    <?php
+                    endforeach;
+                    ?>
 
-                    <!-- Héritier 3 -->
-                    <div class="heir-item">
-                        <div class="heir-avatar"></div>
-                        <div class="heir-details">
-                            <h3 class="heir-name">Héritier 3</h3>
-                            <p class="heir-text">Actifs : 4</p>
-                            <p class="heir-text">Solde : 7500€</p>
-                        </div>
-                        <div class="contact-btn-container">
-                            <a href="https://wa.me/+1234567892" target="_blank" class="contact-btn">
-                                <i class="fab fa-whatsapp"></i> WhatsApp
-                            </a>
-                            <a href="https://t.me/username3" target="_blank" class="contact-btn">
-                                <i class="fab fa-telegram"></i> Telegram
-                            </a>
-                        </div>
-                    </div>
-
-
-                    <!-- Ajouter plus d'héritiers ici -->
                 </div>
             </div>
         </div>

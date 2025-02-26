@@ -96,11 +96,20 @@ class Utilisateur
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 
-    // Récupérer les informations de l'utilisateur par l'email
+    // Récupérer les informations de l'utilisateur par id
     public function getUserById($id_utilisateur)
     {
         $stmt = $this->pdo->prepare('SELECT * FROM utilisateur WHERE id_utilisateur = :id_utilisateur');
         $stmt->execute([':id_utilisateur' => $id_utilisateur]);
+
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
+    // Récupérer les informations de l'utilisateur par secur
+    public function getUserBySecur($secur_utilisateur)
+    {
+        $stmt = $this->pdo->prepare('SELECT * FROM utilisateur WHERE secur_utilisateur = :secur_utilisateur');
+        $stmt->execute([':secur_utilisateur' => $secur_utilisateur]);
 
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
@@ -117,5 +126,135 @@ class Utilisateur
     {
         $stmt = $this->pdo->prepare('UPDATE utilisateur SET confirmation_token = :token WHERE email_utilisateur = :email_utilisateur');
         return $stmt->execute([':token' => $token, ':email_utilisateur' => $email_utilisateur]);
+    }
+
+    // Récupérer la liste des filleuls d'un utilisateur
+    public function getFilleulsByReferal($referal_utilisateur)
+    {
+        $stmt = $this->pdo->prepare('SELECT * FROM utilisateur WHERE referal_utilisateur = :referal_utilisateur');
+        $stmt->execute([':referal_utilisateur' => $referal_utilisateur]);
+
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function getActifsFilleulsByReferal($referal_utilisateur)
+    {
+        $stmt = $this->pdo->prepare(
+            'SELECT utilisateur.* 
+            FROM utilisateur 
+            LEFT JOIN pack_abonne ON utilisateur.secur_utilisateur = pack_abonne.abonne_secur 
+            WHERE referal_utilisateur = :referal_utilisateur AND actif = 1'
+        );
+
+        $stmt->execute([':referal_utilisateur' => $referal_utilisateur]);
+        $filleuls = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        // Supprimer les doublons basés sur l'id_utilisateur
+        $uniqueFilleuls = [];
+        foreach ($filleuls as $filleul) {
+            $uniqueFilleuls[$filleul['id_utilisateur']] = $filleul;
+        }
+
+        return array_values($uniqueFilleuls);
+    }
+
+
+    public function getFilleulsByGeneration($secur_utilisateur, $niveau = 1, $max_niveau = 5)
+    {
+        if ($niveau > $max_niveau) {
+            return []; // On arrête à la 5ème génération
+        }
+
+        // Récupérer les filleuls directs
+        $stmt = $this->pdo->prepare(
+            'SELECT utilisateur.* 
+        FROM utilisateur 
+        LEFT JOIN pack_abonne ON utilisateur.secur_utilisateur = pack_abonne.abonne_secur 
+        WHERE utilisateur.referal_utilisateur = :secur_utilisateur'
+        );
+
+        $stmt->execute([':secur_utilisateur' => $secur_utilisateur]);
+        $filleuls = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+        // Stocker les résultats de cette génération
+        $resultats[$niveau] = $filleuls;
+
+        // Récupérer les filleuls des filleuls récursivement
+        foreach ($filleuls as $filleul) {
+            $resultats += $this->getFilleulsByGeneration($filleul['secur_utilisateur'], $niveau + 1, $max_niveau);
+        }
+
+        return $resultats;
+    }
+
+
+    public function compterFilleulsParGeneration($secur_utilisateur)
+    {
+        $filleulsParNiveau = $this->getFilleulsByGeneration($secur_utilisateur);
+
+        $statistiques = [
+            'total_actifs' => 0,
+            'total_inactifs' => 0,
+            'par_niveau' => []
+        ];
+
+        foreach ($filleulsParNiveau as $niveau => $filleuls) {
+            $actifs = 0;
+            $inactifs = 0;
+
+            foreach ($filleuls as $filleul) {
+                if ($filleul['actif'] == 1) {
+                    $actifs++;
+                } else {
+                    $inactifs++;
+                }
+            }
+
+            $statistiques['par_niveau'][$niveau] = [
+                'actifs' => $actifs,
+                'inactifs' => $inactifs,
+                'total' => $actifs + $inactifs
+            ];
+
+            $statistiques['total_actifs'] += $actifs;
+            $statistiques['total_inactifs'] += $inactifs;
+        }
+
+        return $statistiques;
+    }
+
+    public function mettreAJourSolde($secur_utilisateur)
+    {
+        // Récupération du nombre de filleuls actifs par génération
+        $stats = $this->compterFilleulsParGeneration($secur_utilisateur);
+
+        // Tableau des gains par niveau
+        $gains_par_niveau = [
+            1 => 25,
+            2 => 100,
+            3 => 500,
+            4 => 3000,
+            5 => 30000
+        ];
+
+        $solde_total = 0;
+
+        // Calcul des gains en fonction des filleuls actifs
+        foreach ($stats['par_niveau'] as $niveau => $data) {
+            if (isset($gains_par_niveau[$niveau])) {
+                $solde_total += $gains_par_niveau[$niveau] * $data['actifs'];
+            }
+        }
+
+        // Mise à jour du solde dans la base de données
+        $stmt = $this->pdo->prepare(
+            'UPDATE utilisateur SET solde = :solde WHERE secur_utilisateur = :secur_utilisateur'
+        );
+        $stmt->execute([
+            ':solde' => $solde_total,
+            ':secur_utilisateur' => $secur_utilisateur
+        ]);
+
+        return $solde_total;
     }
 }

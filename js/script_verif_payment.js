@@ -67,7 +67,7 @@ function startCountdown() {
 
         // Récupérer les informations nécessaires pour la souscription
         let pack_id = 1; // ID du pack auquel l'abonné souhaite souscrire
-        let solde = 15;
+        let solde = 0;
         let date_souscription = new Date()
           .toISOString()
           .slice(0, 19)
