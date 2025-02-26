@@ -27,5 +27,5 @@ foreach ($_COOKIE as $key => $value) {
 }
 
 // Redirection vers la page d'accueil
-header("Location: websites/index.php");
+header("Location: website/index.php");
 exit();

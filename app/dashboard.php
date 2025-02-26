@@ -213,7 +213,6 @@ include '../headers/header_dashboard.php';
             <div id="profileMenu" class="hidden absolute right-0 bg-gray-700 p-4 rounded-lg mt-2 w-48">
                 <p class="font-bold"><?php echo $_SESSION['nom'] ?></p>
                 <p class="text-sm text-gray-400">Membre</p>
-                <button class="bg-red-500 px-4 py-2 rounded mt-2">Déconnexion</button>
                 <button onclick="window.location.href='../logout.php'" class="bg-red-500 px-4 py-2 rounded mt-2">Déconnexion</button>
             </div>
         </div>
