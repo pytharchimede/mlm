@@ -7,6 +7,9 @@ require_once '../model/Pack.php';
 $databaseObj = new Database();
 $pdo = $databaseObj->getConnection();
 
+header('Content-Type: application/json');
+
+
 // Vérifier que les données sont envoyées via POST
 if (isset($_POST['abonne_secur'], $_POST['pack_id'], $_POST['date_souscription'])) {
     // Récupérer les données envoyées par AJAX
@@ -24,9 +27,12 @@ if (isset($_POST['abonne_secur'], $_POST['pack_id'], $_POST['date_souscription']
     // Retourner la réponse en JSON
     if ($success) {
         echo json_encode(['success' => true]);
+        exit;
     } else {
         echo json_encode(['success' => false, 'error' => 'Impossible de souscrire au pack']);
+        exit;
     }
 } else {
     echo json_encode(['success' => false, 'error' => 'Données manquantes']);
+    exit;
 }

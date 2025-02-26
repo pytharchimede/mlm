@@ -184,18 +184,24 @@ session_start();
                                 date_fin: date_fin
                             },
                             success: function(response) {
-                                console.log(response); // Utilisez "response" ici au lieu de "data"
+                                console.log('Réponse complète reçue:', response);
 
-                                if (response.success) {
-                                    console.log('Souscription réussie!');
+                                // Vérifiez que response est bien un objet
+                                if (response && typeof response === 'object') {
+                                    console.log('Response.success =', response.success);
 
-                                    // Redirection après 1 seconde
-                                    setTimeout(() => {
-                                        console.log('Redirection en cours...');
-                                        window.location.href = 'nouvelle_page.php'; // Redirection vers une autre page
-                                    }, 1000);
+                                    if (response.success === true) {
+                                        console.log('Souscription réussie!');
+
+                                        setTimeout(() => {
+                                            console.log('Redirection en cours...');
+                                            window.location.href = 'dashboard.php';
+                                        }, 1000);
+                                    } else {
+                                        console.log('Échec de l\'abonnement: ', response.error || 'Erreur inconnue');
+                                    }
                                 } else {
-                                    console.log('Échec de l\'abonnement: ' + response.error);
+                                    console.log('La réponse est mal formée :', response);
                                 }
                             },
                             error: function() {
