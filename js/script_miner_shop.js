@@ -22,7 +22,7 @@ document.addEventListener("DOMContentLoaded", function () {
             pack.name
           }">
               <h3 class="text-xl font-bold">${pack.name}</h3>
-              <p class="text-gray-400">${pack.price} FCFA</p>
+              <p class="text-gray-400">${pack.price} $</p>
               <p class="text-yellow-400">${"⭐".repeat(pack.rating)}</p>
               <button class="mt-4 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
                   onclick='payer(${pack.id}, ${pack.price}, "${
@@ -129,7 +129,7 @@ function openPopup(mode, amount, depositNumber) {
       paymentDetails[mode].icon ||
       "https://cdn-icons-png.flaticon.com/512/1781/1781106.png";
     document.getElementById("payment-title").textContent = mode;
-    document.getElementById("amount").textContent = amount + " FCFA";
+    document.getElementById("amount").textContent = amount + " $";
     // document.getElementById("deposit-number").textContent = depositNumber;
     document.getElementById("deposit-number").textContent =
       paymentDetails[mode].phone; // Valeur statique de test
@@ -140,7 +140,7 @@ function openPopup(mode, amount, depositNumber) {
 
     // Log des détails du paiement dans la console
     console.log("Mode de paiement : " + mode);
-    console.log("Montant : " + amount + " FCFA");
+    console.log("Montant : " + amount + " $");
     console.log("Numéro de dépôt : " + depositNumber);
     console.log("Icône : " + paymentDetails[mode].icon);
     console.log("Numéro téléphone : " + paymentDetails[mode].phone);

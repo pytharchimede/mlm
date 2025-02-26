@@ -205,7 +205,7 @@
     </nav>
 
     <!-- Slider -->
-    <div class="swiper mySwiper w-full mt-4">
+    <!-- <div class="swiper mySwiper w-full mt-4">
         <div class="swiper-wrapper">
             <div class="swiper-slide">
                 <img src="../slide/slide_1.jpg" alt="Slide 1">
@@ -217,18 +217,23 @@
                 <img src="../slide/slide_3.jpg" alt="Slide 3">
             </div>
         </div>
-    </div>
+    </div> -->
 
     <!-- Contenu principal -->
     <div class="p-6">
-        <div class="bg-gray-800 p-6 rounded-lg text-center mb-6">
-            <p class="text-lg">Fonds disponibles</p>
-            <p class="text-3xl font-bold text-green-400">0 XOF</p>
-        </div>
 
-        <!-- Bouton d'activation du profil -->
-        <div class="text-center mb-6">
-            <button class="cta-button px-6 py-3 rounded-lg text-lg font-semibold">Activer mon profil</button>
+
+        <div class="flex justify-between items-center bg-gray-800 p-6 rounded-lg mb-6">
+            <!-- Affichage du solde -->
+            <div class="text-left">
+                <p class="text-lg">Fonds disponibles</p>
+                <p id="balance" class="text-3xl font-bold text-green-400 opacity-50">0 XOF</p>
+            </div>
+
+            <!-- Bouton d'activation du profil -->
+            <button id="activate-btn" class="px-6 py-2 border border-green-400 text-green-400 rounded-lg text-lg font-semibold hover:bg-green-400 hover:text-gray-900 transition">
+                Activer
+            </button>
         </div>
 
         <!-- Contenu principal -->
