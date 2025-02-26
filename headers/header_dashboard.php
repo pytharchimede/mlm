@@ -1,5 +1,11 @@
 <?php
-session_start(); // Démarre la session
+// Vérifier si l'utilisateur est connecté, sinon le déconnecter
+session_start();
+if (!isset($_SESSION['user_id'])) {
+    header("Location: ../login.php");
+    exit;
+}
+
 
 // Inclure les fichiers nécessaires
 include '../model/Database.php';

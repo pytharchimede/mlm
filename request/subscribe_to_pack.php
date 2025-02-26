@@ -11,9 +11,9 @@ header('Content-Type: application/json');
 
 
 // Vérifier que les données sont envoyées via POST
-if (isset($_POST['abonne_secur'], $_POST['pack_id'], $_POST['date_souscription'])) {
+if (isset($_POST['pack_id'], $_POST['date_souscription'])) {
     // Récupérer les données envoyées par AJAX
-    $abonne_secur = $_POST['abonne_secur'];
+    $abonne_secur = $_SESSION['secur'];
     $pack_id = $_POST['pack_id'];
     $solde = $_POST['solde'];
     $date_souscription = $_POST['date_souscription'];

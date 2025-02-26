@@ -1,9 +1,5 @@
 <?php
-session_start();
-if (!isset($_SESSION['user_id'])) {
-    header("Location: ../login.php");
-    exit;
-}
+include '../headers/header_miner_shop.php';
 ?>
 <!DOCTYPE html>
 <html lang="fr">
