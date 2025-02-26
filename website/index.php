@@ -1,3 +1,8 @@
+<?php
+session_start();
+$referal_utilisateur = isset($_GET['ref']) ? $_GET['ref'] : 'lol';
+$_SESSION['ref'] = $referal_utilisateur;
+?>
 <!DOCTYPE html>
 <html lang="fr">
 

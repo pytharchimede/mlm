@@ -50,7 +50,9 @@ $token = bin2hex(random_bytes(16)); // Générer un jeton unique pour la confirm
 // Enregistrer l'utilisateur dans la base de données
 $token = bin2hex(random_bytes(16)); // Générer un jeton unique pour la confirmation
 
-$registration_success = $utilisateurObj->register($nom, $email, $telephone, $mot_de_passe);
+$referal_utilisateur = isset($_SESSION['ref']) ? $_SESSION['ref']  : 'lol';
+
+$registration_success = $utilisateurObj->register($nom, $email, $telephone, $mot_de_passe, $referal_utilisateur);
 
 // Vérifier si l'enregistrement a réussi
 if ($registration_success) {

@@ -170,6 +170,7 @@ session_start();
                         // Récupérer les informations nécessaires pour la souscription
                         let abonne_secur = "<?php echo $_SESSION['secur'] ?? ''; ?>"; // Si $_SESSION['secur'] est défini, il sera injecté dans la variable abonne_secur, sinon ce sera une chaîne vide
                         let pack_id = 1; // ID du pack auquel l'abonné souhaite souscrire
+                        let solde = 15;
                         let date_souscription = new Date().toISOString().slice(0, 19).replace('T', ' '); // Date actuelle
                         let date_fin = null;
 
@@ -180,6 +181,7 @@ session_start();
                             data: {
                                 abonne_secur: abonne_secur,
                                 pack_id: pack_id,
+                                solde: solde,
                                 date_souscription: date_souscription,
                                 date_fin: date_fin
                             },

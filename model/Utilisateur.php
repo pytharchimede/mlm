@@ -11,21 +11,21 @@ class Utilisateur
     }
 
     // Enregistrer un nouvel utilisateur
-    public function register($nom_utilisateur, $email_utilisateur, $telephone_utilisateur, $motpass_utilisateur)
+    public function register($nom_utilisateur, $email_utilisateur, $telephone_utilisateur, $motpass_utilisateur, $referal_utilisateur)
     {
         try {
             // Hacher le mot de passe
             $hashed_password = password_hash($motpass_utilisateur, PASSWORD_BCRYPT);
 
             // Générer un code unique pour le champ secur_utilisateur
-            $secur_utilisateur = uniqid('SEC_', true);  // Précédée de 'SEC_' pour plus de clarté
+            $secur_utilisateur = substr(str_shuffle('ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'), 0, 5);
 
             // Préparer la requête pour l'insertion de l'utilisateur
             $stmt = $this->pdo->prepare('
                 INSERT INTO utilisateur 
-                    (nom_utilisateur, email_utilisateur, telephone_utilisateur, motpass_utilisateur, secur_utilisateur, date_creat_utilisateur, valide_utilisateur, valide_email_utilisateur, valide_telephone_utilisateur)
+                    (nom_utilisateur, email_utilisateur, telephone_utilisateur, motpass_utilisateur, referal_utilisateur, secur_utilisateur, date_creat_utilisateur, valide_utilisateur, valide_email_utilisateur, valide_telephone_utilisateur)
                 VALUES 
-                    (:nom_utilisateur, :email_utilisateur, :telephone_utilisateur, :motpass_utilisateur, :secur_utilisateur, NOW(), 0, 0, 0)
+                    (:nom_utilisateur, :email_utilisateur, :telephone_utilisateur, :motpass_utilisateur, :referal_utilisateur, :secur_utilisateur, NOW(), 0, 0, 0)
             ');
 
             // Exécuter la requête avec les valeurs appropriées
@@ -34,6 +34,7 @@ class Utilisateur
                 ':email_utilisateur' => $email_utilisateur,
                 ':telephone_utilisateur' => $telephone_utilisateur,
                 ':motpass_utilisateur' => $hashed_password,
+                ':referal_utilisateur' => $referal_utilisateur,
                 ':secur_utilisateur' => $secur_utilisateur,
             ]);
 

@@ -42,19 +42,42 @@ class Pack
     }
 
     //Souscrire à un pack
-    public function subscribeToPack($abonne_secur, $pack_id, $date_souscription, $date_fin, $actif = 1)
+    public function subscribeToPack($abonne_secur, $pack_id, $solde, $date_souscription, $date_fin, $actif = 1)
     {
         // Préparer la requête pour insérer un abonnement dans la table pack_abonne
-        $stmt = $this->pdo->prepare("INSERT INTO pack_abonne (abonne_secur, pack_id, actif, date_souscription, date_fin) 
-                                 VALUES (:abonne_secur, :pack_id, :actif, :date_souscription, :date_fin)");
+        $stmt = $this->pdo->prepare("INSERT INTO pack_abonne (abonne_secur, pack_id, solde, actif, date_souscription, date_fin) 
+                                 VALUES (:abonne_secur, :pack_id, :solde, :actif, :date_souscription, :date_fin)");
 
         // Exécuter la requête avec les paramètres
         return $stmt->execute([
             ':abonne_secur' => $abonne_secur,
             ':pack_id' => $pack_id,
+            ':solde' => $solde,
             ':actif' => $actif,
             ':date_souscription' => $date_souscription,
             ':date_fin' => $date_fin
         ]);
+    }
+
+    //Vérifier si l'abonné est actif
+    public function isPackActive($secur)
+    {
+        // Préparer la requête pour vérifier si l'utilisateur a un pack actif
+        $stmt = $this->pdo->prepare("SELECT * FROM pack_abonne WHERE abonne_secur = :abonne_secur AND actif = 1");
+        $stmt->execute([':abonne_secur' => $secur]);
+
+        // Si une ligne est trouvée, retourner true, sinon false
+        return $stmt->fetch(PDO::FETCH_ASSOC) !== false;
+    }
+
+    //Détails du pack abonné actif
+    public function getPackDetails($secur)
+    {
+        // Préparer la requête pour récupérer les détails du pack pour un abonné sécurisé
+        $stmt = $this->pdo->prepare("SELECT * FROM pack_abonne WHERE abonne_secur = :abonne_secur AND actif = 1");
+        $stmt->execute([':abonne_secur' => $secur]);
+
+        // Si un abonnement actif est trouvé, retourner les détails
+        return $stmt->fetch(PDO::FETCH_ASSOC);
     }
 }

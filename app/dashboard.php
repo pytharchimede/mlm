@@ -1,7 +1,5 @@
 <?php
-
-session_start(); // Démarre la session
-
+include '../headers/header_dashboard.php';
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -192,6 +190,17 @@ session_start(); // Démarre la session
         .text-xs {
             color: #ddd;
         }
+
+        nav {
+            z-index: 50;
+            /* S'assure que la navbar est au-dessus */
+            position: relative;
+        }
+
+        #profileMenu {
+            z-index: 100;
+            /* Met le menu bien au-dessus du slider */
+        }
     </style>
 </head>
 
@@ -203,14 +212,15 @@ session_start(); // Démarre la session
             <button id="menuToggle" class="text-xl"><i class="fas fa-bars"></i></button>
             <div id="profileMenu" class="hidden absolute right-0 bg-gray-700 p-4 rounded-lg mt-2 w-48">
                 <p class="font-bold"><?php echo $_SESSION['nom'] ?></p>
-                <p class="text-sm text-gray-400"><?php echo $_SESSION['email'] ?></p>
+                <p class="text-sm text-gray-400">Membre</p>
                 <button class="bg-red-500 px-4 py-2 rounded mt-2">Déconnexion</button>
+                <button onclick="window.location.href='../logout.php'" class="bg-red-500 px-4 py-2 rounded mt-2">Déconnexion</button>
             </div>
         </div>
     </nav>
 
     <!-- Slider -->
-    <!-- <div class="swiper mySwiper w-full mt-4">
+    <div class="swiper mySwiper w-full mt-4">
         <div class="swiper-wrapper">
             <div class="swiper-slide">
                 <img src="../slide/slide_1.jpg" alt="Slide 1">
@@ -222,23 +232,31 @@ session_start(); // Démarre la session
                 <img src="../slide/slide_3.jpg" alt="Slide 3">
             </div>
         </div>
-    </div> -->
+    </div>
 
     <!-- Contenu principal -->
     <div class="p-6">
 
 
-        <div class="flex justify-between items-center bg-gray-800 p-6 rounded-lg mb-6">
+        <!-- HTML pour afficher les informations -->
+        <div class="bg-gray-900 p-8 rounded-xl shadow-lg relative">
+
             <!-- Affichage du solde -->
-            <div class="text-left">
-                <p class="text-lg">Fonds disponibles</p>
-                <p id="balance" class="text-3xl font-bold text-green-400 opacity-50">0 XOF</p>
+            <div class="text-center">
+                <p class="text-lg font-semibold text-gray-400">Fonds disponibles</p>
+                <p id="balance" class="text-5xl font-extrabold text-green-400 mt-2">
+                    <?php echo number_format($solde, 2, ',', ' ') . ' $'; ?>
+                </p>
             </div>
 
             <!-- Bouton d'activation du profil -->
-            <button id="activate-btn" class="px-6 py-2 border border-green-400 text-green-400 rounded-lg text-lg font-semibold hover:bg-green-400 hover:text-gray-900 transition">
-                Activer
-            </button>
+            <?php if (!$is_active): ?>
+                <div class="mt-6 text-center">
+                    <button id="activate-btn" class="px-8 py-3 border border-green-400 text-green-400 rounded-full text-lg font-semibold hover:bg-green-400 hover:text-gray-900 transition shadow-md">
+                        Activer mon Pack
+                    </button>
+                </div>
+            <?php endif; ?>
         </div>
 
         <!-- Contenu principal -->
@@ -247,7 +265,7 @@ session_start(); // Démarre la session
             <!-- Icônes fonctionnalités -->
             <div class="container mx-auto p-4">
                 <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-                    <a href="miner_shop.php" class="flex flex-col items-center p-6 bg-gray-800 rounded-lg">
+                    <a href="<?php echo (!$is_active) ? 'miner_shop.php' : 'javascript:void();';  ?>" class="flex flex-col items-center p-6 bg-gray-800 rounded-lg <?php echo (!$is_active) ? '' : 'opacity-50 cursor-not-allowed'; ?>">
                         <i class="fas fa-shopping-cart text-5xl text-gray-300"></i>
                         <div class="mt-3 text-lg font-semibold">Acheter</div>
                     </a>
@@ -353,7 +371,7 @@ session_start(); // Démarre la session
                     Partagez ce lien de parrainage avec vos amis pour leur faire découvrir **CMDB**, la tontine en cryptomonnaie !
                 </p>
 
-                <input type="text" id="referral-link" value="https://cmdb.com/parrainage?code=123456" readonly class="w-full p-2 mb-4 text-center text-black rounded">
+                <input type="text" id="referral-link" value="https://ifmap.ci/test/website/index.php?ref=<?php echo isset($_SESSION['secur']) ? $_SESSION['secur'] : 'lol'; ?>" readonly class="w-full p-2 mb-4 text-center text-black rounded">
 
                 <div class="flex justify-around">
                     <a href="#" onclick="shareOnFacebook()" class="bg-blue-600 p-3 rounded-full text-white text-lg">
@@ -406,28 +424,47 @@ session_start(); // Démarre la session
                     effect: "fade"
                 });
             });
-            document.getElementById("menuToggle").addEventListener("click", function() {
-                let menu = document.getElementById("profileMenu");
-                menu.classList.toggle("hidden");
-                menu.classList.toggle("opacity-100");
-                menu.classList.toggle("scale-100");
-            });
+            document.addEventListener("DOMContentLoaded", function() {
+                // Vérifie si les éléments existent avant d'ajouter des événements
+                let openPopupButton = document.getElementById("openPopupButton");
+                let closePopupButton = document.getElementById("closePopupButton");
+                let organigrammePopup = document.getElementById("organigrammePopup");
+                let menuToggle = document.getElementById("menuToggle");
+                let activateBtn = document.getElementById("activate-btn");
 
+                if (openPopupButton && organigrammePopup) {
+                    openPopupButton.addEventListener("click", function() {
+                        organigrammePopup.style.display = "block";
+                    });
 
-            // Ouvrir le pop-up
-            document.getElementById("openPopupButton").addEventListener("click", function() {
-                document.getElementById("organigrammePopup").style.display = "block";
-            });
+                    organigrammePopup.addEventListener("click", function(e) {
+                        if (e.target === organigrammePopup) {
+                            organigrammePopup.style.display = "none";
+                        }
+                    });
+                }
 
-            // Fermer le pop-up
-            document.getElementById("closePopupButton").addEventListener("click", function() {
-                document.getElementById("organigrammePopup").style.display = "none";
-            });
+                if (closePopupButton) {
+                    closePopupButton.addEventListener("click", function() {
+                        organigrammePopup.style.display = "none";
+                    });
+                }
 
-            // Fermer le pop-up si l'utilisateur clique en dehors
-            document.getElementById("organigrammePopup").addEventListener("click", function(e) {
-                if (e.target === document.getElementById("organigrammePopup")) {
-                    document.getElementById("organigrammePopup").style.display = "none";
+                if (menuToggle) {
+                    menuToggle.addEventListener("click", function() {
+                        let menu = document.getElementById("profileMenu");
+                        if (menu) {
+                            menu.classList.toggle("hidden");
+                            menu.classList.toggle("opacity-100");
+                            menu.classList.toggle("scale-100");
+                        }
+                    });
+                }
+
+                if (activateBtn) {
+                    activateBtn.addEventListener("click", function() {
+                        window.location.href = 'miner_shop.php';
+                    });
                 }
             });
 
@@ -460,6 +497,7 @@ session_start(); // Démarre la session
                 window.open(`mailto:?subject=${subject}&body=${body}`, '_blank');
             }
         </script>
+
 </body>
 
 </html>
