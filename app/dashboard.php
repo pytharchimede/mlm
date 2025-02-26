@@ -19,7 +19,7 @@ include '../headers/header_dashboard.php';
 <body class="bg-gray-900 text-white pb-20">
     <!-- Navbar -->
     <nav class="bg-gray-800 p-4 flex justify-between items-center">
-        <h1 class="text-xl font-bold">CMDB</h1>
+        <img id="logo" src="../assets/img/logo.png" class="w-32">
         <div class="relative">
             <button id="menuToggle" class="text-xl"><i class="fas fa-bars"></i></button>
             <div id="profileMenu" class="hidden absolute right-0 bg-gray-700 p-4 rounded-lg mt-2 w-48">
@@ -31,7 +31,7 @@ include '../headers/header_dashboard.php';
     </nav>
 
     <!-- Slider -->
-    <div class="swiper mySwiper w-full mt-4">
+    <!-- <div class="swiper mySwiper w-full mt-4">
         <div class="swiper-wrapper">
             <div class="swiper-slide">
                 <img src="../slide/slide_1.jpg" alt="Slide 1">
@@ -43,7 +43,7 @@ include '../headers/header_dashboard.php';
                 <img src="../slide/slide_3.jpg" alt="Slide 3">
             </div>
         </div>
-    </div>
+    </div> -->
 
     <!-- Contenu principal -->
     <div class="p-6">
@@ -116,61 +116,72 @@ include '../headers/header_dashboard.php';
 
         </div>
 
-
-        <!-- Pop-up Organigramme -->
+        <!-- Pop-up Héritiers -->
         <div id="organigrammePopup" class="popup-overlay">
             <div class="popup-content">
                 <button class="popup-close" id="closePopupButton">X</button>
-                <h2 class="text-2xl font-bold text-white mb-4">Mon Organigramme</h2>
-                <div id="network" class="network-container">
-                    <!-- Informations du réseau -->
-                    <div class="member">
-                        <div class="avatar"></div>
-                        <p>Moi</p>
-                        <p class="text-xs text-gray-400">Héritiers actifs: 3</p>
-                        <div class="progress-bar" style="width: 60%;"></div>
-                        <button class="contact-btn">Contacter</button>
-                    </div>
-                    <div class="network-row">
-                        <div class="member">
-                            <div class="avatar"></div>
-                            <p>Héritier 1</p>
-                            <p class="text-xs text-gray-400">Actifs: 2</p>
-                            <div class="progress-bar" style="width: 40%;"></div>
-                            <button class="contact-btn">Contacter</button>
+                <h2 class="text-2xl font-bold text-white mb-4">Liste des Héritiers</h2>
+                <div class="heir-list">
+                    <!-- Héritier 1 -->
+                    <div class="heir-item">
+                        <div class="heir-avatar"></div>
+                        <div class="heir-details">
+                            <h3 class="heir-name">Héritier 1</h3>
+                            <p class="heir-text">Actifs : 2</p>
+                            <p class="heir-text">Solde : 5000€</p>
                         </div>
-                        <div class="member">
-                            <div class="avatar"></div>
-                            <p>Héritier 2</p>
-                            <p class="text-xs text-gray-400">Actifs: 1</p>
-                            <div class="progress-bar" style="width: 20%;"></div>
-                            <button class="contact-btn">Contacter</button>
-                        </div>
-                        <div class="member">
-                            <div class="avatar"></div>
-                            <p>Héritier 3</p>
-                            <p class="text-xs text-gray-400">Actifs: 4</p>
-                            <div class="progress-bar" style="width: 80%;"></div>
-                            <button class="contact-btn">Contacter</button>
-                        </div>
-                        <div class="member">
-                            <div class="avatar"></div>
-                            <p>Héritier 4</p>
-                            <p class="text-xs text-gray-400">Actifs: 0</p>
-                            <div class="progress-bar" style="width: 0%;"></div>
-                            <button class="contact-btn">Contacter</button>
-                        </div>
-                        <div class="member">
-                            <div class="avatar"></div>
-                            <p>Héritier 5</p>
-                            <p class="text-xs text-gray-400">Actifs: 3</p>
-                            <div class="progress-bar" style="width: 60%;"></div>
-                            <button class="contact-btn">Contacter</button>
+                        <div class="contact-btn-container">
+                            <a href="https://wa.me/+1234567890" target="_blank" class="contact-btn">
+                                <i class="fab fa-whatsapp"></i> WhatsApp
+                            </a>
+                            <a href="https://t.me/username" target="_blank" class="contact-btn">
+                                <i class="fab fa-telegram"></i> Telegram
+                            </a>
                         </div>
                     </div>
+
+                    <!-- Héritier 2 -->
+                    <div class="heir-item">
+                        <div class="heir-avatar"></div>
+                        <div class="heir-details">
+                            <h3 class="heir-name">Héritier 2</h3>
+                            <p class="heir-text">Actifs : 1</p>
+                            <p class="heir-text">Solde : 3000€</p>
+                        </div>
+                        <div class="contact-btn-container">
+                            <a href="https://wa.me/+1234567891" target="_blank" class="contact-btn">
+                                <i class="fab fa-whatsapp"></i> WhatsApp
+                            </a>
+                            <a href="https://t.me/username2" target="_blank" class="contact-btn">
+                                <i class="fab fa-telegram"></i> Telegram
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Héritier 3 -->
+                    <div class="heir-item">
+                        <div class="heir-avatar"></div>
+                        <div class="heir-details">
+                            <h3 class="heir-name">Héritier 3</h3>
+                            <p class="heir-text">Actifs : 4</p>
+                            <p class="heir-text">Solde : 7500€</p>
+                        </div>
+                        <div class="contact-btn-container">
+                            <a href="https://wa.me/+1234567892" target="_blank" class="contact-btn">
+                                <i class="fab fa-whatsapp"></i> WhatsApp
+                            </a>
+                            <a href="https://t.me/username3" target="_blank" class="contact-btn">
+                                <i class="fab fa-telegram"></i> Telegram
+                            </a>
+                        </div>
+                    </div>
+
+
+                    <!-- Ajouter plus d'héritiers ici -->
                 </div>
             </div>
         </div>
+
 
         <!-- Popup inviter -->
         <div id="invitePopup" class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center hidden">
