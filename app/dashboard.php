@@ -122,51 +122,50 @@ include '../headers/header_dashboard.php';
             <div class="popup-content">
                 <button class="popup-close" id="closePopupButton">X</button>
                 <h2 class="text-2xl font-bold text-white mb-4">Mon Organigramme</h2>
-                <div id="network">
+                <div id="network" class="network-container">
                     <!-- Informations du réseau -->
-                    <div id="network" class="mt-6">
+                    <div class="member">
+                        <div class="avatar"></div>
+                        <p>Moi</p>
+                        <p class="text-xs text-gray-400">Héritiers actifs: 3</p>
+                        <div class="progress-bar" style="width: 60%;"></div>
+                        <button class="contact-btn">Contacter</button>
+                    </div>
+                    <div class="network-row">
                         <div class="member">
                             <div class="avatar"></div>
-                            <p>Moi</p>
-                            <p class="text-xs text-gray-400">Héritiers actifs: 3</p>
-                            <div class="progress-bar" style="width: 60%;"></div>
+                            <p>Héritier 1</p>
+                            <p class="text-xs text-gray-400">Actifs: 2</p>
+                            <div class="progress-bar" style="width: 40%;"></div>
+                            <button class="contact-btn">Contacter</button>
                         </div>
-                        <div class="line"></div>
-                        <div class="network-row">
-                            <div class="member">
-                                <div class="avatar"></div>
-                                <p>Héritier 1</p>
-                                <p class="text-xs text-gray-400">Actifs: 2</p>
-                                <div class="progress-bar" style="width: 40%;"></div>
-                            </div>
-                            <div class="horizontal-line"></div>
-                            <div class="member">
-                                <div class="avatar"></div>
-                                <p>Héritier 2</p>
-                                <p class="text-xs text-gray-400">Actifs: 1</p>
-                                <div class="progress-bar" style="width: 20%;"></div>
-                            </div>
-                            <div class="horizontal-line"></div>
-                            <div class="member">
-                                <div class="avatar"></div>
-                                <p>Héritier 3</p>
-                                <p class="text-xs text-gray-400">Actifs: 4</p>
-                                <div class="progress-bar" style="width: 80%;"></div>
-                            </div>
-                            <div class="horizontal-line"></div>
-                            <div class="member">
-                                <div class="avatar"></div>
-                                <p>Héritier 4</p>
-                                <p class="text-xs text-gray-400">Actifs: 0</p>
-                                <div class="progress-bar" style="width: 0%;"></div>
-                            </div>
-                            <div class="horizontal-line"></div>
-                            <div class="member">
-                                <div class="avatar"></div>
-                                <p>Héritier 5</p>
-                                <p class="text-xs text-gray-400">Actifs: 3</p>
-                                <div class="progress-bar" style="width: 60%;"></div>
-                            </div>
+                        <div class="member">
+                            <div class="avatar"></div>
+                            <p>Héritier 2</p>
+                            <p class="text-xs text-gray-400">Actifs: 1</p>
+                            <div class="progress-bar" style="width: 20%;"></div>
+                            <button class="contact-btn">Contacter</button>
+                        </div>
+                        <div class="member">
+                            <div class="avatar"></div>
+                            <p>Héritier 3</p>
+                            <p class="text-xs text-gray-400">Actifs: 4</p>
+                            <div class="progress-bar" style="width: 80%;"></div>
+                            <button class="contact-btn">Contacter</button>
+                        </div>
+                        <div class="member">
+                            <div class="avatar"></div>
+                            <p>Héritier 4</p>
+                            <p class="text-xs text-gray-400">Actifs: 0</p>
+                            <div class="progress-bar" style="width: 0%;"></div>
+                            <button class="contact-btn">Contacter</button>
+                        </div>
+                        <div class="member">
+                            <div class="avatar"></div>
+                            <p>Héritier 5</p>
+                            <p class="text-xs text-gray-400">Actifs: 3</p>
+                            <div class="progress-bar" style="width: 60%;"></div>
+                            <button class="contact-btn">Contacter</button>
                         </div>
                     </div>
                 </div>
