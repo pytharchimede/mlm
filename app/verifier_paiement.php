@@ -1,6 +1,3 @@
-<?php
-session_start();
-?>
 <!DOCTYPE html>
 <html lang="fr">
 
@@ -8,8 +5,6 @@ session_start();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Vérification de Transaction BNB</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="../css/style_verif_payment_mobile.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/progressbar.js/1.1.0/progressbar.min.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
@@ -25,12 +20,6 @@ session_start();
         }
 
         .countdown {
-            font-size: 3rem;
-            font-weight: bold;
-            position: absolute;
-        }
-
-        .credit {
             font-size: 3rem;
             font-weight: bold;
             position: absolute;
@@ -58,23 +47,8 @@ session_start();
 </head>
 
 <body class="bg-dark text-light">
-
-    <header class="flex justify-between items-center p-4 bg-gray-800">
-        <a href="dashboard.php">
-            <img src="../assets/img/logo.png" alt="Logo" class="h-10">
-        </a>
-        <div class="flex gap-4">
-            <a href="https://wa.me/123456789" target="_blank">
-                <img src="../assets/icons_svg/whatsapp.svg" alt="WhatsApp" class="w-8">
-            </a>
-            <a href="https://t.me/yourusername" target="_blank">
-                <img src="../assets/icons_svg/telegram.svg" alt="Telegram" class="w-8">
-            </a>
-        </div>
-    </header>
-
-    <div class="container mx-auto p-8">
-        <h1 class="text-3xl font-bold text-center">Vérification du Paiement <?php echo $_SESSION['secur'] ?? ''; ?></h1>
+    <div class="container mt-5">
+        <h2 class="text-center"><i class="fas fa-search"></i> Vérification d'une transaction BNB</h2>
         <div class="mb-3">
             <label for="hash" class="form-label">Entrez le hash de la transaction :</label>
             <input type="text" id="hash" class="form-control" placeholder="Ex: 0x123abc..." required>
@@ -89,7 +63,6 @@ session_start();
                     <div class="countdown-container">
                         <div class="progress-circle" id="progress-container"></div>
                         <div class="countdown" id="countdown"></div>
-                        <div class="credit" id="credit"></div>
                     </div>
                     <div class="details">
                         <p><strong><i class="fas fa-coins"></i> Montant :</strong> <span id="montant"></span></p>
@@ -112,8 +85,8 @@ session_start();
             }
 
             $.ajax({
-                url: "../request/verif_payment_request.php",
-                type: "POST",
+                url: "request/verif_transac_request.php",
+                type: "GET",
                 data: {
                     hash: hash
                 },
@@ -142,12 +115,12 @@ session_start();
         }
 
         function startCountdown() {
-            let seconds = 5;
+            let seconds = 60;
             $("#countdown").text(seconds);
             let progressBar = new ProgressBar.Circle("#progress-container", {
                 strokeWidth: 6,
                 easing: 'linear',
-                duration: 5000,
+                duration: 60000,
                 color: '#28a745',
                 trailColor: '#ddd',
                 trailWidth: 6,
@@ -160,51 +133,35 @@ session_start();
                 $("#countdown").text(seconds);
                 if (seconds <= 0) {
                     clearInterval(interval);
-                    // Masquer les détails et le compte à rebours
-                    $("#resultat").addClass("d-none");
-                    $("#countdown").addClass("d-none");
-                    // Effectuer la redirection après un petit délai
+                    $("#countdown").html('<i class="fas fa-check-circle text-success"></i> Crédit effectué !');
                     setTimeout(() => {
-                        console.log('Souscription au pack en cours...');
-
-                        // Récupérer les informations nécessaires pour la souscription
-                        let abonne_secur = "<?php echo $_SESSION['secur'] ?? ''; ?>"; // Si $_SESSION['secur'] est défini, il sera injecté dans la variable abonne_secur, sinon ce sera une chaîne vide
-                        let pack_id = 1; // ID du pack auquel l'abonné souhaite souscrire
-                        let date_souscription = new Date().toISOString().slice(0, 19).replace('T', ' '); // Date actuelle
-                        let date_fin = null;
-
-                        // Appel AJAX pour souscrire l'abonné au pack
-                        $.ajax({
-                            url: '../request/subscribe_to_pack.php', // Fichier PHP qui gère l'abonnement
-                            type: 'POST',
-                            data: {
-                                abonne_secur: abonne_secur,
-                                pack_id: pack_id,
-                                date_souscription: date_souscription,
-                                date_fin: date_fin
-                            },
-                            success: function(response) {
-                                console.log(response); // Utilisez "response" ici au lieu de "data"
-
-                                if (response.success) {
-                                    console.log('Souscription réussie!');
-
-                                    // Redirection après 1 seconde
-                                    setTimeout(() => {
-                                        console.log('Redirection en cours...');
-                                        window.location.href = 'nouvelle_page.php'; // Redirection vers une autre page
-                                    }, 1000);
-                                } else {
-                                    console.log('Échec de l\'abonnement: ' + response.error);
-                                }
-                            },
-                            error: function() {
-                                console.log('Erreur lors de l\'appel AJAX.');
-                            }
-                        });
+                        startRedirectCountdown();
                     }, 1000);
+                }
+            }, 1000);
+        }
 
+        function startRedirectCountdown() {
+            let seconds = 5;
+            $("#status").html('<i class="fas fa-spinner fa-spin"></i> Redirection en cours...');
+            $("#countdown").text(seconds);
+            let progressBar = new ProgressBar.Circle("#progress-container", {
+                strokeWidth: 6,
+                easing: 'linear',
+                duration: 5000,
+                color: '#ffc107',
+                trailColor: '#ddd',
+                trailWidth: 6,
+                svgStyle: null
+            });
+            progressBar.animate(1);
 
+            let interval = setInterval(() => {
+                seconds--;
+                $("#countdown").text(seconds);
+                if (seconds <= 0) {
+                    clearInterval(interval);
+                    window.location.href = "https://votreurl.com/page_de_redirection";
                 }
             }, 1000);
         }

@@ -17,23 +17,32 @@ class Utilisateur
             // Hacher le mot de passe
             $hashed_password = password_hash($motpass_utilisateur, PASSWORD_BCRYPT);
 
+            // Générer un code unique pour le champ secur_utilisateur
+            $secur_utilisateur = uniqid('SEC_', true);  // Précédée de 'SEC_' pour plus de clarté
+
+            // Préparer la requête pour l'insertion de l'utilisateur
             $stmt = $this->pdo->prepare('
-                INSERT INTO utilisateur (nom_utilisateur, email_utilisateur, telephone_utilisateur, motpass_utilisateur, date_creat_utilisateur, valide_utilisateur, valide_email_utilisateur, valide_telephone_utilisateur)
-                VALUES (:nom_utilisateur, :email_utilisateur, :telephone_utilisateur, :motpass_utilisateur, NOW(), 0, 0, 0)
+                INSERT INTO utilisateur 
+                    (nom_utilisateur, email_utilisateur, telephone_utilisateur, motpass_utilisateur, secur_utilisateur, date_creat_utilisateur, valide_utilisateur, valide_email_utilisateur, valide_telephone_utilisateur)
+                VALUES 
+                    (:nom_utilisateur, :email_utilisateur, :telephone_utilisateur, :motpass_utilisateur, :secur_utilisateur, NOW(), 0, 0, 0)
             ');
 
+            // Exécuter la requête avec les valeurs appropriées
             $stmt->execute([
                 ':nom_utilisateur' => $nom_utilisateur,
                 ':email_utilisateur' => $email_utilisateur,
                 ':telephone_utilisateur' => $telephone_utilisateur,
                 ':motpass_utilisateur' => $hashed_password,
+                ':secur_utilisateur' => $secur_utilisateur,
             ]);
 
-            return true;
+            return true;  // Retourner true si l'inscription réussit
         } catch (PDOException $e) {
             die('Error registering user: ' . $e->getMessage());
         }
     }
+
 
     // Vérifier si l'email existe déjà
     public function checkEmailExists($email_utilisateur)

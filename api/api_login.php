@@ -1,4 +1,6 @@
 <?php
+session_start();
+
 // Définir l'en-tête pour la réponse JSON
 header('Content-Type: application/json');
 
@@ -7,7 +9,7 @@ require_once '../model/Utilisateur.php';
 require_once '../model/Tracabilite.php';
 require_once '../model/Database.php';
 
-error_log(print_r($_POST, true));
+// error_log(print_r($_POST, true));
 
 // Récupérer les données de la requête POST
 if (isset($_POST['email']) && isset($_POST['password'])) {
@@ -29,13 +31,12 @@ if (isset($_POST['email']) && isset($_POST['password'])) {
 
         // Vérifier si le mot de passe est correct
         if ($utilisateur->verifyPassword($email, $password)) {
-            // Connexion réussie : on démarre une session et on redirige vers le tableau de bord
-            session_start();
 
             // Stocker les informations de l'utilisateur dans la session
             $_SESSION['user_id'] = $user['id_utilisateur'];
             $_SESSION['email'] = $user['email_utilisateur'];
             $_SESSION['nom'] = $user['nom_utilisateur'];
+            $_SESSION['secur'] = $user['secur_utilisateur'];
 
             // Créer une instance de la classe Tracabilite
             $tracabilite = new Tracabilite(Database::getConnection());
