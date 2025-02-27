@@ -77,7 +77,28 @@ class Pack
         $stmt = $this->pdo->prepare("SELECT * FROM pack_abonne WHERE abonne_secur = :abonne_secur AND actif = 1");
         $stmt->execute([':abonne_secur' => $secur]);
 
-        // Si un abonnement actif est trouvé, retourner les détails
-        return $stmt->fetch(PDO::FETCH_ASSOC);
+        // Vérifier si un abonnement actif est trouvé
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if ($result) {
+            return $result;
+        } else {
+            return null;  // Retourner null si aucune donnée n'est trouvée
+        }
+    }
+
+
+    // Mettre à jour le solde d'un pack pour un abonné
+    public function updatePackBalance($abonne_secur, $pack_id, $new_balance)
+    {
+        // Préparer la requête SQL pour mettre à jour le solde
+        $stmt = $this->pdo->prepare("UPDATE pack_abonne SET solde = :solde WHERE abonne_secur = :abonne_secur AND id_pack_abonne = :pack_id");
+
+        // Exécuter la requête avec les paramètres fournis
+        return $stmt->execute([
+            ':abonne_secur' => $abonne_secur,
+            ':pack_id' => $pack_id,
+            ':solde' => $new_balance
+        ]);
     }
 }

@@ -38,3 +38,11 @@ if ($secur) {
         $solde = $packDetails['solde'];
     }
 }
+
+$hasWallet = $utilisateurObj->checkWalletAddress($secur); // true ou false
+
+// Récupérer l'adresse du wallet existant si elle existe
+$walletAddress = null;
+if ($hasWallet) {
+    $walletAddress = $utilisateurObj->getWalletAddress($secur); // Assure-toi d'avoir une méthode pour récupérer l'adresse
+}

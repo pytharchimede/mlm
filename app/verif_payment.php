@@ -34,7 +34,7 @@ include '../headers/header_verif_payment.php';
     </header>
 
     <div class="container mx-auto p-8">
-        <h1 class="text-3xl font-bold text-center">Vérification du Paiement <?php echo $_SESSION['secur'] ?? ''; ?></h1>
+        <h1 class="text-3xl font-bold text-center">Vérification du Paiement</h1>
         <div class="mb-3">
             <label for="hash" class="form-label">Entrez le hash de la transaction :</label>
             <input type="text" id="hash" class="form-control" placeholder="Ex: 0x123abc..." required>

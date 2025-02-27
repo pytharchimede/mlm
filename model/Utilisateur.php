@@ -1,13 +1,16 @@
 <?php
 require_once 'Database.php';
+require_once 'Pack.php';
 
 class Utilisateur
 {
     private $pdo;
+    private $packObj;
 
     public function __construct()
     {
         $this->pdo = Database::getConnection();
+        $this->packObj = new Pack($this->pdo);
     }
 
     // Enregistrer un nouvel utilisateur
@@ -128,6 +131,42 @@ class Utilisateur
         return $stmt->execute([':token' => $token, ':email_utilisateur' => $email_utilisateur]);
     }
 
+    // Mettre à jour ladresse du wallet BNB
+    public function updateBnbWalletAdress($user_secur, $new_address)
+    {
+        $stmt = $this->pdo->prepare('UPDATE utilisateur SET bnb_wallet_address = :new_address WHERE secur_utilisateur = :user_secur');
+        return $stmt->execute([':new_address' => $new_address, ':user_secur' => $user_secur]);
+    }
+
+    // Vérifier si l'utilisateur a déjà une adresse de portefeuille BNB
+    public function checkWalletAddress($user_secur)
+    {
+        // Préparer la requête SQL pour récupérer l'adresse BNB de l'utilisateur
+        $stmt = $this->pdo->prepare('SELECT bnb_wallet_address FROM utilisateur WHERE secur_utilisateur = :user_secur');
+        $stmt->execute([':user_secur' => $user_secur]);
+
+        // Récupérer le résultat
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        // Si l'adresse existe et n'est pas vide, retourner vrai
+        return !empty($result['bnb_wallet_address']);
+    }
+
+    // Récupérer l'adresse du portefeuille BNB de l'utilisateur par sécur
+    public function getWalletAddress($secur_utilisateur)
+    {
+        $stmt = $this->pdo->prepare('SELECT bnb_wallet_address FROM utilisateur WHERE secur_utilisateur = :secur_utilisateur');
+        $stmt->execute([':secur_utilisateur' => $secur_utilisateur]);
+
+        // Récupérer l'adresse si elle existe
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        // Si l'adresse existe, la retourner, sinon retourner null
+        return $result ? $result['bnb_wallet_address'] : null;
+    }
+
+
+
     // Récupérer la liste des filleuls d'un utilisateur
     public function getFilleulsByReferal($referal_utilisateur)
     {
@@ -139,6 +178,12 @@ class Utilisateur
 
     public function getActifsFilleulsByReferal($referal_utilisateur)
     {
+        // Vérification du type de donnée
+        if (!is_scalar($referal_utilisateur)) {
+            error_log("Erreur: referal_utilisateur est un tableau au lieu d'une valeur unique: " . print_r($referal_utilisateur, true));
+            return [];
+        }
+
         $stmt = $this->pdo->prepare(
             'SELECT utilisateur.* 
             FROM utilisateur 
@@ -159,74 +204,11 @@ class Utilisateur
     }
 
 
-    public function getFilleulsByGeneration($secur_utilisateur, $niveau = 1, $max_niveau = 5)
-    {
-        if ($niveau > $max_niveau) {
-            return []; // On arrête à la 5ème génération
-        }
-
-        // Récupérer les filleuls directs
-        $stmt = $this->pdo->prepare(
-            'SELECT utilisateur.* 
-        FROM utilisateur 
-        LEFT JOIN pack_abonne ON utilisateur.secur_utilisateur = pack_abonne.abonne_secur 
-        WHERE utilisateur.referal_utilisateur = :secur_utilisateur'
-        );
-
-        $stmt->execute([':secur_utilisateur' => $secur_utilisateur]);
-        $filleuls = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-        // Stocker les résultats de cette génération
-        $resultats[$niveau] = $filleuls;
-
-        // Récupérer les filleuls des filleuls récursivement
-        foreach ($filleuls as $filleul) {
-            $resultats += $this->getFilleulsByGeneration($filleul['secur_utilisateur'], $niveau + 1, $max_niveau);
-        }
-
-        return $resultats;
-    }
-
-
-    public function compterFilleulsParGeneration($secur_utilisateur)
-    {
-        $filleulsParNiveau = $this->getFilleulsByGeneration($secur_utilisateur);
-
-        $statistiques = [
-            'total_actifs' => 0,
-            'total_inactifs' => 0,
-            'par_niveau' => []
-        ];
-
-        foreach ($filleulsParNiveau as $niveau => $filleuls) {
-            $actifs = 0;
-            $inactifs = 0;
-
-            foreach ($filleuls as $filleul) {
-                if ($filleul['actif'] == 1) {
-                    $actifs++;
-                } else {
-                    $inactifs++;
-                }
-            }
-
-            $statistiques['par_niveau'][$niveau] = [
-                'actifs' => $actifs,
-                'inactifs' => $inactifs,
-                'total' => $actifs + $inactifs
-            ];
-
-            $statistiques['total_actifs'] += $actifs;
-            $statistiques['total_inactifs'] += $inactifs;
-        }
-
-        return $statistiques;
-    }
 
     public function mettreAJourSolde($secur_utilisateur)
     {
-        // Récupération du nombre de filleuls actifs par génération
-        $stats = $this->compterFilleulsParGeneration($secur_utilisateur);
+        $niveauParrain = 0;
+        $filleuls = [$secur_utilisateur]; // Commencer avec l'utilisateur lui-même
 
         // Tableau des gains par niveau
         $gains_par_niveau = [
@@ -237,24 +219,53 @@ class Utilisateur
             5 => 30000
         ];
 
-        $solde_total = 0;
+        for ($niveau = 1; $niveau <= 5; $niveau++) {
+            $nouveaux_filleuls = [];
 
-        // Calcul des gains en fonction des filleuls actifs
-        foreach ($stats['par_niveau'] as $niveau => $data) {
-            if (isset($gains_par_niveau[$niveau])) {
-                $solde_total += $gains_par_niveau[$niveau] * $data['actifs'];
+            foreach ($filleuls as $filleul) {
+                if (!is_scalar($filleul)) {
+                    error_log("Erreur: Filleul est un tableau au lieu d'une valeur unique: " . print_r($filleul, true));
+                    continue; // On ignore ce filleul
+                }
+
+                $filleuls_niveau_suivant = $this->getActifsFilleulsByReferal($filleul);
+
+                // Vérifier si le nombre de filleuls est suffisant pour passer au niveau suivant
+                if (count($filleuls_niveau_suivant) < 5) {
+                    break 2; // On arrête directement la boucle si la condition n'est pas remplie
+                }
+
+                // Ajouter tous les filleuls trouvés à la liste du prochain niveau
+                $nouveaux_filleuls = array_merge($nouveaux_filleuls, array_column($filleuls_niveau_suivant, 'secur_utilisateur'));
             }
+
+            // Si le niveau est validé, on l'incrémente
+            $niveauParrain++;
+            $filleuls = $nouveaux_filleuls;
         }
 
-        // Mise à jour du solde dans la base de données
-        $stmt = $this->pdo->prepare(
-            'UPDATE utilisateur SET solde = :solde WHERE secur_utilisateur = :secur_utilisateur'
-        );
-        $stmt->execute([
-            ':solde' => $solde_total,
-            ':secur_utilisateur' => $secur_utilisateur
-        ]);
+        // Vérifier que le niveau est bien dans le tableau de gains
+        if (!isset($gains_par_niveau[$niveauParrain])) {
+            error_log("Niveau invalide: " . $niveauParrain);
+            return false;
+        }
 
-        return $solde_total;
+        // Récupérer les informations du parrain
+        $detailCompteParrain = $this->packObj->getPackDetails($secur_utilisateur);
+        if (!$detailCompteParrain) {
+            error_log("Erreur: Impossible de récupérer les détails du pack pour l'utilisateur " . $secur_utilisateur);
+            return false;
+        }
+
+        $soldeParrain = $detailCompteParrain['solde'];
+        $soldeAdittionnel = $gains_par_niveau[$niveauParrain];
+        $solde_total = $soldeParrain + $soldeAdittionnel;
+
+        error_log("Mise à jour du solde pour $secur_utilisateur : Nouveau solde = $solde_total");
+
+        // Mise à jour du solde
+        $miseAjourPack = $this->packObj->updatePackBalance($secur_utilisateur, $detailCompteParrain['id_pack_abonne'], $solde_total);
+
+        return $miseAjourPack;
     }
 }
