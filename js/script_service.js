@@ -96,14 +96,17 @@ fetch("mediaSections.json")
       let content = "";
       let previewButton = "";
 
+      // Construction de l'URL absolue pour le média
+      let mediaURL = window.location.origin + "/test" + section.media;
+
       if (section.type === "image") {
-        content = `<img src="${section.media}" alt="${section.alt}" class="w-full h-48 object-cover rounded-lg">`;
+        content = `<img src="${mediaURL}" alt="${section.alt}" class="w-full h-48 object-cover rounded-lg">`;
         previewButton = `<div class="preview-icon absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-black bg-opacity-60 text-white p-2 rounded-full text-lg opacity-0 hover:opacity-100 transition duration-300 cursor-pointer" onclick="openPreview('${section.media}', 'image')">
                           <i class="fas fa-search-plus"></i>
                         </div>`;
       } else if (section.type === "video") {
         content = `<video controls class="w-full h-48 object-cover rounded-lg">
-                    <source src="${section.media}" type="video/mp4">
+                    <source src="${mediaURL}" type="video/mp4">
                     Votre navigateur ne supporte pas la lecture de vidéos.
                   </video>`;
       } else if (section.type === "text") {
@@ -117,17 +120,29 @@ fetch("mediaSections.json")
           ${content}
           ${previewButton}
           <div class="share-buttons flex justify-center gap-3 mt-4">
-            <a href="#" onclick="shareOnFacebook()" class="bg-blue-600 p-3 rounded-full text-white text-lg">
+            <!-- Facebook Share Button -->
+            <a href="#" onclick="shareOnFacebook('${mediaURL}')" class="bg-blue-600 p-3 rounded-full text-white text-lg">
               <i class="fab fa-facebook-f"></i>
             </a>
-            <a href="#" onclick="shareOnWhatsApp()" class="bg-green-500 p-3 rounded-full text-white text-lg">
+            
+            <!-- WhatsApp Share Button -->
+            <a href="#" onclick="shareOnWhatsApp('${mediaURL}')" class="bg-green-500 p-3 rounded-full text-white text-lg">
               <i class="fab fa-whatsapp"></i>
             </a>
-            <a href="#" onclick="shareOnTelegram()" class="bg-blue-400 p-3 rounded-full text-white text-lg">
+            
+            <!-- Telegram Share Button -->
+            <a href="#" onclick="shareOnTelegram('${mediaURL}')" class="bg-blue-400 p-3 rounded-full text-white text-lg">
               <i class="fab fa-telegram-plane"></i>
             </a>
-            <a href="#" onclick="shareByEmail()" class="bg-red-500 p-3 rounded-full text-white text-lg">
+            
+            <!-- Email Share Button -->
+            <a href="#" onclick="shareByEmail('${mediaURL}')" class="bg-red-500 p-3 rounded-full text-white text-lg">
               <i class="fas fa-envelope"></i>
+            </a>
+            
+            <!-- Download Button -->
+            <a href="${mediaURL}" download class="bg-gray-600 p-3 rounded-full text-white text-lg">
+              <i class="fas fa-download"></i>
             </a>
           </div>
         </div>
@@ -194,6 +209,40 @@ function openPreview(mediaUrl, type) {
 // Fermer l'aperçu
 function closePreview() {
   document.getElementById("preview-modal").remove();
+}
+
+// 💡 Fonctions de partage
+function shareOnFacebook(mediaURL) {
+  const shareURL = `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(
+    mediaURL
+  )}`;
+  window.open(shareURL, "_blank", "width=600,height=400");
+}
+
+function shareOnWhatsApp(mediaURL) {
+  const shareURL = `https://wa.me/?text=${encodeURIComponent(mediaURL)}`;
+  window.open(shareURL, "_blank");
+}
+
+function shareOnTelegram(mediaURL) {
+  const shareURL = `https://t.me/share/url?url=${encodeURIComponent(mediaURL)}`;
+  window.open(shareURL, "_blank");
+}
+
+function shareByEmail(mediaURL) {
+  const subject = "Découvrez ce média !";
+  const body = `Salut, regarde ce que j'ai trouvé : ${mediaURL}`;
+  const mailtoLink = `mailto:?subject=${encodeURIComponent(
+    subject
+  )}&body=${encodeURIComponent(body)}`;
+  window.location.href = mailtoLink;
+}
+
+function downloadMedia(mediaURL) {
+  const link = document.createElement("a");
+  link.href = mediaURL;
+  link.download = mediaURL.split("/").pop(); // Nom du fichier à partir de l'URL
+  link.click();
 }
 
 /*
