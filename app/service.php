@@ -30,7 +30,6 @@
     <section id="media-section" class="container mx-auto px-6 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
     </section>
 
-
     <section class="container mx-auto px-6 mt-12">
         <h2 class="text-3xl font-bold text-center mb-6">Pourquoi nous faire confiance ?</h2>
 

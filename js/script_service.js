@@ -90,31 +90,33 @@ fetch("mediaSections.json")
   .then((response) => response.json())
   .then((data) => {
     const container = document.getElementById("media-section");
-    let sectionHTML = '<div class="media-container">';
+    let sectionHTML = "";
 
     data.sections.forEach((section) => {
       let content = "";
       let previewButton = "";
 
       if (section.type === "image") {
-        content = `<img src="${section.media}" alt="${section.alt}">`;
-        previewButton = `<div class="preview-icon" onclick="openPreview('${section.media}', 'image')">
+        content = `<img src="${section.media}" alt="${section.alt}" class="w-full h-48 object-cover rounded-lg">`;
+        previewButton = `<div class="preview-icon absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-black bg-opacity-60 text-white p-2 rounded-full text-lg opacity-0 hover:opacity-100 transition duration-300 cursor-pointer" onclick="openPreview('${section.media}', 'image')">
                           <i class="fas fa-search-plus"></i>
                         </div>`;
       } else if (section.type === "video") {
-        content = `<video><source src="${section.media}" type="video/mp4"></video>`;
-        previewButton = `<div class="preview-icon" onclick="openPreview('${section.media}', 'video')">
-                          <i class="fas fa-play"></i>
-                        </div>`;
+        content = `<video controls class="w-full h-48 object-cover rounded-lg">
+                    <source src="${section.media}" type="video/mp4">
+                    Votre navigateur ne supporte pas la lecture de vidéos.
+                  </video>`;
       } else if (section.type === "text") {
-        content = `<p>${section.text}</p>`;
+        content = `<div class="bg-gray-700 text-white text-center p-4 rounded-lg shadow-md w-full">
+                     <p>${section.text}</p>
+                   </div>`;
       }
 
       sectionHTML += `
-        <div class="media-item">
+        <div class="media-item relative bg-gray-800 p-4 rounded-lg shadow-lg flex flex-col items-center text-center">
           ${content}
           ${previewButton}
-          <div class="share-buttons">
+          <div class="share-buttons flex justify-center gap-3 mt-4">
             <a href="#" onclick="shareOnFacebook()" class="bg-blue-600 p-3 rounded-full text-white text-lg">
               <i class="fab fa-facebook-f"></i>
             </a>
@@ -132,7 +134,6 @@ fetch("mediaSections.json")
       `;
     });
 
-    sectionHTML += "</div>";
     container.innerHTML = sectionHTML;
   })
   .catch((error) =>
