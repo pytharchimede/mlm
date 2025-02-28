@@ -207,8 +207,9 @@ class Utilisateur
 
     public function mettreAJourSolde($secur_utilisateur)
     {
-        $niveauParrain = 0;
         $filleuls = [$secur_utilisateur]; // Commencer avec l'utilisateur lui-même
+        $niveauParrain = 0;
+        $soldeAdittionnel = 0;
 
         // Tableau des gains par niveau
         $gains_par_niveau = [
@@ -232,40 +233,33 @@ class Utilisateur
 
                 // Vérifier si le nombre de filleuls est suffisant pour passer au niveau suivant
                 if (count($filleuls_niveau_suivant) < 5) {
-                    break 2; // On arrête directement la boucle si la condition n'est pas remplie
+                    break 2; // On arrête si les conditions ne sont pas remplies
                 }
 
-                // Ajouter tous les filleuls trouvés à la liste du prochain niveau
+                // Ajouter les filleuls trouvés pour le prochain niveau
                 $nouveaux_filleuls = array_merge($nouveaux_filleuls, array_column($filleuls_niveau_suivant, 'secur_utilisateur'));
             }
 
-            // Si le niveau est validé, on l'incrémente
+            // Si le niveau est validé, on l'incrémente et on ajoute les gains correspondants
             $niveauParrain++;
+            $soldeAdittionnel += $gains_par_niveau[$niveauParrain];
             $filleuls = $nouveaux_filleuls;
         }
 
-        // Vérifier que le niveau est bien dans le tableau de gains
-        if (!isset($gains_par_niveau[$niveauParrain])) {
-            error_log("Niveau invalide: " . $niveauParrain);
-            return false;
-        }
-
-        // Récupérer les informations du parrain
+        // Vérifier que les détails du pack existent
         $detailCompteParrain = $this->packObj->getPackDetails($secur_utilisateur);
         if (!$detailCompteParrain) {
             error_log("Erreur: Impossible de récupérer les détails du pack pour l'utilisateur " . $secur_utilisateur);
             return false;
         }
 
+        // Calcul du nouveau solde
         $soldeParrain = $detailCompteParrain['solde'];
-        $soldeAdittionnel = $gains_par_niveau[$niveauParrain];
         $solde_total = $soldeParrain + $soldeAdittionnel;
 
         error_log("Mise à jour du solde pour $secur_utilisateur : Nouveau solde = $solde_total");
 
         // Mise à jour du solde
-        $miseAjourPack = $this->packObj->updatePackBalance($secur_utilisateur, $detailCompteParrain['id_pack_abonne'], $solde_total);
-
-        return $miseAjourPack;
+        return $this->packObj->updatePackBalance($secur_utilisateur, $detailCompteParrain['id_pack_abonne'], $solde_total);
     }
 }
