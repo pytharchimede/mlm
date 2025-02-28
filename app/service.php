@@ -67,7 +67,7 @@
     <section class="py-16 px-6 text-center">
         <h2 class="text-3xl md:text-4xl font-bold mb-8">🎬 Vidéo pour Motiver Tes Amis</h2>
         <div class="flex justify-center">
-            <iframe class="w-full md:w-2/3 h-64 md:h-96 rounded-lg shadow-xl" src="https://www.youtube.com/embed/YOUR_VIDEO_ID" frameborder="0" allowfullscreen></iframe>
+            <iframe class="w-full md:w-2/3 h-64 md:h-96 rounded-lg shadow-xl" src="../assets/video/explication_video.mp4" frameborder="0" allowfullscreen></iframe>
         </div>
     </section>
 
