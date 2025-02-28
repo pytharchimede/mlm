@@ -1,0 +1,41 @@
+{
+    "questions": [
+      {
+        "icon": "fa-check-circle",
+        "color": "text-green-500",
+        "title": "5+ ans d'expérience",
+        "text": "Nous existons depuis plus de 5 ans, avec des résultats concrets à chaque étape."
+      },
+      {
+        "icon": "fa-users",
+        "color": "text-blue-500",
+        "title": "Des milliers de membres",
+        "text": "Rejoignez une communauté de milliers de membres actifs et engagés dans l'entraide."
+      },
+      {
+        "icon": "fa-handshake",
+        "color": "text-yellow-500",
+        "title": "Vision de partage",
+        "text": "Nous avons une vision axée sur le partage et l'entraide pour un impact positif global."
+      },
+      {
+        "icon": "fa-trophy",
+        "color": "text-red-500",
+        "title": "Témoignages authentiques",
+        "text": "Des témoignages réels de réussite qui prouvent l'impact positif de notre mission."
+      },
+      {
+        "icon": "fa-shield-alt",
+        "color": "text-teal-500",
+        "title": "Sécurité & Fiabilité",
+        "text": "Nous garantissons la sécurité de vos informations avec des mesures fiables et robustes."
+      },
+      {
+        "icon": "fa-clipboard-check",
+        "color": "text-purple-500",
+        "title": "Support 24/7",
+        "text": "Un support client disponible 24/7 pour répondre à toutes vos questions et vous accompagner."
+      }
+    ]
+  }
+  
