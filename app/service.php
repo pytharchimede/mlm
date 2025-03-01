@@ -21,7 +21,9 @@ include '../headers/header_service.php';
 
     <!-- Navbar -->
     <nav class="bg-gray-800 p-4 flex justify-between items-center">
-        <img id="logo" src="../assets/img/logo.png" class="w-32">
+        <a href="dashboard.php">
+            <img id="logo" src="../assets/img/logo.png" class="w-32">
+        </a>
         <div class="relative">
             <button id="menuToggle" class="text-xl"><i class="fas fa-bars"></i></button>
             <div id="profileMenu" class="hidden absolute right-0 bg-gray-700 p-4 rounded-lg mt-2 w-48">
