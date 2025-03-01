@@ -10,6 +10,8 @@
 
 <body class="bg-gray-900 text-white">
 
+    <?php include 'include/header.php'; ?>
+
     <div class="container mx-auto p-8">
         <div id="message" class="text-center text-xl my-4"></div>
         <div id="loader" class="text-center hidden">

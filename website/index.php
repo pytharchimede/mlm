@@ -55,21 +55,7 @@ $_SESSION['ref'] = $referal_utilisateur;
 </head>
 
 <body class="bg-gray-900 text-white">
-    <header class="bg-gray-800 p-5 flex justify-between items-center">
-        <img id="logo" src="../assets/img/logo.png" class="w-32">
-
-        <div class="flex items-center space-x-4">
-            <a href="../login.php" class="bg-blue-500 px-4 py-2 rounded-lg flex items-center space-x-2 text-white">
-                <i class="fas fa-sign-in-alt"></i>
-                <span>Connexion</span>
-            </a>
-            <a href="#inscription" class="bg-green-500 px-4 py-2 rounded-lg flex items-center space-x-2 text-white">
-                <i class="fas fa-user-plus"></i>
-                <span>Inscription</span>
-            </a>
-        </div>
-
-    </header>
+    <?php include 'include/header.php'; ?>
 
     <section class="relative text-center py-20 px-5 bg-cover bg-center" style="background-image: url('../assets/img/community_1.jpg');">
         <div class="absolute inset-0 bg-black bg-opacity-50"></div> <!-- Overlay sombre pour améliorer la lisibilité -->
