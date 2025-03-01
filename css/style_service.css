@@ -1,3 +1,4 @@
+/* MEDIAS MOTIVATION */
 .media-container {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -67,3 +68,49 @@
     }
   }
   
+
+  /*TEXTES INSPIRANTS*/
+  #inspirational-text-section {
+    background-color: #2d2d2d; /* Fond plus foncé */
+  }
+  
+  .carousel-item {
+    padding: 2rem;
+  }
+  
+  button {
+    margin-top: 1rem;
+  }
+  
+
+
+/* TEMOIGNAGES */
+#testimonials-carousel .carousel-inner {
+  overflow: hidden;
+  text-align: center; /* Centrage du texte */
+}
+
+.carousel-item {
+  display: block; /* Bootstrap gère déjà le positionnement */
+  padding: 20px;
+  box-sizing: border-box;
+}
+
+/* Style pour le blockquote */
+.carousel-item blockquote {
+  font-size: 1.2rem;
+  text-align: center;
+  font-style: italic;
+  color: #ddd;
+}
+
+/* Sur mobile */
+@media (max-width: 768px) {
+  .carousel-item {
+      padding: 15px;
+  }
+
+  .carousel-item blockquote {
+      font-size: 1rem;
+  }
+}

@@ -7,6 +7,7 @@
     <title>Service de Recrutement</title>
     <script defer src="../plugins/js/fontawesome-all.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="../css/style_service.css" rel="stylesheet">
 </head>
 
@@ -46,7 +47,7 @@
 
     <!-- 📝 SECTION TEXTES INSPIRANTS À PARTAGER -->
     <section class="py-16 px-6 bg-gray-800 text-center" id="inspirational-text-section">
-        <h2 class="text-3xl font-bold mb-4">✍️ Textes Inspirants</h2>
+        <h2 class="text-3xl font-bold mb-4 text-white">✍️ Textes Inspirants</h2>
         <div class="max-w-3xl mx-auto">
             <div id="inspirational-text-carousel" class="carousel slide" data-bs-ride="carousel">
                 <div class="carousel-inner" id="carousel-text-container">
@@ -63,6 +64,7 @@
     </section>
 
 
+
     <!-- 🎥 SECTION VIDÉO PROMOTIONNELLE -->
     <section class="py-16 px-6 text-center">
         <h2 class="text-3xl md:text-4xl font-bold mb-8">🎬 Vidéo pour Motiver Tes Amis</h2>
@@ -73,10 +75,9 @@
 
     <!-- 📣 SECTION TÉMOIGNAGES -->
     <section class="py-16 px-6 bg-gray-800 text-center">
-        <h2 class="text-3xl font-bold mb-4">💬 Témoignages de Réussite</h2>
-        <div class="max-w-2xl mx-auto">
-            <blockquote class="italic text-lg text-gray-300 mb-4">"Grâce à cette opportunité, j'ai pu réaliser mes rêves et aider ma famille. C'est à ton tour maintenant !"</blockquote>
-            <p class="font-bold">- Marie K., Membre Actif</p>
+        <h2 class="text-3xl font-bold mb-6 text-white">💬 Témoignages de Réussite</h2>
+        <div id="testimonials-container" class="max-w-3xl mx-auto space-y-6">
+            <!-- Les témoignages seront insérés ici dynamiquement -->
         </div>
     </section>
 
@@ -105,11 +106,11 @@
 
     <!-- 📣 FOOTER -->
     <footer class="bg-gray-900 py-6 text-center text-gray-400">
-        <p>&copy; 2025 Tous droits réservés | <strong>Votre Entreprise</strong></p>
+        <p>&copy; <?php echo gmdate('Y'); ?> Tous droits réservés | <strong>CMDB</strong></p>
     </footer>
 
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
     <script src="../js/script_service.js"></script>
-
 </body>
 
 </html>

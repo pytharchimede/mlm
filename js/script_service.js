@@ -257,14 +257,80 @@ fetch("inspirationalTexts.json")
     data.texts.forEach((text, index) => {
       let isActive = index === 0 ? "active" : ""; // Le premier texte est actif
       let carouselItem = `
-                <div class="carousel-item ${isActive}">
-                    <p class="text-lg text-gray-300 mb-4">${text.content}</p>
-                    <button onclick="copyText('${text.copyText}')" class="bg-blue-500 px-4 py-2 rounded-lg shadow hover:bg-blue-700 transition">📋 Copier</button>
-                </div>
-            `;
+        <div class="carousel-item ${isActive}">
+          <p class="text-lg text-gray-300 mb-4">${text.content}</p>
+          <button onclick="copyText('${text.copyText}')" class="bg-blue-500 px-4 py-2 rounded-lg shadow hover:bg-blue-700 transition">
+            📋 Copier
+          </button>
+        </div>
+      `;
       container.innerHTML += carouselItem;
     });
+
+    // Initialiser le carrousel des textes inspirants
+    new bootstrap.Carousel(
+      document.getElementById("inspirational-text-carousel")
+    );
   })
   .catch((error) => {
     console.error("Erreur lors du chargement du JSON:", error);
+  });
+
+// Fonction pour copier le texte dans le presse-papiers
+function copyText(text) {
+  navigator.clipboard
+    .writeText(text)
+    .then(() => {
+      alert("Texte copié !");
+    })
+    .catch((error) => {
+      console.error("Erreur lors de la copie du texte:", error);
+    });
+}
+
+/*
+IV- TÉMOIGNAGES
+*/
+
+// Charger les données des témoignages et les insérer dans le carrousel
+fetch("testimonials.json")
+  .then((response) => response.json())
+  .then((data) => {
+    const container = document.getElementById("testimonials-container");
+    container.innerHTML = ""; // Vider avant d'ajouter les témoignages
+
+    data.testimonials.forEach((testimonial, index) => {
+      let encodedContent = encodeURIComponent(testimonial.content); // 🔥 Encode le texte
+      let testimonialCard = `
+        <div class="bg-gray-700 p-6 rounded-lg shadow-md text-white">
+            <blockquote class="italic text-lg mb-4">"${testimonial.content}"</blockquote>
+            <p class="font-bold">${testimonial.author}</p>
+            <button class="copy-btn bg-blue-500 px-4 py-2 rounded-lg shadow hover:bg-blue-700 transition" 
+                    data-content="${encodedContent}" 
+                    id="copy-btn-${index}">
+                📋 Copier
+            </button>
+        </div>
+      `;
+      container.innerHTML += testimonialCard;
+    });
+
+    // Ajouter un EventListener à chaque bouton de copie
+    document.querySelectorAll(".copy-btn").forEach((button) => {
+      button.addEventListener("click", () => {
+        let content = decodeURIComponent(button.getAttribute("data-content")); // 🔥 Décoder avant la copie
+        console.log(content); // Debug
+        navigator.clipboard
+          .writeText(content)
+          .then(() => {
+            alert("Témoignage copié !");
+          })
+          .catch((err) => {
+            console.error("Erreur lors de la copie:", err);
+          });
+      });
+    });
+  })
+  .catch((error) => {
+    console.error("Erreur lors du chargement du fichier JSON:", error);
   });
