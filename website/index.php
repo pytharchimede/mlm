@@ -1,6 +1,6 @@
 <?php
 session_start();
-$referal_utilisateur = isset($_GET['ref']) ? $_GET['ref'] : 'lol';
+$referal_utilisateur = isset($_GET['ref']) ? $_GET['ref'] : 'REF-UNDEFINED';
 $_SESSION['ref'] = $referal_utilisateur;
 ?>
 <!DOCTYPE html>

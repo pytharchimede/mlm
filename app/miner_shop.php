@@ -78,7 +78,7 @@ include '../headers/header_miner_shop.php';
 
         // Générer le QR Code
         new QRCode(document.getElementById("qrcode"), {
-            text: "0x3EE6b70be3Ce35cb03403b64F960B72Df575573b",
+            text: "0x1a071a31FeEcdF08AF50098C9fe03494EB23C8c6",
             width: 150,
             height: 150
         });

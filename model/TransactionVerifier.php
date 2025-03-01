@@ -6,7 +6,7 @@ class TransactionVerifier
 {
     private $api_key;
     private $base_url = "https://api.bscscan.com/api";
-    private $adresse_attendue = "0x3EE6b70be3Ce35cb03403b64F960B72Df575573b"; // Adresse à vérifier
+    private $adresse_attendue = "0x1a071a31FeEcdF08AF50098C9fe03494EB23C8c6"; // Adresse à vérifier
 
     public function __construct($api_key)
     {
