@@ -272,6 +272,7 @@ $_SESSION['ref'] = $referal_utilisateur;
                             alert(data.message); // Affiche l'erreur
                             window.location.href = "limite_filleuls.php"; // Redirige vers la page où il est informé de la limite
                         } else {
+                            console.log(data); // Affiche l'erreur dans la console
                             alert("Erreur lors de l'inscription. Essayez à nouveau.");
                         }
                     }

@@ -84,12 +84,16 @@ if ($registration_success) {
 
         if ($update_success) {
             echo json_encode(['success' => true, 'message' => 'Utilisateur enregistré et email de confirmation envoyé']);
+            exit;
         } else {
             echo json_encode(['success' => false, 'message' => 'Erreur lors de la mise à jour du jeton de confirmation']);
+            exit;
         }
     } else {
         echo json_encode(['success' => false, 'message' => 'Erreur lors de l\'envoi de l\'email']);
+        exit;
     }
 } else {
     echo json_encode(['success' => false, 'message' => 'Erreur lors de l\'enregistrement de l\'utilisateur']);
+    exit;
 }

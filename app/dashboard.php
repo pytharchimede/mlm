@@ -248,7 +248,7 @@ include '../headers/header_dashboard.php';
                     Partagez ce lien de parrainage avec vos amis pour leur faire découvrir **CMDB**, la tontine en cryptomonnaie !
                 </p>
 
-                <input type="text" id="referral-link" value="https://ifmap.ci/test/website/index.php?ref=<?php echo isset($_SESSION['secur']) ? $_SESSION['secur'] : 'lol'; ?>" readonly class="w-full p-2 mb-4 text-center text-black rounded">
+                <input type="text" id="referral-link" value="https://comodubo.com/website/index.php?ref=<?php echo isset($_SESSION['secur']) ? $_SESSION['secur'] : 'lol'; ?>" readonly class="w-full p-2 mb-4 text-center text-black rounded">
 
                 <div class="flex justify-around">
                     <a href="#" onclick="shareOnFacebook()" class="bg-blue-600 p-3 rounded-full text-white text-lg">
