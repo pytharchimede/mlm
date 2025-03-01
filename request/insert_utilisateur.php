@@ -45,6 +45,19 @@ if ($telephone && $utilisateurObj->checkPhoneExists($telephone)) {
     exit;
 }
 
+// Vérifier le nombre de filleuls d'un utilisateur
+$referal_utilisateur = isset($_SESSION['ref']) ? $_SESSION['ref']  : null;
+if ($referal_utilisateur) {
+    $filleuls_count = $utilisateurObj->countFilleulsByReferal($referal_utilisateur);
+
+    if ($filleuls_count >= 5) {
+        // Si l'utilisateur a déjà 5 filleuls ou plus, rediriger vers une page d'avertissement
+        echo json_encode(['success' => false, 'message' => 'Vous avez atteint la limite de 5 filleuls.']);
+        exit;
+    }
+}
+
+
 // Enregistrer l'utilisateur dans la base de données
 $token = bin2hex(random_bytes(16)); // Générer un jeton unique pour la confirmation
 

@@ -96,11 +96,11 @@ include '../headers/header_dashboard.php';
                         <i class="fas fa-headset text-5xl text-gray-300"></i>
                         <div class="mt-3 text-lg font-semibold">Service</div>
                     </a>
-                    <a href="javascript:void(0);" onclick="openInvitePopup()" class="flex flex-col items-center p-6 bg-gray-800 rounded-lg shadow-lg hover:bg-gray-700 transition">
+                    <a href="javascript:void(0);" <?php echo ($is_active) ? 'onclick="openInvitePopup()"' : ''; ?> class="flex flex-col items-center p-6 bg-gray-800 rounded-lg <?php echo ($is_active) ? 'shadow-lg hover:bg-gray-700 transition' : 'opacity-50 cursor-not-allowed'; ?>">
                         <i class="fas fa-users text-5xl text-gray-300"></i>
                         <div class="mt-3 text-lg font-semibold">Inviter</div>
                     </a>
-                    <a href="javascript:void();" id="openPopupButton" class="flex flex-col items-center p-6 bg-gray-800 rounded-lg shadow-lg hover:bg-gray-700 transition">
+                    <a href="javascript:void();" <?php echo ($is_active) ? 'id="openPopupButton"' : ''; ?> class="flex flex-col items-center p-6 bg-gray-800 rounded-lg <?php echo ($is_active) ? 'shadow-lg hover:bg-gray-700 transition' : 'opacity-50 cursor-not-allowed'; ?>">
                         <i class="fas fa-sitemap text-5xl text-gray-300"></i>
                         <div class="mt-3 text-lg font-semibold">Réseau</div>
                     </a>
@@ -116,12 +116,12 @@ include '../headers/header_dashboard.php';
                     <i class="fas fa-user-friends text-5xl text-gray-300"></i>
                     <div class="mt-3 text-lg font-semibold">Équipe</div>
                 </a>
-                <a href="javascript:void(0);" onclick="openModal()" class="flex flex-col items-center p-6 bg-gray-800 rounded-lg shadow-lg hover:bg-gray-700 transition">
+                <a href="javascript:void(0);" <?php echo ($is_active) ? 'onclick="openModal()"' : ''; ?> class="flex flex-col items-center p-6 bg-gray-800 rounded-lg <?php echo ($is_active) ? 'shadow-lg hover:bg-gray-700 transition' : 'opacity-50 cursor-not-allowed'; ?>">
                     <i class="fas fa-university text-5xl text-gray-300"></i>
                     <div class="mt-3 text-lg font-semibold">Compte</div>
                 </a>
 
-                <a href="javascript:void(0);" id="withdrawalButton" class="flex flex-col items-center p-6 bg-gray-800 rounded-lg shadow-lg hover:bg-gray-700 transition">
+                <a href="javascript:void(0);" <?php echo ($is_active) ? 'id="withdrawalButton"' : ''; ?> class="flex flex-col items-center p-6 bg-gray-800 rounded-lg <?php echo ($is_active) ? 'shadow-lg hover:bg-gray-700 transition' : 'opacity-50 cursor-not-allowed'; ?>">
                     <i class="fas fa-wallet text-5xl text-gray-300"></i>
                     <div class="mt-3 text-lg font-semibold">Retrait</div>
                 </a>

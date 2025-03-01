@@ -281,7 +281,13 @@ $_SESSION['ref'] = $referal_utilisateur;
                         console.log(data);
                         window.location.href = "success_register.php"; // Redirige vers la page de succès
                     } else {
-                        alert("Erreur lors de l'inscription. Essayez à nouveau.");
+                        if (data.message && data.message.includes("Vous avez atteint la limite de 5 filleuls")) {
+                            // Si le message d'erreur indique que le parrain a atteint la limite de filleuls
+                            alert(data.message); // Affiche l'erreur
+                            window.location.href = "limite_filleuls.php"; // Redirige vers la page où il est informé de la limite
+                        } else {
+                            alert("Erreur lors de l'inscription. Essayez à nouveau.");
+                        }
                     }
                 })
                 .catch(error => {

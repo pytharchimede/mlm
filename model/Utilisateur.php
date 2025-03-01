@@ -176,6 +176,16 @@ class Utilisateur
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    // Récupérer le nombre de filleuls d'un utilisateur
+    public function countFilleulsByReferal($referal_utilisateur)
+    {
+        $stmt = $this->pdo->prepare('SELECT COUNT(*) FROM utilisateur WHERE referal_utilisateur = :referal_utilisateur');
+        $stmt->execute([':referal_utilisateur' => $referal_utilisateur]);
+
+        return $stmt->fetchColumn(); // Retourne le nombre de filleuls
+    }
+
+
     public function getActifsFilleulsByReferal($referal_utilisateur)
     {
         // Vérification du type de donnée
