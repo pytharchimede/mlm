@@ -50,13 +50,18 @@
                                         filleulsData.filleuls.forEach(filleul => {
                                             console.log(filleul);
                                             const div = document.createElement("div");
-                                            div.classList.add("bg-gray-800", "p-4", "rounded-lg", "text-center");
+                                            div.classList.add("bg-gray-800", "p-6", "rounded-lg", "text-center", "shadow-lg", "hover:bg-gray-700", "transition", "duration-300");
+
                                             div.innerHTML = `
-                                                <h3 class="text-lg font-bold">${filleul.nom_utilisateur}</h3>
-                                                <p>${filleul.email_utilisateur}</p>
-                                                <a href="https://ifmap.ci/test/website/index.php?ref=${filleul.secur_utilisateur}" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded mt-2">
-                                                    Inscription
-                                                </a>
+                                                <div class="flex flex-col items-center">
+                                                    <img src="../assets/icon/user.png" alt="Profil" class="w-20 h-20 rounded-full border-2 border-gray-600">
+                                                    <h3 class="text-lg font-bold mt-3">${filleul.nom_utilisateur}</h3>
+                                                    <p class="text-gray-400 text-sm">${filleul.email_utilisateur}</p>
+                                                    <a href="https://ifmap.ci/test/website/index.php?ref=${filleul.secur_utilisateur}" 
+                                                    class="mt-4 bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-6 rounded-full shadow-md transition duration-300">
+                                                        Choisir ce parrain
+                                                    </a>
+                                                </div>
                                             `;
                                             filleulsList.appendChild(div);
                                         });
