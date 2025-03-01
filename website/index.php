@@ -183,15 +183,21 @@ $_SESSION['ref'] = $referal_utilisateur;
 
 
 
-    <section class="bg-gray-900 p-10 text-center">
-        <h2 class="text-3xl font-bold mb-4">Investissement unique</h2>
-        <div class="packs grid grid-cols-1 md:grid-cols-1 gap-1">
-            <div class="pack bg-gray-700 p-4 rounded" data-pack="Basic 1">
-                <!-- <div class="icon">✨</div> -->
-                <h2>PACK UNIQUE</h2>
-                <p>15 $</p>
-                <div class="stars">
+    <section class="bg-gray-900 p-10 text-center rounded-lg shadow-lg">
+        <h2 class="text-4xl font-bold text-white mb-6 transform transition-transform duration-300 hover:scale-105">Investissement Unique</h2>
+        <div class="packs grid grid-cols-1 md:grid-cols-1 lg:grid-cols-1 gap-6">
+            <div class="pack bg-gray-800 p-8 rounded-lg shadow-xl transform transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:cursor-pointer">
+                <h3 class="text-2xl font-semibold text-white mb-4 uppercase tracking-wider">Pack Unique</h3>
+                <p class="text-xl text-yellow-500 font-semibold mb-6">$15</p>
+                <div class="stars flex justify-center items-center text-yellow-500">
                     ★★★★★
+                </div>
+                <div class="mt-4 flex justify-center">
+                    <a href="#inscription">
+                        <button class="bg-gray-900 text-white px-6 py-3 rounded-lg font-bold transition-all duration-300 hover:bg-gray-700 transform hover:scale-105">
+                            Investir maintenant
+                        </button>
+                    </a>
                 </div>
             </div>
         </div>
