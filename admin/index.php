@@ -48,15 +48,15 @@
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-5">
             <div class="bg-gray-700 p-6 rounded-lg shadow-lg text-center">
                 <h3 class="text-xl text-white">Montant Encaissé</h3>
-                <p class="text-3xl text-yellow-500 font-bold">10,000€</p>
+                <p class="text-3xl text-yellow-500 font-bold">10,000 $</p>
             </div>
             <div class="bg-gray-700 p-6 rounded-lg shadow-lg text-center">
                 <h3 class="text-xl text-white">Montant à Reverser</h3>
-                <p class="text-3xl text-yellow-500 font-bold">5,000€</p>
+                <p class="text-3xl text-yellow-500 font-bold">5,000 $</p>
             </div>
             <div class="bg-gray-700 p-6 rounded-lg shadow-lg text-center">
                 <h3 class="text-xl text-white">Chiffre d'Affaires</h3>
-                <p class="text-3xl text-yellow-500 font-bold">50,000€</p>
+                <p class="text-3xl text-yellow-500 font-bold">50,000 $</p>
             </div>
             <div class="bg-gray-700 p-6 rounded-lg shadow-lg text-center">
                 <h3 class="text-xl text-white">Demandes de retrait</h3>
