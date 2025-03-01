@@ -51,6 +51,12 @@
                 <div class="text-gray-400 text-sm">
                     <a href="forgot_password.php" class="hover:text-green-400">Mot de passe oublié ?</a>
                 </div>
+
+                <!-- Lien Inscription -->
+                <div class="text-gray-400 text-sm">
+                    <span>Pas encore de compte ? </span>
+                    <a href="website/index.php#inscription" class="hover:text-green-400">Inscrivez-vous</a>
+                </div>
             </form>
         </div>
     </div>

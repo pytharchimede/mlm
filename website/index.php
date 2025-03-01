@@ -27,6 +27,30 @@ $_SESSION['ref'] = $referal_utilisateur;
         body {
             padding-top: 100px;
         }
+
+        #inscription {
+            background-color: #1a202c;
+            /* Couleur de fond sombre */
+            box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.3);
+            /* Ombre plus douce */
+            border-radius: 20px;
+        }
+
+        input,
+        button {
+            transition: all 0.3s ease;
+        }
+
+        input:focus,
+        button:hover {
+            transform: scale(1.05);
+            box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.4);
+        }
+
+        button:active {
+            transform: scale(1);
+            box-shadow: none;
+        }
     </style>
 </head>
 
@@ -63,14 +87,6 @@ $_SESSION['ref'] = $referal_utilisateur;
         <p class="text-lg text-gray-300 mb-6">
             Découvrez les étapes simples pour commencer à investir et gagner des revenus passifs.
         </p>
-
-        <!-- Vidéo avec effet Parallax -->
-        <!-- <div class="absolute top-0 left-0 w-full h-full overflow-hidden">
-            <video autoplay muted loop class="w-full h-full object-cover parallax-video">
-                <source src="../assets/video/explication_video.mp4" type="video/mp4">
-                Votre navigateur ne supporte pas la balise vidéo.
-            </video>
-        </div> -->
 
         <div class="flex flex-col md:flex-row justify-center items-center space-y-4 md:space-x-10 relative z-10">
             <div class="bg-gray-700 p-6 rounded-lg w-64">
@@ -195,19 +211,46 @@ $_SESSION['ref'] = $referal_utilisateur;
         </div>
     </section>
 
-    <section id="inscription" class="bg-gray-800 p-10 text-center">
-        <h3 class="text-2xl font-bold mb-4">Créez votre compte dès aujourd'hui</h3>
-        <form id="inscriptionForm" class="max-w-md mx-auto">
-            <input type="text" value="<? $referal_utilisateur ?>" class="w-full mb-4 px-4 py-2 rounded bg-gray-700 text-white" readonly>
-            <input type="text" name="nom" placeholder="Nom complet" class="w-full mb-4 px-4 py-2 rounded bg-gray-700 text-white" required>
-            <input type="email" name="email" placeholder="Email" class="w-full mb-4 px-4 py-2 rounded bg-gray-700 text-white" required>
-            <input type="password" name="mot_de_passe" placeholder="Mot de passe" class="w-full mb-4 px-4 py-2 rounded bg-gray-700 text-white" required>
-            <input type="password" name="confirmer_mot_de_passe" placeholder="Confirmer le mot de passe" class="w-full mb-4 px-4 py-2 rounded bg-gray-700 text-white" required>
-            <button type="submit" class="bg-blue-500 w-full py-3 rounded text-lg">S'inscrire</button>
+    <section id="inscription" class="bg-gray-900 p-12 text-center rounded-lg shadow-lg">
+        <h3 class="text-3xl font-bold text-white mb-8">Créez votre compte dès aujourd'hui</h3>
+        <form id="inscriptionForm" class="max-w-lg mx-auto space-y-6">
+            <!-- Champ Référent Utilisateur -->
+            <div class="flex items-center space-x-4">
+                <label for="referal_utilisateur" class="w-40 text-left text-gray-300">Référent :</label>
+                <input type="text" id="referal_utilisateur" value="<?php echo $referal_utilisateur ?>" class="w-full px-4 py-2 rounded-lg bg-gray-700 text-white" readonly>
+            </div>
+
+            <!-- Champ Nom Complet -->
+            <div class="flex items-center space-x-4">
+                <label for="nom" class="w-40 text-left text-gray-300">Nom complet :</label>
+                <input type="text" name="nom" id="nom" placeholder="Nom complet" class="w-full px-4 py-2 rounded-lg bg-gray-700 text-white" required>
+            </div>
+
+            <!-- Champ Email -->
+            <div class="flex items-center space-x-4">
+                <label for="email" class="w-40 text-left text-gray-300">Email :</label>
+                <input type="email" name="email" id="email" placeholder="Email" class="w-full px-4 py-2 rounded-lg bg-gray-700 text-white" required>
+            </div>
+
+            <!-- Champ Mot de Passe -->
+            <div class="flex items-center space-x-4">
+                <label for="mot_de_passe" class="w-40 text-left text-gray-300">Mot de passe :</label>
+                <input type="password" name="mot_de_passe" id="mot_de_passe" placeholder="Mot de passe" class="w-full px-4 py-2 rounded-lg bg-gray-700 text-white" required>
+            </div>
+
+            <!-- Champ Confirmer Mot de Passe -->
+            <div class="flex items-center space-x-4">
+                <label for="confirmer_mot_de_passe" class="w-40 text-left text-gray-300">Confirmer mot de passe :</label>
+                <input type="password" name="confirmer_mot_de_passe" id="confirmer_mot_de_passe" placeholder="Confirmer le mot de passe" class="w-full px-4 py-2 rounded-lg bg-gray-700 text-white" required>
+            </div>
+
+            <!-- Bouton d'inscription -->
+            <button type="submit" class="w-full py-3 rounded-lg text-lg bg-indigo-600 hover:bg-indigo-700 text-white transition">S'inscrire</button>
+
+            <!-- Lien vers la page de connexion -->
             <p class="mt-4 text-gray-400">Déjà un compte ? <a href="../login.php" class="text-blue-400 hover:underline">Connectez-vous</a></p>
         </form>
     </section>
-
 
     <footer class="bg-gray-800 p-5 text-center mt-10">
         <p class="text-gray-400">&copy; 2025 CMDB. Tous droits réservés.</p>
