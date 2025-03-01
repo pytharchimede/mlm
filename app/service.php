@@ -46,23 +46,12 @@
     </section>
 
     <!-- 📝 SECTION TEXTES INSPIRANTS À PARTAGER -->
-    <section class="py-16 px-6 bg-gray-800 text-center" id="inspirational-text-section">
+    <section class="py-16 px-6 bg-gray-800 text-center">
         <h2 class="text-3xl font-bold mb-4 text-white">✍️ Textes Inspirants</h2>
-        <div class="max-w-3xl mx-auto">
-            <div id="inspirational-text-carousel" class="carousel slide" data-bs-ride="carousel">
-                <div class="carousel-inner" id="carousel-text-container">
-                    <!-- Les éléments de texte seront ajoutés ici dynamiquement -->
-                </div>
-                <button class="carousel-control-prev" type="button" data-bs-target="#inspirational-text-carousel" data-bs-slide="prev">
-                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                </button>
-                <button class="carousel-control-next" type="button" data-bs-target="#inspirational-text-carousel" data-bs-slide="next">
-                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                </button>
-            </div>
+        <div id="inspirational-text-container" class="max-w-3xl mx-auto space-y-6">
+            <!-- Les textes seront insérés ici dynamiquement -->
         </div>
     </section>
-
 
 
     <!-- 🎥 SECTION VIDÉO PROMOTIONNELLE -->

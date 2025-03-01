@@ -253,40 +253,42 @@ III- TEXTES INSPIRANTS
 fetch("inspirationalTexts.json")
   .then((response) => response.json())
   .then((data) => {
-    const container = document.getElementById("carousel-text-container");
+    const container = document.getElementById("inspirational-text-container");
+    container.innerHTML = ""; // Vider le contenu avant d'ajouter les textes inspirants
+
     data.texts.forEach((text, index) => {
-      let isActive = index === 0 ? "active" : ""; // Le premier texte est actif
-      let carouselItem = `
-        <div class="carousel-item ${isActive}">
-          <p class="text-lg text-gray-300 mb-4">${text.content}</p>
-          <button onclick="copyText('${text.copyText}')" class="bg-blue-500 px-4 py-2 rounded-lg shadow hover:bg-blue-700 transition">
-            📋 Copier
-          </button>
+      let encodedText = encodeURIComponent(text.content); // 🔥 Encodage du texte inspirant
+      let textCard = `
+        <div class="bg-gray-700 p-6 rounded-lg shadow-md text-white">
+            <blockquote class="italic text-lg mb-4">"${text.content}"</blockquote>
+            <button class="copy-btn bg-blue-500 px-4 py-2 rounded-lg shadow hover:bg-blue-700 transition" 
+                    data-content="${encodedText}" 
+                    id="copy-btn-${index}">
+                📋 Copier
+            </button>
         </div>
       `;
-      container.innerHTML += carouselItem;
+      container.innerHTML += textCard;
     });
 
-    // Initialiser le carrousel des textes inspirants
-    new bootstrap.Carousel(
-      document.getElementById("inspirational-text-carousel")
-    );
+    // Ajouter un EventListener à chaque bouton de copie
+    document.querySelectorAll(".copy-btn").forEach((button) => {
+      button.addEventListener("click", () => {
+        let content = decodeURIComponent(button.getAttribute("data-content")); // 🔥 Décodage avant la copie
+        navigator.clipboard
+          .writeText(content)
+          .then(() => {
+            alert("Texte inspirant copié !");
+          })
+          .catch((err) => {
+            console.error("Erreur lors de la copie:", err);
+          });
+      });
+    });
   })
   .catch((error) => {
-    console.error("Erreur lors du chargement du JSON:", error);
+    console.error("Erreur lors du chargement du fichier JSON:", error);
   });
-
-// Fonction pour copier le texte dans le presse-papiers
-function copyText(text) {
-  navigator.clipboard
-    .writeText(text)
-    .then(() => {
-      alert("Texte copié !");
-    })
-    .catch((error) => {
-      console.error("Erreur lors de la copie du texte:", error);
-    });
-}
 
 /*
 IV- TÉMOIGNAGES
