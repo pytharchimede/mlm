@@ -11,6 +11,8 @@ include '../headers/header_service.php';
     <script defer src="../plugins/js/fontawesome-all.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../plugins/css/swiper-bundle.min.css" />
+    <script defer src="../plugins/js/swiper-bundle.min.js"></script>
     <link rel="stylesheet" href="../css/style_dashboard.css" />
     <link href="../css/style_service.css" rel="stylesheet">
 </head>
@@ -116,8 +118,8 @@ include '../headers/header_service.php';
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="../js/script_dashboard.js"></script>
     <script src="../js/script_service.js"></script>
+    <script src="../js/script_dashboard.js"></script>
 </body>
 
 </html>

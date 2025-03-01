@@ -8,7 +8,7 @@ I- Questions réponses
 */
 
 // Charger les données depuis le fichier JSON
-fetch("questions.json")
+fetch("../api/api_questionBloquante.php")
   .then((response) => response.json())
   .then((data) => {
     const cardsSection = document.getElementById("cards-section");
@@ -86,18 +86,18 @@ fetch("questions.json")
 II- Images, textes et vdéos de motivation
 */
 
-fetch("mediaSections.json")
+fetch("../api/api_motivation.php")
   .then((response) => response.json())
   .then((data) => {
     const container = document.getElementById("media-section");
     let sectionHTML = "";
 
-    data.sections.forEach((section) => {
+    data.motivations.forEach((section) => {
       let content = "";
       let previewButton = "";
 
       // Construction de l'URL absolue pour le média
-      let mediaURL = window.location.origin + "/test" + section.media;
+      let mediaURL = window.location.origin + section.media;
 
       if (section.type === "image") {
         content = `<img src="${mediaURL}" alt="${section.alt}" class="w-full h-48 object-cover rounded-lg">`;
@@ -250,7 +250,7 @@ III- TEXTES INSPIRANTS
 */
 
 // Charger le fichier JSON et insérer dynamiquement les textes dans le carrousel
-fetch("inspirationalTexts.json")
+fetch("../api/api_texteInspirant.php")
   .then((response) => response.json())
   .then((data) => {
     const container = document.getElementById("inspirational-text-container");
@@ -295,13 +295,13 @@ IV- TÉMOIGNAGES
 */
 
 // Charger les données des témoignages et les insérer dans le carrousel
-fetch("testimonials.json")
+fetch("../api/api_temoignages.php")
   .then((response) => response.json())
   .then((data) => {
     const container = document.getElementById("testimonials-container");
     container.innerHTML = ""; // Vider avant d'ajouter les témoignages
 
-    data.testimonials.forEach((testimonial, index) => {
+    data.temoignages.forEach((testimonial, index) => {
       let encodedContent = encodeURIComponent(testimonial.content); // 🔥 Encode le texte
       let testimonialCard = `
         <div class="bg-gray-700 p-6 rounded-lg shadow-md text-white">
