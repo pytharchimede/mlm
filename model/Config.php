@@ -5,7 +5,7 @@ class Config
     private static $constants = [
         "API_KEY" => "VWE4S3C-2R84KGN-H1TR9R3-W514NC5",
         "IPN_SECRET" => "6BCdJPz74ShyIlH3rSbaHvnJVYXfVg5G",
-        "BASE_URL" => "https://ifmap.ci/test",
+        "BASE_URL" => "https://comodubo.com",
         "DB_HOST" => "localhost",
         "DB_USER" => "root",
         "DB_PASS" => "",

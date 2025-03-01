@@ -73,7 +73,7 @@ if ($registration_success) {
     // Envoyer l'email de confirmation
     $emailManager = new EmailManager();
     $subject = "Confirmation de votre inscription";
-    $body = "<p>Bonjour $nom,</p><p>Merci de vous etre inscrit sur notre plateforme. Veuillez confirmer votre inscription en cliquant sur le lien suivant :</p><a href='https://ifmap.ci/test/confirmation_email.php?email=$email&token=$token'>Confirmer mon inscription</a>";
+    $body = "<p>Bonjour $nom,</p><p>Merci de vous etre inscrit sur notre plateforme. Veuillez confirmer votre inscription en cliquant sur le lien suivant :</p><a href='https://comodubo.com/confirmation_email.php?email=$email&token=$token'>Confirmer mon inscription</a>";
 
     // Envoyer l'email
     $sent = $emailManager->sendEmail($subject, $body, [$email => $nom]);

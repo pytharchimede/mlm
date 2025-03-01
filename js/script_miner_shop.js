@@ -68,8 +68,8 @@ function payer(id, amount, packName) {
       price_currency: "XOF",
       pay_currency: "usdttrc20",
       order_id: packName + "_" + Date.now(),
-      success_url: "https://ifmap.ci/test/success.php",
-      cancel_url: "https://ifmap.ci/test/cancel.php",
+      success_url: "http://www.comodubo.com/success.php",
+      cancel_url: "http://www.comodubo.com/cancel.php",
     }),
   })
     .then((response) => response.json())

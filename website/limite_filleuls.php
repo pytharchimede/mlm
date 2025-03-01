@@ -59,7 +59,7 @@
                                                     <img src="../assets/icon/user.png" alt="Profil" class="w-20 h-20 rounded-full border-2 border-gray-600">
                                                     <h3 class="text-lg font-bold mt-3">${filleul.nom_utilisateur}</h3>
                                                     <p class="text-gray-400 text-sm">${filleul.email_utilisateur}</p>
-                                                    <a href="https://ifmap.ci/test/website/index.php?ref=${filleul.secur_utilisateur}" 
+                                                    <a href="https://comodubo.com/website/index.php?ref=${filleul.secur_utilisateur}" 
                                                     class="mt-4 bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-6 rounded-full shadow-md transition duration-300">
                                                         Choisir ce parrain
                                                     </a>

@@ -11,6 +11,9 @@ if (!isset($_SESSION['user_id'])) {
 include '../model/Database.php';
 include '../model/Pack.php';
 include '../model/Utilisateur.php';
+include '../model/Config.php';
+
+$baseUrl = Config::get("BASE_URL");
 
 // Créer une instance de la base de données et de la classe Pack
 $databaseObj = new Database();

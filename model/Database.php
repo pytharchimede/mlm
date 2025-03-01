@@ -8,8 +8,8 @@ class Database
         if (self::$pdo === null) {
             try {
                 self::$pdo = new PDO(
-                    'mysql:host=localhost;dbname=ifmapci_finova_db',
-                    'ifmapci_ulrich',
+                    'mysql:host=localhost;dbname=fidestci_comodubo_db',
+                    'fidestci_ulrich',
                     '@Succes2019'
                 );
                 self::$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
