@@ -24,7 +24,7 @@ class EmailManager
         $this->mailer->Host = 'mail.ifmap.ci';
         $this->mailer->SMTPAuth = true;
         $this->mailer->Username = "support@ifmap.ci";
-        $this->mailer->Password = "@Succes2019";
+        $this->mailer->Password = "@Succes2019_____";
         $this->mailer->SMTPSecure = "ssl";
         $this->mailer->Port = 465;
         $this->mailer->From = "support@ifmap.ci";

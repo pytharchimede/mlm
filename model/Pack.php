@@ -59,6 +59,14 @@ class Pack
         ]);
     }
 
+    public function packExisteDeja($hash)
+    {
+        $stmt = $this->pdo->prepare("SELECT COUNT(*) FROM pack_abonne WHERE transaction_hash = :hash");
+        $stmt->execute([':hash' => $hash]);
+        return $stmt->fetchColumn() > 0;
+    }
+
+
     //Vérifier si l'abonné est actif
     public function isPackActive($secur)
     {
