@@ -198,6 +198,7 @@ $_SESSION['ref'] = $referal_utilisateur;
     <section id="inscription" class="bg-gray-800 p-10 text-center">
         <h3 class="text-2xl font-bold mb-4">Créez votre compte dès aujourd'hui</h3>
         <form id="inscriptionForm" class="max-w-md mx-auto">
+            <input type="text" value="<? $referal_utilisateur ?>" class="w-full mb-4 px-4 py-2 rounded bg-gray-700 text-white" readonly>
             <input type="text" name="nom" placeholder="Nom complet" class="w-full mb-4 px-4 py-2 rounded bg-gray-700 text-white" required>
             <input type="email" name="email" placeholder="Email" class="w-full mb-4 px-4 py-2 rounded bg-gray-700 text-white" required>
             <input type="password" name="mot_de_passe" placeholder="Mot de passe" class="w-full mb-4 px-4 py-2 rounded bg-gray-700 text-white" required>

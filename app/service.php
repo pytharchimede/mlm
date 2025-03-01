@@ -1,3 +1,6 @@
+<?php
+include '../headers/header_service.php';
+?>
 <!DOCTYPE html>
 <html lang="fr">
 
@@ -8,10 +11,24 @@
     <script defer src="../plugins/js/fontawesome-all.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../css/style_dashboard.css" />
     <link href="../css/style_service.css" rel="stylesheet">
 </head>
 
 <body class="bg-gray-900 text-white">
+
+    <!-- Navbar -->
+    <nav class="bg-gray-800 p-4 flex justify-between items-center">
+        <img id="logo" src="../assets/img/logo.png" class="w-32">
+        <div class="relative">
+            <button id="menuToggle" class="text-xl"><i class="fas fa-bars"></i></button>
+            <div id="profileMenu" class="hidden absolute right-0 bg-gray-700 p-4 rounded-lg mt-2 w-48">
+                <p class="font-bold"><?php echo $_SESSION['nom'] ?></p>
+                <p class="text-sm text-gray-400">Membre</p>
+                <button onclick="window.location.href='../logout.php'" class="bg-red-500 px-4 py-2 rounded mt-2">Déconnexion</button>
+            </div>
+        </div>
+    </nav>
 
     <header class="relative w-full h-96 flex items-center justify-center text-center bg-cover bg-center" style="background-image: url('https://source.unsplash.com/1600x900/?team,success');">
         <div class="absolute inset-0 bg-black bg-opacity-60"></div>
@@ -99,6 +116,7 @@
     </footer>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="../js/script_dashboard.js"></script>
     <script src="../js/script_service.js"></script>
 </body>
 
