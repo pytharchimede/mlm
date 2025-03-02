@@ -38,7 +38,7 @@ class FinanceManager
 
     public function getActiveUsers()
     {
-        $stmt = $this->pdo->prepare("SELECT * FROM utilisateur WHERE id_utilisateur IN (SELECT DISTINCT abonne_secur FROM pack_abonne WHERE actif = 1)");
+        $stmt = $this->pdo->prepare("SELECT * FROM utilisateur WHERE secur_utilisateur IN (SELECT DISTINCT abonne_secur FROM pack_abonne WHERE actif = 1)");
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }

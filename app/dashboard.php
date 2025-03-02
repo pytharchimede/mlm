@@ -144,8 +144,8 @@ include '../headers/header_dashboard.php';
                             <div class="heir-avatar"></div>
                             <div class="heir-details">
                                 <h3 class="heir-name"><?= htmlspecialchars($filleul['nom_utilisateur']) ?></h3>
-                                <p class="heir-text">Filleuls Actifs : 2</p>
-                                <p class="heir-text">Solde : 5000 $</p>
+                                <p class="heir-text">Filleuls Actifs : 0</p>
+                                <p class="heir-text">Solde : 0 $</p>
                             </div>
                             <div class="contact-btn-container">
                                 <a href="https://wa.me/<?= empty($filleul['whatsapp_utilisateur']) ? 'empty_number' : $filleul['telephone_utilisateur'] ?>" target="_blank" class="contact-btn">

@@ -12,69 +12,81 @@
 
 <body class="bg-gray-800">
 
-    <!-- Navbar -->
-    <nav class="bg-gray-900 text-white px-4 py-3 shadow-lg flex justify-between items-center">
-        <h1 class="text-2xl font-bold">Dashboard Admin</h1>
-        <button class="md:hidden" id="hamburgerBtn">
-            <i class="fas fa-bars"></i>
-        </button>
-    </nav>
-
-    <!-- Menu horizontal -->
-    <div id="sidebar" class="md:flex hidden justify-center space-x-8 bg-gray-900 py-3 text-white">
-        <a href="#" class="hover:bg-gray-700 p-2 rounded-md"><i class="fas fa-wallet mr-2"></i>Demandes de Retrait</a>
-        <a href="#" class="hover:bg-gray-700 p-2 rounded-md"><i class="fas fa-chart-line mr-2"></i>Statistiques</a>
-        <a href="#" class="hover:bg-gray-700 p-2 rounded-md"><i class="fas fa-users mr-2"></i>Utilisateurs</a>
-        <a href="#" class="hover:bg-gray-700 p-2 rounded-md"><i class="fas fa-gift mr-2"></i>Cadeaux Distribués</a>
-
-        <!-- Profil utilisateur -->
-        <div class="relative group">
-            <button class="flex items-center p-2 rounded-md hover:bg-gray-700">
-                <img src="https://via.placeholder.com/30" alt="Profil" class="rounded-full mr-2">
-                <span>Jean Dupont</span>
-                <i class="fas fa-chevron-down ml-2"></i>
-            </button>
-            <!-- Menu déroulant -->
-            <div class="absolute right-0 mt-2 w-48 bg-gray-900 text-white rounded-md shadow-lg hidden group-hover:block">
-                <a href="#" class="block px-4 py-2 hover:bg-gray-700">Mon Profil</a>
-                <a href="#" class="block px-4 py-2 hover:bg-gray-700">Paramètres</a>
-                <a href="#" class="block px-4 py-2 hover:bg-gray-700">Déconnexion</a>
-            </div>
-        </div>
-    </div>
-
+    <?php include 'inc/menu.php'; ?>
     <!-- Contenu principal -->
     <div class="p-5">
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-5">
-            <div class="bg-gray-700 p-6 rounded-lg shadow-lg text-center">
-                <h3 class="text-xl text-white">Montant Encaissé</h3>
-                <p class="text-3xl text-yellow-500 font-bold">10,000 $</p>
-            </div>
-            <div class="bg-gray-700 p-6 rounded-lg shadow-lg text-center">
-                <h3 class="text-xl text-white">Montant à Reverser</h3>
-                <p class="text-3xl text-yellow-500 font-bold">5,000 $</p>
-            </div>
-            <div class="bg-gray-700 p-6 rounded-lg shadow-lg text-center">
-                <h3 class="text-xl text-white">Chiffre d'Affaires</h3>
-                <p class="text-3xl text-yellow-500 font-bold">50,000 $</p>
-            </div>
-            <div class="bg-gray-700 p-6 rounded-lg shadow-lg text-center">
-                <h3 class="text-xl text-white">Demandes de retrait</h3>
-                <p class="text-3xl text-yellow-500 font-bold" id="montant_encaisse">0</p>
-            </div>
-            <div class="bg-gray-700 p-6 rounded-lg shadow-lg text-center">
-                <h3 class="text-xl text-white">Cadeaux à distribuer</h3>
-                <p class="text-3xl text-yellow-500 font-bold" id="montant_reverser">0</p>
-            </div>
-            <div class="bg-gray-700 p-6 rounded-lg shadow-lg text-center">
-                <h3 class="text-xl text-white">Cadeaux distribués</h3>
-                <p class="text-3xl text-yellow-500 font-bold" id="chiffre_affaire">0</p>
-            </div>
+
+            <a href="details_montant_encaisse.php" class="block">
+                <div class="bg-gray-700 p-6 rounded-lg shadow-lg text-center hover:bg-gray-600 transition">
+                    <h3 class="text-xl text-white">Montant Encaissé</h3>
+                    <p class="text-3xl text-yellow-500 font-bold" id="montant_encaisse"></p>
+                </div>
+            </a>
+
+            <a href="details_montant_reverser.php" class="block">
+                <div class="bg-gray-700 p-6 rounded-lg shadow-lg text-center hover:bg-gray-600 transition">
+                    <h3 class="text-xl text-white">Montant à Reverser</h3>
+                    <p class="text-3xl text-yellow-500 font-bold" id="montant_reverser"></p>
+                </div>
+            </a>
+
+            <a href="javascript:void();" class="block">
+                <div class="bg-gray-700 p-6 rounded-lg shadow-lg opacity-50 cursor-not-allowed">
+                    <h3 class="text-xl text-white">Chiffre d'Affaires</h3>
+                    <p class="text-3xl text-yellow-500 font-bold" id="chiffre_affaire"></p>
+                </div>
+            </a>
+
+            <a href="javascript:void();" class="block">
+                <div class="bg-gray-700 p-6 rounded-lg shadow-lg opacity-50 cursor-not-allowed">
+                    <h3 class="text-xl text-white">Demandes de retrait</h3>
+                    <p class="text-3xl text-yellow-500 font-bold" id="demande_retrait"></p>
+                </div>
+            </a>
+
+            <a href="details_cadeaux_a_distribuer.php" class="block">
+                <div class="bg-gray-700 p-6 rounded-lg shadow-lg text-center hover:bg-gray-600 transition">
+                    <h3 class="text-xl text-white">Cadeaux à distribuer</h3>
+                    <p class="text-3xl text-yellow-500 font-bold" id="cadeau_a_distribuer">0</p>
+                </div>
+            </a>
+
+            <a href="details_cadeaux_distribues.php" class="block">
+                <div class="bg-gray-700 p-6 rounded-lg shadow-lg text-center hover:bg-gray-600 transition">
+                    <h3 class="text-xl text-white">Cadeaux distribués</h3>
+                    <p class="text-3xl text-yellow-500 font-bold" id="cadeaux_distribues">0</p>
+                </div>
+            </a>
+
+            <a href="details_membres.php" class="block">
+                <div class="bg-gray-700 p-6 rounded-lg shadow-lg text-center hover:bg-gray-600 transition">
+                    <h3 class="text-xl text-white">Membres</h3>
+                    <p class="text-3xl text-yellow-500 font-bold" id="membres_total"></p>
+                </div>
+            </a>
+
+            <a href="details_membres_actifs.php" class="block">
+                <div class="bg-gray-700 p-6 rounded-lg shadow-lg text-center hover:bg-gray-600 transition">
+                    <h3 class="text-xl text-white">Membres actifs</h3>
+                    <p class="text-3xl text-yellow-500 font-bold" id="membres_actifs"></p>
+                </div>
+            </a>
+
+            <a href="javascript:void();" class="block">
+                <div class="bg-gray-700 p-6 rounded-lg shadow-lg opacity-50 cursor-not-allowed">
+                    <h3 class="text-xl text-white">Taux de conversion</h3>
+                    <p class="text-3xl text-yellow-500 font-bold" id="taux_conversion"></p>
+                </div>
+            </a>
+
         </div>
+
         <div class="mt-10">
             <canvas id="montantsChart"></canvas>
         </div>
     </div>
+
 
     <script>
         async function fetchData() {
@@ -82,11 +94,37 @@
                 let response = await fetch('../api/api_finance.php');
                 let data = await response.json();
 
-                document.getElementById('montant_encaisse').innerText = data.montantEncaisses + " $";
-                document.getElementById('montant_reverser').innerText = data.montantReverser + " $";
-                document.getElementById('chiffre_affaire').innerText = (data.montantEncaisses - data.montantReverser) + " $";
+                console.log(data); // Ajoutez cette ligne pour vérifier les données reçues
+
+                // Vérification et assignation des valeurs par défaut si null ou NaN
+                let montantEncaisses = data.montantEncaisses ?? 0;
+                let montantReverser = data.montantTotalAReverser ?? 0;
+                let chiffreAffaire = montantEncaisses - montantReverser;
+
+                let demandesRetraitCount = data.demandesRetrait?.length ?? 0;
+                let nombreTotalDeMembres = data.listeUtilisateurs?.length ?? 0;
+                let nombreDeMembresActifs = data.listeUtilisateursActifs?.length ?? 0;
+                let tauxDeConversion = nombreTotalDeMembres > 0 ?
+                    ((nombreDeMembresActifs / nombreTotalDeMembres) * 100).toFixed(2) :
+                    0;
+
+                // Mise à jour des valeurs dans l'interface
+                document.getElementById('montant_encaisse').innerText = montantEncaisses + " $";
+                document.getElementById('montant_reverser').innerText = montantReverser + " $";
+                document.getElementById('chiffre_affaire').innerText = (montantEncaisses - montantReverser) + " $";
+                document.getElementById('demande_retrait').innerText = demandesRetraitCount;
+                document.getElementById('membres_total').innerText = nombreTotalDeMembres;
+                document.getElementById('membres_actifs').innerText = nombreDeMembresActifs;
+                document.getElementById('taux_conversion').innerText = tauxDeConversion + " %";
+
+                // Mise à jour des trois premières cartes
+                let cards = document.querySelectorAll('.grid div p.font-bold');
+                cards[0].innerText = montantEncaisses + " $"; // Montant Encaissé
+                cards[1].innerText = montantReverser + " $"; // Montant à Reverser
+                cards[2].innerText = (montantEncaisses - montantReverser) + " $"; // Chiffre d'Affaires
 
                 updateChart(data.montantEncaisses);
+
             } catch (error) {
                 console.error("Erreur lors de la récupération des données :", error);
             }
