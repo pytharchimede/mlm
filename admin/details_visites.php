@@ -98,6 +98,12 @@ include 'inc/header_admin.php';
         <!-- Tableau des visites -->
         <div class="table-container">
             <h3 class="text-2xl mb-4">Tableau des Visites</h3>
+            <!-- Champ de recherche -->
+            <div class="mb-4">
+                <input type="text" id="searchInput" placeholder="Rechercher..."
+                    class="w-full px-4 py-2 border rounded-lg bg-gray-800 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500">
+            </div>
+
             <table id="visites-table" class="display table-auto w-full text-sm text-left text-gray-300">
                 <thead class="bg-gray-700">
                     <tr>
@@ -270,6 +276,15 @@ include 'inc/header_admin.php';
 
         $('#close-modal').on('click', function() {
             $('#modal').addClass('hidden');
+        });
+
+        $(document).ready(function() {
+            $("#searchInput").on("keyup", function() {
+                var value = $(this).val().toLowerCase();
+                $("#visites-tbody tr").filter(function() {
+                    $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1);
+                });
+            });
         });
     </script>
 </body>
