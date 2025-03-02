@@ -19,14 +19,14 @@ include '../headers/header_miner_shop.php';
         <a href="dashboard.php">
             <img src="../assets/img/logo.png" alt="Logo" class="h-10">
         </a>
-        <div class="flex space-x-4">
+        <!-- <div class="flex space-x-4">
             <a href="https://wa.me/123456789" target="_blank" class="text-green-400 text-2xl">
                 <i class="fab fa-whatsapp"></i>
             </a>
             <a href="https://t.me/yourusername" target="_blank" class="text-blue-400 text-2xl">
                 <i class="fab fa-telegram"></i>
             </a>
-        </div>
+        </div> -->
     </header>
 
     <div class="container mx-auto p-6">
@@ -37,17 +37,23 @@ include '../headers/header_miner_shop.php';
         <!-- Montant fixe -->
         <div class="bg-gray-800 p-6 rounded-lg text-center mb-6">
             <p class="text-lg">Montant unique d'adhésion</p>
-            <p class="text-3xl font-bold text-yellow-400">15$ en BNB</p>
+            <p class="text-3xl font-bold text-yellow-400">15$ soit <span id="bnb-equivalent">...</span></p>
         </div>
+
 
         <!-- Informations de paiement -->
         <div id="payment-info" class="text-center">
             <h2 class="text-2xl font-semibold mb-4">Effectuez votre paiement</h2>
 
-            <p>Envoyez l'équivalent de <span class="font-bold text-yellow-400">15$ en BNB</span> à l'adresse suivante :</p>
+            <p class="text-center">
+                Envoyez le montant unique d'adhésion à l'adresse suivante :
+            </p>
+
 
             <div class="flex items-center justify-center space-x-2 mt-2">
-                <p class="text-yellow-400 font-mono text-lg" id="payment-address">0x3EE6b70be3Ce35cb03403b64F960B72Df575573b</p>
+                <p class="text-yellow-400 font-mono text-lg break-all" id="payment-address">
+                    0x1a071a31FeEcdF08AF50098C9fe03494EB23C8c6
+                </p>
                 <button class="bg-yellow-400 text-gray-900 px-2 py-1 rounded-lg text-sm font-semibold hover:bg-yellow-500 transition" onclick="copyAddress()">
                     <i class="fas fa-copy"></i>
                 </button>
@@ -82,7 +88,29 @@ include '../headers/header_miner_shop.php';
             width: 150,
             height: 150
         });
+
+        function updateBNBPrice() {
+            fetch('https://api.coingecko.com/api/v3/simple/price?ids=binancecoin&vs_currencies=usd')
+                .then(response => response.json())
+                .then(data => {
+                    let bnbPrice = data.binancecoin.usd; // Prix de 1 BNB en USD
+                    let equivalentBNB = (15 / bnbPrice).toFixed(3); // Calcul de 15$ en BNB
+
+                    // Mise à jour de l'affichage
+                    document.getElementById("bnb-equivalent").innerText = equivalentBNB + " BNB";
+                    console.log("Prix BNB mis à jour 15$ = " + equivalentBNB + " BNB");
+
+                })
+                .catch(error => console.error("Erreur lors de la récupération du prix BNB:", error));
+        }
+
+        // Actualiser le prix toutes les 60 secondes
+        setInterval(updateBNBPrice, 30000);
+
+        // Charger le prix immédiatement au chargement de la page
+        updateBNBPrice();
     </script>
+
 </body>
 
 </html>

@@ -1,4 +1,5 @@
 <?php
+session_start();
 require_once "../model/Database.php";
 require_once "../model/TransactionVerifier.php";
 require_once "../model/Pack.php";
@@ -36,6 +37,8 @@ $verificateur = new TransactionVerifier($api_key);
 
 // Récupération des détails de la transaction
 $tx_hash = $_POST['hash'];
+$_SESSION['transaction_hash'] = $tx_hash;
+
 $resultat = $verificateur->verifierTransaction($tx_hash);
 
 

@@ -42,11 +42,11 @@ class Pack
     }
 
     //Souscrire à un pack
-    public function subscribeToPack($abonne_secur, $pack_id, $solde, $date_souscription, $date_fin, $actif = 1)
+    public function subscribeToPack($abonne_secur, $pack_id, $solde, $date_souscription, $date_fin, $actif = 1, $transaction_hash)
     {
         // Préparer la requête pour insérer un abonnement dans la table pack_abonne
-        $stmt = $this->pdo->prepare("INSERT INTO pack_abonne (abonne_secur, pack_id, solde, actif, date_souscription, date_fin) 
-                                 VALUES (:abonne_secur, :pack_id, :solde, :actif, :date_souscription, :date_fin)");
+        $stmt = $this->pdo->prepare("INSERT INTO pack_abonne (abonne_secur, pack_id, solde, actif, date_souscription, date_fin, transaction_hash) 
+                                 VALUES (:abonne_secur, :pack_id, :solde, :actif, :date_souscription, :date_fin, :transaction_hash)");
 
         // Exécuter la requête avec les paramètres
         return $stmt->execute([
@@ -55,7 +55,8 @@ class Pack
             ':solde' => $solde,
             ':actif' => $actif,
             ':date_souscription' => $date_souscription,
-            ':date_fin' => $date_fin
+            ':date_fin' => $date_fin,
+            ':transaction_hash' => $transaction_hash
         ]);
     }
 
