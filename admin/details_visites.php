@@ -123,6 +123,33 @@ include 'inc/header_admin.php';
 
     </div>
 
+    <!-- Modal Popup -->
+    <div id="modal" class="fixed inset-0 bg-gray-900 bg-opacity-75 flex items-center justify-center hidden">
+        <div class="bg-gray-800 p-6 rounded-lg shadow-lg max-w-lg w-full">
+            <h2 class="text-2xl font-semibold text-indigo-400 mb-4">Détails de la Visite</h2>
+            <div class="space-y-2 text-gray-300">
+                <p><strong>ID:</strong> <span id="modal-id"></span></p>
+                <p><strong>IP:</strong> <span id="modal-ip"></span></p>
+                <p><strong>User Agent:</strong> <span id="modal-user-agent"></span></p>
+                <p><strong>Système:</strong> <span id="modal-os"></span></p>
+                <p><strong>Navigateur:</strong> <span id="modal-navigateur"></span></p>
+                <p><strong>Latitude:</strong> <span id="modal-latitude"></span></p>
+                <p><strong>Longitude:</strong> <span id="modal-longitude"></span></p>
+                <p><strong>Pays:</strong> <span id="modal-pays"></span></p>
+                <p><strong>Ville:</strong> <span id="modal-ville"></span></p>
+                <p><strong>Page Visité:</strong> <span id="modal-url"></span></p>
+                <p><strong>Referer:</strong> <span id="modal-referer"></span></p>
+                <p><strong>Date de Visite:</strong> <span id="modal-date"></span></p>
+            </div>
+            <div class="mt-4 text-right">
+                <button id="close-modal" class="bg-red-500 px-4 py-2 rounded-md text-white hover:bg-red-600">
+                    Fermer
+                </button>
+            </div>
+        </div>
+    </div>
+
+
     <!-- Script pour graphiques et DataTables -->
     <script>
         function updateData() {
@@ -218,6 +245,32 @@ include 'inc/header_admin.php';
 
         // Charger initialement les données
         updateData();
+
+        //ouvrir modal details visite
+        $(document).on('click', '#visites-table tbody tr', function() {
+            let rowData = $(this).find('td').map(function() {
+                return $(this).text();
+            }).get();
+
+            $('#modal-id').text(rowData[0]);
+            $('#modal-ip').text(rowData[1]);
+            $('#modal-user-agent').text(rowData[2]);
+            $('#modal-os').text(rowData[3]);
+            $('#modal-navigateur').text(rowData[4]);
+            $('#modal-latitude').text(rowData[5]);
+            $('#modal-longitude').text(rowData[6]);
+            $('#modal-pays').text(rowData[7]);
+            $('#modal-ville').text(rowData[8]);
+            $('#modal-url').text(rowData[9]);
+            $('#modal-referer').text(rowData[10]);
+            $('#modal-date').text(rowData[11]);
+
+            $('#modal').removeClass('hidden');
+        });
+
+        $('#close-modal').on('click', function() {
+            $('#modal').addClass('hidden');
+        });
     </script>
 </body>
 
