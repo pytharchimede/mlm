@@ -108,7 +108,7 @@ include '../headers/header_dashboard.php';
             </div>
 
             <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mt-4">
-                <a class="flex flex-col items-center p-6 bg-gray-700 rounded-lg opacity-50 cursor-not-allowed">
+                <a href="javascript:void(0);" onclick="openForumModal()" class="flex flex-col items-center p-6 bg-gray-800 rounded-lg shadow-lg hover:bg-gray-700 transition">
                     <i class="fas fa-comments text-5xl text-gray-300"></i>
                     <div class="mt-3 text-lg font-semibold">Forum</div>
                 </a>
@@ -266,6 +266,37 @@ include '../headers/header_dashboard.php';
                 </div>
             </div>
         </div>
+
+        <!-- Popup de communication -->
+        <div id="forumModal" class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center hidden">
+            <div class="bg-gray-800 p-6 rounded-lg shadow-lg w-96 text-center relative">
+                <!-- Bouton de fermeture -->
+                <button onclick="closeForumModal()" class="absolute top-2 right-2 text-gray-400 hover:text-white text-2xl">&times;</button>
+
+                <!-- Titre -->
+                <h2 class="text-xl font-bold text-white mb-3">Nos canaux de communication</h2>
+
+                <!-- Lien de partage dynamique -->
+                <p class="text-gray-300 text-sm mb-2">Cliquez sur un canal et copiez le lien :</p>
+                <div class="flex bg-gray-700 p-2 rounded-lg mb-4">
+                    <input id="referralLink" type="text" value="" class="bg-transparent text-white text-sm flex-1 outline-none" readonly>
+                    <button onclick="copyLink()" class="ml-2 bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600 transition">Copier</button>
+                </div>
+
+                <!-- Icônes des réseaux sociaux (Cliquables) -->
+                <div class="grid grid-cols-4 gap-3 justify-center">
+                    <img src="../assets/icon/social/whatsapp.png" onclick="updateLink('https://wa.me/971527959652')" class="social-icon" alt="WhatsApp">
+                    <img src="../assets/icon/social/telegram.png" onclick="updateLink('https://t.me/+N_aPV8J8wwwzYzM8')" class="social-icon" alt="Telegram">
+                    <img src="../assets/icon/social/email.png" onclick="updateLink('assistance@comodubo.com')" class="social-icon" alt="Email">
+                    <img src="../assets/icon/social/facebook.png" onclick="updateLink('https://facebook.com/votre_page')" class="social-icon" alt="Facebook">
+                    <img src="../assets/icon/social/tiktok.png" onclick="updateLink('https://www.tiktok.com/@2025cmdb?lang=fr')" class="social-icon" alt="TikTok">
+                    <img src="../assets/icon/social/youtube.png" onclick="updateLink('https://youtube.com/c/votre_chaine')" class="social-icon" alt="YouTube">
+                    <img src="../assets/icon/social/instagram.png" onclick="updateLink('https://instagram.com/votre_compte')" class="social-icon" alt="Instagram">
+                    <img src="../assets/icon/social/twitter.png" onclick="updateLink('https://twitter.com/votre_compte')" class="social-icon" alt="Twitter">
+                </div>
+            </div>
+        </div>
+
 
         <!-- Bottom Navigation -->
         <?php include '../inc/bottom_navigation_bar.php'; ?>
@@ -434,6 +465,32 @@ include '../headers/header_dashboard.php';
                         alert('Une erreur est survenue lors de la soumission de la demande.');
                     });
             });
+
+
+            function openForumModal() {
+                // Affiche le modal pour les cannaux de communication
+                document.getElementById("forumModal").classList.remove("hidden");
+            }
+
+            function closeForumModal() {
+                // Affiche le modal pour les cannaux de communication
+                document.getElementById("forumModal").classList.add("hidden");
+            }
+
+            function updateLink(link) {
+                document.getElementById("referralLink").value = link;
+            }
+
+            function copyLink() {
+                var copyText = document.getElementById("referralLink");
+                if (copyText.value === "") {
+                    alert("Sélectionnez d'abord un canal !");
+                    return;
+                }
+                copyText.select();
+                document.execCommand("copy");
+                alert("Lien copié : " + copyText.value);
+            }
         </script>
 </body>
 
