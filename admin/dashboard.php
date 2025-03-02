@@ -77,20 +77,45 @@
     </div>
 
     <script>
-        // Graphique
+        async function fetchData() {
+            try {
+                let response = await fetch('../api/api_finance.php');
+                let data = await response.json();
+
+                document.getElementById('montant_encaisse').innerText = data.montantEncaisses + " $";
+                document.getElementById('montant_reverser').innerText = data.montantReverser + " $";
+                document.getElementById('chiffre_affaire').innerText = (data.montantEncaisses - data.montantReverser) + " $";
+
+                updateChart(data.montantEncaisses);
+            } catch (error) {
+                console.error("Erreur lors de la récupération des données :", error);
+            }
+        }
+
+        function updateChart(montant) {
+            montantsChart.data.datasets[0].data.push(montant);
+            if (montantsChart.data.datasets[0].data.length > 12) {
+                montantsChart.data.datasets[0].data.shift();
+            }
+            montantsChart.update();
+        }
+
         const ctx = document.getElementById('montantsChart').getContext('2d');
-        new Chart(ctx, {
+        const montantsChart = new Chart(ctx, {
             type: 'line',
             data: {
                 labels: ['Jan', 'Fév', 'Mar', 'Avr', 'Mai', 'Juin'],
                 datasets: [{
                     label: 'Montants Encaissés',
-                    data: [1000, 2000, 1500, 2500, 3000, 3500],
+                    data: [],
                     borderColor: 'rgba(255, 159, 64, 1)',
                     fill: false,
                 }]
             },
         });
+
+        fetchData();
+        setInterval(fetchData, 5000);
 
         // Menu mobile
         document.getElementById('hamburgerBtn').addEventListener('click', () => {
