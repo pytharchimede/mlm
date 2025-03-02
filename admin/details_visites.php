@@ -1,3 +1,6 @@
+<?php
+include 'inc/header_admin.php';
+?>
 <!DOCTYPE html>
 <html lang="fr">
 
@@ -54,6 +57,7 @@
 </head>
 
 <body class="bg-gray-900 text-white">
+    <?php include 'inc/menu.php'; ?>
 
     <!-- Conteneur principal -->
     <div class="container mx-auto p-8 space-y-8 bg-gray-800 rounded-lg shadow-lg">
@@ -126,9 +130,10 @@
                 url: '../api/api_visites.php', // L'URL de l'API
                 method: 'GET',
                 success: function(data) {
+                    console.log(data); // Afficher les données dans la console pour le débogage
                     // Mettre à jour les statistiques générales
                     $('#total_visites').text(data.total_visites);
-                    $('#pays_count').text(data.statistiques_pays.length + ' Pays');
+                    $('#pays_count').text(Object.keys(data.statistiques_pays).length + ' Pays');
 
                     // Mettre à jour les graphiques
                     updateCharts(data.statistiques_pays, data.statistiques_navigateur);
@@ -140,47 +145,52 @@
         }
 
         function updateCharts(statistiques_pays, statistiques_navigateur) {
-            // Détruire les graphiques existants si nécessaires
+            // Mettre à jour le graphique des visites par pays
             if (window.graphPays) {
-                window.graphPays.destroy();
+                window.graphPays.data.labels = Object.keys(statistiques_pays); // Mise à jour des labels
+                window.graphPays.data.datasets[0].data = Object.values(statistiques_pays); // Mise à jour des données
+                window.graphPays.update(); // Appliquer les changements sans reconstruire
+            } else {
+                // Si le graphique n'existe pas encore, on le crée
+                var ctx1 = document.getElementById('graph-pays').getContext('2d');
+                window.graphPays = new Chart(ctx1, {
+                    type: 'pie',
+                    data: {
+                        labels: Object.keys(statistiques_pays),
+                        datasets: [{
+                            label: 'Visites par Pays',
+                            data: Object.values(statistiques_pays),
+                            backgroundColor: ['#FF5733', '#33FF57', '#3357FF', '#FF33A8', '#F4D03F'],
+                            borderColor: '#fff',
+                            borderWidth: 1
+                        }]
+                    }
+                });
             }
+
+            // Mettre à jour le graphique des visites par navigateur
             if (window.graphNavigateur) {
-                window.graphNavigateur.destroy();
+                window.graphNavigateur.data.labels = Object.keys(statistiques_navigateur); // Mise à jour des labels
+                window.graphNavigateur.data.datasets[0].data = Object.values(statistiques_navigateur); // Mise à jour des données
+                window.graphNavigateur.update(); // Appliquer les changements sans reconstruire
+            } else {
+                // Si le graphique n'existe pas encore, on le crée
+                var ctx2 = document.getElementById('graph-navigateur').getContext('2d');
+                window.graphNavigateur = new Chart(ctx2, {
+                    type: 'bar',
+                    data: {
+                        labels: Object.keys(statistiques_navigateur),
+                        datasets: [{
+                            label: 'Visites par Navigateur',
+                            data: Object.values(statistiques_navigateur),
+                            backgroundColor: '#4CAF50',
+                            borderColor: '#fff',
+                            borderWidth: 1
+                        }]
+                    }
+                });
             }
-
-            // Graphique des visites par pays
-            var ctx1 = document.getElementById('graph-pays').getContext('2d');
-            window.graphPays = new Chart(ctx1, {
-                type: 'pie',
-                data: {
-                    labels: Object.keys(statistiques_pays),
-                    datasets: [{
-                        label: 'Visites par Pays',
-                        data: Object.values(statistiques_pays),
-                        backgroundColor: ['#FF5733', '#33FF57', '#3357FF', '#FF33A8', '#F4D03F'],
-                        borderColor: '#fff',
-                        borderWidth: 1
-                    }]
-                }
-            });
-
-            // Graphique des visites par navigateur
-            var ctx2 = document.getElementById('graph-navigateur').getContext('2d');
-            window.graphNavigateur = new Chart(ctx2, {
-                type: 'bar',
-                data: {
-                    labels: Object.keys(statistiques_navigateur),
-                    datasets: [{
-                        label: 'Visites par Navigateur',
-                        data: Object.values(statistiques_navigateur),
-                        backgroundColor: '#4CAF50',
-                        borderColor: '#fff',
-                        borderWidth: 1
-                    }]
-                }
-            });
         }
-
 
         function updateTable(visites) {
             var tbody = $('#visites-tbody');

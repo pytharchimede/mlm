@@ -272,4 +272,45 @@ class Utilisateur
         // Mise à jour du solde
         return $this->packObj->updatePackBalance($secur_utilisateur, $detailCompteParrain['id_pack_abonne'], $solde_total);
     }
+
+    public function getUserByResetToken($token)
+    {
+        $stmt = $this->pdo->prepare('SELECT * FROM utilisateur WHERE reset_token = :token');
+        $stmt->bindParam(':token', $token);
+        $stmt->execute();
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
+
+    public function updatePassword($email, $hashed_password)
+    {
+        $stmt = $this->pdo->prepare('UPDATE utilisateur SET motpass_utilisateur = :password WHERE email_utilisateur = :email');
+        $stmt->bindParam(':password', $hashed_password);
+        $stmt->bindParam(':email', $email);
+        $stmt->execute();
+    }
+
+    public function clearResetToken($email)
+    {
+        $stmt = $this->pdo->prepare('UPDATE utilisateur SET reset_token = NULL WHERE email_utilisateur = :email');
+        $stmt->bindParam(':email', $email);
+        $stmt->execute();
+    }
+
+    public function updateResetToken($email, $token)
+    {
+        // Supposons que vous utilisez PDO pour la connexion à la base de données
+        $query = "UPDATE utilisateur SET reset_token = :token WHERE email_utilisateur = :email";
+        $stmt = $this->pdo->prepare($query);
+
+        // Lier les paramètres avec les valeurs
+        $stmt->bindParam(':token', $token, PDO::PARAM_STR);
+        $stmt->bindParam(':email', $email, PDO::PARAM_STR);
+
+        // Exécuter la requête et vérifier si l'opération a réussi
+        if ($stmt->execute()) {
+            return true; // Le token a été mis à jour avec succès
+        } else {
+            return false; // Une erreur s'est produite
+        }
+    }
 }

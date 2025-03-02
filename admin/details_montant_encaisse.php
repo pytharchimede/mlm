@@ -1,3 +1,6 @@
+<?php
+include 'inc/header_admin.php';
+?>
 <!DOCTYPE html>
 <html lang="fr">
 

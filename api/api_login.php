@@ -37,6 +37,8 @@ if (isset($_POST['email']) && isset($_POST['password'])) {
             $_SESSION['email'] = $user['email_utilisateur'];
             $_SESSION['nom'] = $user['nom_utilisateur'];
             $_SESSION['secur'] = $user['secur_utilisateur'];
+            $_SESSION['acces_admin'] = $user['acces_admin'];
+
 
             // Créer une instance de la classe Tracabilite
             $tracabilite = new Tracabilite(Database::getConnection());
