@@ -288,7 +288,7 @@ include '../headers/header_dashboard.php';
                     <img src="../assets/icon/social/whatsapp.png" onclick="updateLink('https://wa.me/971527959652')" class="social-icon" alt="WhatsApp">
                     <img src="../assets/icon/social/telegram.png" onclick="updateLink('https://t.me/+N_aPV8J8wwwzYzM8')" class="social-icon" alt="Telegram">
                     <img src="../assets/icon/social/email.png" onclick="updateLink('assistance@comodubo.com')" class="social-icon" alt="Email">
-                    <img src="../assets/icon/social/facebook.png" onclick="updateLink('https://facebook.com/votre_page')" class="social-icon" alt="Facebook">
+                    <img src="../assets/icon/social/facebook.png" onclick="updateLink('https://www.facebook.com/profile.php?id=61573796879697&mibextid=LQQJ4d')" class="social-icon" alt="Facebook">
                     <img src="../assets/icon/social/tiktok.png" onclick="updateLink('https://www.tiktok.com/@2025cmdb?lang=fr')" class="social-icon" alt="TikTok">
                     <img src="../assets/icon/social/youtube.png" onclick="updateLink('https://youtube.com/c/votre_chaine')" class="social-icon" alt="YouTube">
                     <img src="../assets/icon/social/instagram.png" onclick="updateLink('https://instagram.com/votre_compte')" class="social-icon" alt="Instagram">

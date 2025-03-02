@@ -1,5 +1,8 @@
 <?php
 session_start();
+
+include 'header_site_index.php';
+
 $referal_utilisateur = isset($_GET['ref']) ? $_GET['ref'] : 'REF-UNDEFINED';
 $_SESSION['ref'] = $referal_utilisateur;
 ?>
@@ -13,45 +16,6 @@ $_SESSION['ref'] = $referal_utilisateur;
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
     <link rel="stylesheet" href="site_css/accueil.css">
-    <style>
-        /* Fixer le header en haut de la page */
-        header {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            z-index: 1000;
-        }
-
-        /* Ajouter un espace sous le header pour éviter que le contenu ne soit caché */
-        body {
-            padding-top: 100px;
-        }
-
-        #inscription {
-            background-color: #1a202c;
-            /* Couleur de fond sombre */
-            box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.3);
-            /* Ombre plus douce */
-            border-radius: 20px;
-        }
-
-        input,
-        button {
-            transition: all 0.3s ease;
-        }
-
-        input:focus,
-        button:hover {
-            transform: scale(1.05);
-            box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.4);
-        }
-
-        button:active {
-            transform: scale(1);
-            box-shadow: none;
-        }
-    </style>
 </head>
 
 <body class="bg-gray-900 text-white">
@@ -108,71 +72,7 @@ $_SESSION['ref'] = $referal_utilisateur;
             </div>
 
             <!-- Tableau des gains -->
-            <div class="overflow-x-auto">
-                <table class="w-full bg-gray-800 shadow-lg rounded-lg overflow-hidden">
-                    <thead class="bg-blue-500 text-white">
-                        <tr>
-                            <th class="py-4 px-6 text-lg">Niveau</th>
-                            <th class="py-4 px-6 text-lg">Participants </th>
-                            <th class="py-4 px-6 text-lg">Gains du Niveau </th>
-                            <th class="py-4 px-6 text-lg">Gains Cumulés </th>
-                            <th class="py-4 px-6 text-lg">Bonus </th>
-                            <th class="py-4 px-6 text-lg">Explication</th>
-                        </tr>
-                    </thead>
-                    <tbody class="text-gray-300 text-center">
-                        <!-- Niveau 1 -->
-                        <tr class="border-b border-gray-700 bg-gray-700">
-                            <td class="py-4 px-6 font-bold">1️⃣</td>
-                            <td class="py-4 px-6">5</td>
-                            <td class="py-4 px-6">$25</td>
-                            <td class="py-4 px-6">$25</td>
-                            <td class="py-4 px-6">Montre + Sardines</td>
-                            <td class="py-4 px-6 text-left">Dès que vous recrutez 5 personnes directement, vous recevez $25 et un cadeau.</td>
-                        </tr>
-
-                        <!-- Niveau 2 -->
-                        <tr class="border-b border-gray-700">
-                            <td class="py-4 px-6 font-bold">2️⃣</td>
-                            <td class="py-4 px-6">25</td>
-                            <td class="py-4 px-6">$100</td>
-                            <td class="py-4 px-6">$125</td>
-                            <td class="py-4 px-6">Sac de riz + Huile</td>
-                            <td class="py-4 px-6 text-left">Si vos 5 filleuls recrutent chacun 5 personnes, vous passez au niveau 2 et recevez $100 supplémentaires.</td>
-                        </tr>
-
-                        <!-- Niveau 3 -->
-                        <tr class="border-b border-gray-700 bg-gray-700">
-                            <td class="py-4 px-6 font-bold">3️⃣</td>
-                            <td class="py-4 px-6">125</td>
-                            <td class="py-4 px-6">$500</td>
-                            <td class="py-4 px-6">$625</td>
-                            <td class="py-4 px-6"> Palette d'eau + Poisson</td>
-                            <td class="py-4 px-6 text-left">Vos 25 filleuls du niveau 2 recrutent 5 personnes chacun, vous obtenez $500 supplémentaires.</td>
-                        </tr>
-
-                        <!-- Niveau 4 -->
-                        <tr class="border-b border-gray-700">
-                            <td class="py-4 px-6 font-bold">4️⃣</td>
-                            <td class="py-4 px-6">625</td>
-                            <td class="py-4 px-6">$3,000</td>
-                            <td class="py-4 px-6">$3,625</td>
-                            <td class="py-4 px-6">Pomme de terre + Poulet</td>
-                            <td class="py-4 px-6 text-left">625 personnes dans votre réseau ? Bravo, vous recevez $3,000 supplémentaires !</td>
-                        </tr>
-
-                        <!-- Niveau 5 -->
-                        <tr class="border-b border-gray-700 bg-gray-700">
-                            <td class="py-4 px-6 font-bold">5️⃣</td>
-                            <td class="py-4 px-6">3,125</td>
-                            <td class="py-4 px-6">$30,000</td>
-                            <td class="py-4 px-6">$33,625</td>
-                            <td class="py-4 px-6"> Voyage en Tanzanie</td>
-                            <td class="py-4 px-6 text-left">Si vos filleuls continuent de recruter, vous atteignez 3,125 membres et remportez $30,000 supplémentaires !</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
+            <?php include 'include/rsi_tab.php'; ?>
 
             <!-- Message d'encouragement -->
             <div class="mt-6 text-center text-white">
@@ -249,34 +149,7 @@ $_SESSION['ref'] = $referal_utilisateur;
         <img src="../assets/icon/social/whatsapp.png" alt="WhatsApp" class="w-10 h-10">
     </a>
 
-    <footer class="bg-gray-900 text-gray-300 p-8 mt-10">
-        <div class="container mx-auto flex flex-col items-center">
-            <div class="flex space-x-6 mb-4">
-                <a href="https://wa.me/971527959652" target="_blank">
-                    <img src="../assets/icon/social/whatsapp.png" alt="WhatsApp" class="w-8 h-8 hover:scale-110 transition">
-                </a>
-                <a href="https://t.me/+N_aPV8J8wwwzYzM8" target="_blank">
-                    <img src="../assets/icon/social/telegram.png" alt="Telegram" class="w-8 h-8 hover:scale-110 transition">
-                </a>
-                <a href="mailto:assistance@comodubo.com">
-                    <img src="../assets/icon/social/email.png" alt="Email" class="w-8 h-8 hover:scale-110 transition">
-                </a>
-                <a href="https://facebook.com/votre_page" target="_blank">
-                    <img src="../assets/icon/social/facebook.png" alt="Facebook" class="w-8 h-8 hover:scale-110 transition">
-                </a>
-                <a href="https://www.tiktok.com/@2025cmdb?lang=fr" target="_blank">
-                    <img src="../assets/icon/social/tiktok.png" alt="TikTok" class="w-8 h-8 hover:scale-110 transition">
-                </a>
-                <a href="https://youtube.com/c/votre_chaine" target="_blank">
-                    <img src="../assets/icon/social/youtube.png" alt="YouTube" class="w-8 h-8 hover:scale-110 transition">
-                </a>
-                <a href="https://instagram.com/votre_compte" target="_blank">
-                    <img src="../assets/icon/social/instagram.png" alt="Instagram" class="w-8 h-8 hover:scale-110 transition">
-                </a>
-            </div>
-            <p class="text-gray-400 text-sm">&copy; 2025 CMDB. Tous droits réservés.</p>
-        </div>
-    </footer>
+    <?php include 'include/footer.php'; ?>
 
     <script>
         document.getElementById("inscriptionForm").addEventListener("submit", function(event) {

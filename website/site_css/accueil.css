@@ -43,3 +43,42 @@ body {
 .px-5 {
     background-color: rgba(17, 24, 39, 0.8);
 }
+
+
+ /* Fixer le header en haut de la page */
+ header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1000;
+}
+
+/* Ajouter un espace sous le header pour éviter que le contenu ne soit caché */
+body {
+    padding-top: 100px;
+}
+
+#inscription {
+    background-color: #1a202c;
+    /* Couleur de fond sombre */
+    box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.3);
+    /* Ombre plus douce */
+    border-radius: 20px;
+}
+
+input,
+button {
+    transition: all 0.3s ease;
+}
+
+input:focus,
+button:hover {
+    transform: scale(1.05);
+    box-shadow: 0px 4px 15px rgba(0, 0, 0, 0.4);
+}
+
+button:active {
+    transform: scale(1);
+    box-shadow: none;
+}

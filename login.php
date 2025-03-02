@@ -1,3 +1,6 @@
+<?php
+include 'headers/header_login.php';
+?>
 <!DOCTYPE html>
 <html lang="fr">
 
