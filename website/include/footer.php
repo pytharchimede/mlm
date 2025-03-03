@@ -16,7 +16,7 @@
             <a href="https://www.tiktok.com/@2025cmdb?lang=fr" target="_blank">
                 <img src="../assets/icon/social/tiktok.png" alt="TikTok" class="w-8 h-8 hover:scale-110 transition">
             </a>
-            <a href="https://youtube.com/c/votre_chaine" target="_blank">
+            <a href="https://www.youtube.com/@revolutionfinanciere2025" target="_blank">
                 <img src="../assets/icon/social/youtube.png" alt="YouTube" class="w-8 h-8 hover:scale-110 transition">
             </a>
             <a href="https://instagram.com/votre_compte" target="_blank">

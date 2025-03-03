@@ -313,4 +313,36 @@ class Utilisateur
             return false; // Une erreur s'est produite
         }
     }
+
+
+    // Méthode pour récupérer les utilisateurs n'ayant pas activé leur compte après 24h
+    public function getUsersAfter24h()
+    {
+        $stmt = $this->pdo->prepare("SELECT * FROM utilisateur WHERE acces_admin != 1 AND date_creat_utilisateur <= NOW() - INTERVAL 1 DAY");
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    // Méthode pour récupérer les utilisateurs n'ayant pas validé leur compte après 48h
+    public function getUsersAfter48h()
+    {
+        $stmt = $this->pdo->prepare("SELECT * FROM utilisateur WHERE acces_admin != 1 AND date_creat_utilisateur <= NOW() - INTERVAL 2 DAY AND date_creat_utilisateur > NOW() - INTERVAL 3 DAY");
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    // Méthode pour récupérer les utilisateurs n'ayant pas validé leur compte après 72h
+    public function getUsersAfter72h()
+    {
+        $stmt = $this->pdo->prepare("SELECT * FROM utilisateur WHERE acces_admin != 1 AND date_creat_utilisateur <= NOW() - INTERVAL 3 DAY");
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    // Méthode pour supprimer un utilisateur
+    public function deleteUser($userId)
+    {
+        $deleteStmt = $this->pdo->prepare("DELETE FROM utilisateur WHERE id_utilisateur = :id");
+        $deleteStmt->execute([':id' => $userId]);
+    }
 }

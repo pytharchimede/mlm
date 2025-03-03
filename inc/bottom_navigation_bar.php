@@ -11,7 +11,7 @@
         <i class="fas fa-chart-line"></i>
         <span>Statistiques</span>
     </a>
-    <a href="#">
+    <a href="settings.php">
         <i class="fas fa-cog"></i>
         <span>Réglages</span>
     </a>

@@ -112,10 +112,15 @@ include '../headers/header_dashboard.php';
                     <i class="fas fa-comments text-5xl text-gray-300"></i>
                     <div class="mt-3 text-lg font-semibold">Forum</div>
                 </a>
-                <a href="javascript:void();" class="flex flex-col items-center p-6 bg-gray-800 rounded-lg opacity-50 cursor-not-allowed">
+                <a href="javascript:void();" <?php echo ($is_active) ? 'id="openTeamModal"' : '';
+                                                ?> class="flex flex-col items-center p-6 bg-gray-800 rounded-lg <?php echo ($is_active) ? 'shadow-lg hover:bg-gray-700 transition' : 'opacity-50 cursor-not-allowed'; ?>">
                     <i class="fas fa-user-friends text-5xl text-gray-300"></i>
-                    <div class="mt-3 text-lg font-semibold">Équipe</div>
+                    <div class="mt-3 text-lg font-semibold text-white">Équipe</div>
                 </a>
+                <!-- <a href="javascript:void();" id="openTeamModal" class="flex flex-col items-center p-6 bg-gray-800 rounded-lg shadow-lg hover:bg-gray-700 transition">
+                    <i class="fas fa-user-friends text-5xl text-gray-300"></i>
+                    <div class="mt-3 text-lg font-semibold text-white">Équipe</div>
+                </a> -->
                 <a href="javascript:void(0);" <?php echo ($is_active) ? 'onclick="openModal()"' : ''; ?> class="flex flex-col items-center p-6 bg-gray-800 rounded-lg <?php echo ($is_active) ? 'shadow-lg hover:bg-gray-700 transition' : 'opacity-50 cursor-not-allowed'; ?>">
                     <i class="fas fa-university text-5xl text-gray-300"></i>
                     <div class="mt-3 text-lg font-semibold">Compte</div>
@@ -290,9 +295,41 @@ include '../headers/header_dashboard.php';
                     <img src="../assets/icon/social/email.png" onclick="updateLink('assistance@comodubo.com')" class="social-icon" alt="Email">
                     <img src="../assets/icon/social/facebook.png" onclick="updateLink('https://www.facebook.com/profile.php?id=61573796879697&mibextid=LQQJ4d')" class="social-icon" alt="Facebook">
                     <img src="../assets/icon/social/tiktok.png" onclick="updateLink('https://www.tiktok.com/@2025cmdb?lang=fr')" class="social-icon" alt="TikTok">
-                    <img src="../assets/icon/social/youtube.png" onclick="updateLink('https://youtube.com/c/votre_chaine')" class="social-icon" alt="YouTube">
+                    <img src="../assets/icon/social/youtube.png" onclick="updateLink('https://www.youtube.com/@revolutionfinanciere2025')" class="social-icon" alt="YouTube">
                     <img src="../assets/icon/social/instagram.png" onclick="updateLink('https://instagram.com/votre_compte')" class="social-icon" alt="Instagram">
                     <img src="../assets/icon/social/twitter.png" onclick="updateLink('https://twitter.com/votre_compte')" class="social-icon" alt="Twitter">
+                </div>
+            </div>
+        </div>
+
+        <!-- Modal (Popup) -->
+        <div id="teamModal" class="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center hidden">
+            <div class="bg-gray-900 text-white p-6 rounded-lg shadow-lg w-96 relative">
+                <!-- Bouton de fermeture -->
+                <button id="closeTeamModal" class="absolute top-2 right-2 text-gray-400 hover:text-white text-2xl">
+                    &times;
+                </button>
+
+                <!-- Titre -->
+                <h2 class="text-2xl font-semibold mb-4 text-center">Choisissez un service</h2>
+
+                <!-- Liste des options -->
+                <div class="space-y-3">
+                    <a href="#" class="flex items-center p-3 bg-gray-800 rounded-lg hover:bg-indigo-600 transition duration-300">
+                        <i class="fas fa-tools text-xl mr-3"></i> Service Technique
+                    </a>
+                    <a href="#" class="flex items-center p-3 bg-gray-800 rounded-lg hover:bg-green-500 transition duration-300">
+                        <i class="fas fa-handshake text-xl mr-3"></i> Service Commercial
+                    </a>
+                    <a href="#" class="flex items-center p-3 bg-gray-800 rounded-lg hover:bg-yellow-500 transition duration-300">
+                        <i class="fas fa-wallet text-xl mr-3"></i> Service Financier
+                    </a>
+                    <a href="#" class="flex items-center p-3 bg-gray-800 rounded-lg hover:bg-blue-500 transition duration-300">
+                        <i class="fas fa-user-tie text-xl mr-3"></i> Contacter mon Parrain
+                    </a>
+                    <a href="#" class="flex items-center p-3 bg-gray-800 rounded-lg hover:bg-pink-500 transition duration-300">
+                        <i class="fas fa-users text-xl mr-3"></i> Contacter mes Filleuls
+                    </a>
                 </div>
             </div>
         </div>
@@ -305,38 +342,105 @@ include '../headers/header_dashboard.php';
         <script src="../js/script_dashboard.js"></script>
 
         <script>
-            // Passer la variable PHP à JavaScript
+            // Passer les variables PHP à JavaScript
             var hasWallet = <?php echo $hasWallet ? 'true' : 'false'; ?>;
             var walletAddress = "<?php echo $walletAddress; ?>";
 
-            function openModal() {
-                if (hasWallet) {
-                    // Si l'utilisateur a un wallet, afficher le modal avec l'adresse et le QR code
-                    showExistingWalletModal();
-                } else {
-                    // Si l'utilisateur n'a pas de wallet, afficher le modal d'ajout de wallet
-                    showAddWalletModal();
+            document.addEventListener("DOMContentLoaded", function() {
+                initWithdrawalModal();
+                initTeamModal();
+            });
+
+            /* ==========================
+               GESTION DU MODAL DE RETRAIT
+               ========================== */
+            function initWithdrawalModal() {
+                const withdrawalButton = document.getElementById("withdrawalButton");
+                const withdrawalForm = document.getElementById("withdrawalForm");
+
+                if (withdrawalButton && withdrawalForm) {
+                    withdrawalButton.addEventListener("click", openWithdrawalModal);
+                    withdrawalForm.addEventListener("submit", submitWithdrawalForm);
                 }
             }
 
-            function showExistingWalletModal() {
-                // Affiche le modal pour le wallet existant
-                document.getElementById("modal-existing-wallet").classList.remove("hidden");
+            function openWithdrawalModal() {
+                document.getElementById("modal-withdraw-request").classList.remove("hidden");
+            }
 
-                // Générer le QR Code avec l'adresse du wallet existant
+            function closeModalWithdrawRequest() {
+                document.getElementById("modal-withdraw-request").classList.add("hidden");
+            }
+
+            function submitWithdrawalForm(event) {
+                event.preventDefault();
+                const withdrawalAmount = document.getElementById("withdrawalAmount").value;
+                const formData = new FormData();
+                formData.append("withdrawalAmount", withdrawalAmount);
+
+                fetch("../request/insert_demande_retrait.php", {
+                        method: "POST",
+                        body: formData,
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            document.getElementById("confirmationMessage").classList.remove("hidden");
+                            document.getElementById("withdrawalForm").reset();
+                        } else {
+                            alert(data.message);
+                        }
+                    })
+                    .catch(error => {
+                        console.error("Erreur:", error);
+                        alert("Une erreur est survenue lors de la soumission de la demande.");
+                    });
+            }
+
+            /* ==========================
+               GESTION DU MODAL ÉQUIPE
+               ========================== */
+            function initTeamModal() {
+                const openTeamModalBtn = document.getElementById("openTeamModal");
+                const closeTeamModalBtn = document.getElementById("closeTeamModal");
+                const teamModal = document.getElementById("teamModal");
+
+                if (openTeamModalBtn && closeTeamModalBtn && teamModal) {
+                    openTeamModalBtn.addEventListener("click", () => {
+                        teamModal.style.display = "flex";
+                    });
+
+                    closeTeamModalBtn.addEventListener("click", () => {
+                        teamModal.style.display = "none";
+                    });
+
+                    window.addEventListener("click", (event) => {
+                        if (event.target === teamModal) {
+                            teamModal.style.display = "none";
+                        }
+                    });
+                }
+            }
+
+            /* ==========================
+               GESTION DU WALLET UTILISATEUR
+               ========================== */
+            function openModal() {
+                hasWallet ? showExistingWalletModal() : showAddWalletModal();
+            }
+
+            function showExistingWalletModal() {
+                document.getElementById("modal-existing-wallet").classList.remove("hidden");
                 var qrcode = new QRCode(document.getElementById("qrcode-container"));
-                qrcode.makeCode(walletAddress); // Utiliser l'adresse existante pour générer le QR Code
+                qrcode.makeCode(walletAddress);
             }
 
             function showAddWalletModal() {
-                // Affiche le modal pour ajouter un wallet
                 document.getElementById("modal-add-wallet").classList.remove("hidden");
             }
 
-
             function closeModalExisting() {
                 document.getElementById("modal-existing-wallet").classList.add("hidden");
-
             }
 
             function closeModalAdd() {
@@ -376,7 +480,6 @@ include '../headers/header_dashboard.php';
             }
 
             function saveToDatabase(address) {
-                // Simulation de requête AJAX pour mettre à jour l'adresse BNB dans la base de données
                 fetch("../request/update_user_wallet.php", {
                         method: "POST",
                         headers: {
@@ -385,10 +488,10 @@ include '../headers/header_dashboard.php';
                         body: `wallet_address=${encodeURIComponent(address)}`
                     })
                     .then(response => response.text())
-                    .then(data => {
+                    .then(() => {
                         document.getElementById("progressText").textContent = "Adresse enregistrée avec succès !";
                         setTimeout(() => {
-                            location.reload(); // Actualiser la page après enregistrement
+                            location.reload();
                         }, 1000);
                     })
                     .catch(error => {
@@ -398,82 +501,24 @@ include '../headers/header_dashboard.php';
             }
 
             function copyWalletAddress() {
-                // Récupérer l'adresse du portefeuille
                 const walletAddress = document.getElementById("wallet-address").innerText;
-
-                // Créer un champ de texte temporaire pour copier l'adresse
                 const tempInput = document.createElement("input");
                 document.body.appendChild(tempInput);
                 tempInput.value = walletAddress;
                 tempInput.select();
-                tempInput.setSelectionRange(0, 99999); // Pour les appareils mobiles
-
-                // Copier l'adresse dans le presse-papiers
                 document.execCommand("copy");
-
-                // Supprimer le champ temporaire
                 document.body.removeChild(tempInput);
-
-                // Optionnel: Afficher une notification ou un message de succès
                 alert("Adresse copiée dans le presse-papiers !");
             }
 
-            //demande de retrait
-
-            // Ouvrir le modal de demande de retrait
-            document.getElementById("withdrawalButton").addEventListener("click", function() {
-                openWithdrawalModal();
-            });
-
-            // Ouvrir le modal de retrait
-            function openWithdrawalModal() {
-                document.getElementById('modal-withdraw-request').classList.remove('hidden');
-            }
-
-            // Fermer le modal de retrait
-            function closeModalWithdrawRequest() {
-                document.getElementById('modal-withdraw-request').classList.add('hidden');
-            }
-
-            // Gérer la soumission du formulaire
-            document.getElementById('withdrawalForm').addEventListener('submit', function(event) {
-                event.preventDefault(); // Empêcher l'envoi normal du formulaire
-
-                // Récupérer le montant de retrait
-                const withdrawalAmount = document.getElementById('withdrawalAmount').value;
-
-                // Effectuer une requête AJAX pour envoyer la demande de retrait au serveur
-                const formData = new FormData();
-                formData.append('withdrawalAmount', withdrawalAmount);
-
-                fetch('../request/insert_demande_retrait.php', {
-                        method: 'POST',
-                        body: formData,
-                    })
-                    .then(response => response.json())
-                    .then(data => {
-                        if (data.success) {
-                            // Afficher le message de confirmation
-                            document.getElementById('confirmationMessage').classList.remove('hidden');
-                            document.getElementById('withdrawalForm').reset(); // Réinitialiser le formulaire
-                        } else {
-                            alert(data.message); // Afficher l'erreur
-                        }
-                    })
-                    .catch(error => {
-                        console.error('Erreur:', error);
-                        alert('Une erreur est survenue lors de la soumission de la demande.');
-                    });
-            });
-
-
+            /* ==========================
+               GESTION DES CANAUX DE COMMUNICATION
+               ========================== */
             function openForumModal() {
-                // Affiche le modal pour les cannaux de communication
                 document.getElementById("forumModal").classList.remove("hidden");
             }
 
             function closeForumModal() {
-                // Affiche le modal pour les cannaux de communication
                 document.getElementById("forumModal").classList.add("hidden");
             }
 
@@ -492,6 +537,7 @@ include '../headers/header_dashboard.php';
                 alert("Lien copié : " + copyText.value);
             }
         </script>
+
 </body>
 
 </html>
