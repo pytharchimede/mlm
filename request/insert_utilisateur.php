@@ -3,6 +3,7 @@ session_start();
 // Inclure les classes nécessaires
 require_once '../model/Database.php';
 require_once '../model/EmailManager.php';
+require_once '../model/EmailLogger.php';
 require_once '../model/Utilisateur.php';
 
 
@@ -12,6 +13,7 @@ $pdo = $databaseObj->getConnection();
 
 // Créer une instance de la classe Utilisateur
 $utilisateurObj = new Utilisateur();
+$emailLogger = new EmailLogger($pdo);
 
 // Vérifier si le formulaire est soumis
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
@@ -77,6 +79,10 @@ if ($registration_success) {
 
     // Envoyer l'email
     $sent = $emailManager->sendEmail($subject, $body, [$email => $nom]);
+
+    //Enregistrer le mail envoyé
+    $emailLogger->logEmail($subject, $body, $email, $nom);
+
 
     if ($sent) {
         // Utiliser la méthode updateConfirmationToken

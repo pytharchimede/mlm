@@ -72,8 +72,6 @@ include 'inc/header_admin.php';
                 })
                 .catch(error => console.error('Erreur de chargement des données:', error));
         }
-
-
         // Rafraîchir toutes les 5 secondes
         setInterval(fetchMembers, 5000);
     </script>

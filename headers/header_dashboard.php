@@ -49,3 +49,9 @@ $walletAddress = null;
 if ($hasWallet) {
     $walletAddress = $utilisateurObj->getWalletAddress($secur); // Assure-toi d'avoir une méthode pour récupérer l'adresse
 }
+
+
+//Activer automatiquement toutes les fonctionnalités pour les admins
+if (isset($_SESSION['acces_admin']) && $_SESSION['acces_admin'] == 1) {
+    $is_active = true;
+}

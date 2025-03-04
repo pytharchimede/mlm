@@ -29,6 +29,7 @@ class EmailManager
         $this->mailer->Port = 465;
         $this->mailer->From = "support@comodubo.com";
         $this->mailer->FromName = "SUPPORT CMDB";
+        $this->mailer->CharSet = 'UTF-8';
     }
 
     public function sendEmail($subject, $body, $recipients = [], $cc = [], $bcc = [])
