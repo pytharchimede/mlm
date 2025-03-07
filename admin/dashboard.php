@@ -97,72 +97,134 @@ include 'inc/header_admin.php';
                 let response = await fetch('../api/api_finance.php');
                 let data = await response.json();
 
-                console.log(data); // Ajoutez cette ligne pour vérifier les données reçues
+                console.log("Données récupérées :", data);
 
                 // Vérification et assignation des valeurs par défaut si null ou NaN
-                let montantEncaisses = data.montantEncaisses ?? 0;
-                let montantReverser = data.montantTotalAReverser ?? 0;
+                let montantEncaisses = isNaN(data.montantEncaisses) ? 0 : data.montantEncaisses;
+                let montantReverser = isNaN(data.montantTotalAReverser) ? 0 : data.montantTotalAReverser;
                 let chiffreAffaire = montantEncaisses - montantReverser;
 
-                let demandesRetraitCount = data.demandesRetrait?.length ?? 0;
-                let nombreTotalDeMembres = data.listeUtilisateurs?.length ?? 0;
-                let nombreDeMembresActifs = data.listeUtilisateursActifs?.length ?? 0;
-                let tauxDeConversion = nombreTotalDeMembres > 0 ?
-                    ((nombreDeMembresActifs / nombreTotalDeMembres) * 100).toFixed(2) :
-                    0;
+                let demandesRetraitCount = Array.isArray(data.demandesRetrait) ? data.demandesRetrait.length : 0;
+                let nombreTotalDeMembres = Array.isArray(data.listeUtilisateurs) ? data.listeUtilisateurs.length : 0;
+                let nombreDeMembresActifs = Array.isArray(data.listeUtilisateursActifs) ? data.listeUtilisateursActifs.length : 0;
+                let tauxDeConversion = nombreTotalDeMembres > 0 ? ((nombreDeMembresActifs / nombreTotalDeMembres) * 100).toFixed(2) : 0;
 
                 // Mise à jour des valeurs dans l'interface
                 document.getElementById('montant_encaisse').innerText = montantEncaisses + " $";
                 document.getElementById('montant_reverser').innerText = montantReverser + " $";
-                document.getElementById('chiffre_affaire').innerText = (montantEncaisses - montantReverser) + " $";
+                document.getElementById('chiffre_affaire').innerText = chiffreAffaire + " $";
                 document.getElementById('demande_retrait').innerText = demandesRetraitCount;
                 document.getElementById('membres_total').innerText = nombreTotalDeMembres;
                 document.getElementById('membres_actifs').innerText = nombreDeMembresActifs;
                 document.getElementById('taux_conversion').innerText = tauxDeConversion + " %";
 
-                // Mise à jour des trois premières cartes
+                // Mise à jour des cartes
                 let cards = document.querySelectorAll('.grid div p.font-bold');
-                cards[0].innerText = montantEncaisses + " $"; // Montant Encaissé
-                cards[1].innerText = montantReverser + " $"; // Montant à Reverser
-                cards[2].innerText = (montantEncaisses - montantReverser) + " $"; // Chiffre d'Affaires
+                if (cards.length >= 3) {
+                    cards[0].innerText = montantEncaisses + " $"; // Montant Encaissé
+                    cards[1].innerText = montantReverser + " $"; // Montant à Reverser
+                    cards[2].innerText = chiffreAffaire + " $"; // Chiffre d'Affaires
+                }
 
-                updateChart(data.montantEncaisses);
+                // Création des dailyMontants si absents
+                let dailyMontants = generateDailyMontants(data.listePacksAbonne);
+
+                // Mise à jour du graphe
+                updateChart(dailyMontants);
 
             } catch (error) {
                 console.error("Erreur lors de la récupération des données :", error);
             }
         }
 
-        function updateChart(montant) {
-            montantsChart.data.datasets[0].data.push(montant);
-            if (montantsChart.data.datasets[0].data.length > 12) {
+        // Fonction pour générer les dailyMontants en fonction des abonnements
+        function generateDailyMontants(listePacksAbonne) {
+            let dailyMontants = [];
+            let now = new Date();
+            let today = now.toLocaleDateString('fr-FR');
+
+            // Regarde combien de jours se sont écoulés depuis la première souscription
+            let firstSubscriptionDate = new Date(listePacksAbonne[0]?.date_souscription);
+            let daysSinceFirstSubscription = Math.floor((now - firstSubscriptionDate) / (1000 * 3600 * 24));
+
+            // Parcours chaque jour depuis la première souscription jusqu'à aujourd'hui
+            for (let i = 0; i <= daysSinceFirstSubscription; i++) {
+                let currentDate = new Date(firstSubscriptionDate);
+                currentDate.setDate(currentDate.getDate() + i);
+                let formattedDate = currentDate.toLocaleDateString('fr-FR');
+
+                // Cherche si un abonnement a eu lieu ce jour-là
+                let montantDuJour = 0;
+                listePacksAbonne.forEach(pack => {
+                    let subscriptionDate = new Date(pack.date_souscription);
+                    if (subscriptionDate.toLocaleDateString('fr-FR') === formattedDate) {
+                        montantDuJour = parseFloat(montantDuJour) + 15; // Assurez-vous d'utiliser le montant du pack pour ce jour
+                    }
+                });
+
+                dailyMontants.push({
+                    date: formattedDate,
+                    montant: montantDuJour
+                });
+            }
+
+            return dailyMontants;
+        }
+
+        function updateChart(dailyData) {
+            let formattedDates = [];
+            let montants = [];
+
+            // Si dailyData est un tableau de montants par jour
+            dailyData.forEach(item => {
+                formattedDates.push(item.date); // Format de la date
+                montants.push(item.montant); // Montant pour chaque jour
+            });
+
+            if (montantsChart.data.labels.length >= 30) { // Limitez à 30 jours si nécessaire
+                montantsChart.data.labels.shift();
                 montantsChart.data.datasets[0].data.shift();
             }
+
+            // Ajoutez les nouvelles dates et montants
+            montantsChart.data.labels = [...formattedDates];
+            montantsChart.data.datasets[0].data = [...montants];
             montantsChart.update();
         }
 
+        // Initialisation du graphe
         const ctx = document.getElementById('montantsChart').getContext('2d');
         const montantsChart = new Chart(ctx, {
             type: 'line',
             data: {
-                labels: ['Jan', 'Fév', 'Mar', 'Avr', 'Mai', 'Juin'],
+                labels: [], // Les dates seront insérées ici
                 datasets: [{
                     label: 'Montants Encaissés',
-                    data: [],
+                    data: [], // Les montants seront insérés ici
                     borderColor: 'rgba(255, 159, 64, 1)',
-                    fill: false,
+                    backgroundColor: 'rgba(255, 159, 64, 0.2)',
+                    borderWidth: 2,
+                    fill: true,
+                    tension: 0.3
                 }]
             },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
         });
 
+        // Chargement initial et mise à jour toutes les 5 secondes
         fetchData();
         setInterval(fetchData, 5000);
-
-        // Menu mobile
-        document.getElementById('hamburgerBtn').addEventListener('click', () => {
-            document.getElementById('sidebar').classList.toggle('hidden');
-        });
     </script>
+
+
 </body>
 
 </html>
