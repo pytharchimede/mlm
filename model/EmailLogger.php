@@ -22,4 +22,13 @@ class EmailLogger
             ':recipientName' => $recipientName
         ]);
     }
+
+    // Lister les emails envoyés
+    public function getEmailLogs()
+    {
+        $stmt = $this->pdo->query("SELECT email_subject, email_body, recipient_email, recipient_name, sent_at FROM email_logs ORDER BY sent_at DESC");
+
+        // Récupérer tous les résultats sous forme de tableau associatif
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
 }

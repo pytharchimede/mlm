@@ -89,6 +89,9 @@ try {
     foreach ($users72h as $user) {
         $isActif = $packObj->isPackActive($user['secur_utilisateur']);
         if (!$isActif) {
+
+            //Archiver l'utilisateur
+            $utilisateurObj->archiverUtilisateur($user);
             // Supprimer l'utilisateur
             $utilisateurObj->deleteUser($user['id_utilisateur']);
             // Envoyer un email de suppression

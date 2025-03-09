@@ -345,4 +345,34 @@ class Utilisateur
         $deleteStmt = $this->pdo->prepare("DELETE FROM utilisateur WHERE id_utilisateur = :id");
         $deleteStmt->execute([':id' => $userId]);
     }
+
+    public function archiverUtilisateur($user)
+    {
+        $stmt = $this->pdo->prepare("
+            INSERT INTO archive_utilisateur 
+            (id_utilisateur, secur_utilisateur, nom_utilisateur, email_utilisateur, telephone_utilisateur, motpass_utilisateur, date_creat_utilisateur, valide_utilisateur, valide_email_utilisateur, valide_telephone_utilisateur, confirmation_token, referal_utilisateur, whatsapp_utilisateur, telegram_utilisateur, bnb_wallet_address, acces_admin, reset_token) 
+            VALUES 
+            (:id_utilisateur, :secur_utilisateur, :nom_utilisateur, :email_utilisateur, :telephone_utilisateur, :motpass_utilisateur, :date_creat_utilisateur, :valide_utilisateur, :valide_email_utilisateur, :valide_telephone_utilisateur, :confirmation_token, :referal_utilisateur, :whatsapp_utilisateur, :telegram_utilisateur, :bnb_wallet_address, :acces_admin, :reset_token)
+        ");
+
+        $stmt->execute([
+            ':id_utilisateur' => $user['id_utilisateur'],
+            ':secur_utilisateur' => $user['secur_utilisateur'],
+            ':nom_utilisateur' => $user['nom_utilisateur'],
+            ':email_utilisateur' => $user['email_utilisateur'],
+            ':telephone_utilisateur' => $user['telephone_utilisateur'],
+            ':motpass_utilisateur' => $user['motpass_utilisateur'],
+            ':date_creat_utilisateur' => $user['date_creat_utilisateur'],
+            ':valide_utilisateur' => $user['valide_utilisateur'],
+            ':valide_email_utilisateur' => $user['valide_email_utilisateur'],
+            ':valide_telephone_utilisateur' => $user['valide_telephone_utilisateur'],
+            ':confirmation_token' => $user['confirmation_token'],
+            ':referal_utilisateur' => $user['referal_utilisateur'],
+            ':whatsapp_utilisateur' => $user['whatsapp_utilisateur'],
+            ':telegram_utilisateur' => $user['telegram_utilisateur'],
+            ':bnb_wallet_address' => $user['bnb_wallet_address'],
+            ':acces_admin' => $user['acces_admin'],
+            ':reset_token' => $user['reset_token']
+        ]);
+    }
 }

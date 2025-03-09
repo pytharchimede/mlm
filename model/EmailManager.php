@@ -35,6 +35,12 @@ class EmailManager
     public function sendEmail($subject, $body, $recipients = [], $cc = [], $bcc = [])
     {
         try {
+
+            // Réinitialisation des destinataires pour éviter l'accumulation
+            $this->mailer->clearAddresses();
+            $this->mailer->clearCCs();
+            $this->mailer->clearBCCs();
+
             foreach ($recipients as $email => $name) {
                 $this->mailer->addAddress($email, $name);
             }
