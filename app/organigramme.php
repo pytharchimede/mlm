@@ -69,6 +69,7 @@
                     <h2 class="text-xl font-bold">${filleul.nom}</h2>
                     <p class="text-sm text-gray-400">${filleul.email}</p>
                     <p class="text-green-400 font-bold">Solde: ${filleul.solde} $</p>
+                    <p class="text-sm text-gray-400"><b>${filleul.nbre_filleuls}</b> filleuls directes</p>
                     <span class="text-xs px-2 py-1 rounded ${filleul.statut === 'Actif' ? 'bg-green-500' : 'bg-red-500'}">
                         ${filleul.statut}
                     </span>

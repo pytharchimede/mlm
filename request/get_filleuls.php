@@ -21,6 +21,12 @@ $secur = $_SESSION['secur'] ?? '';
 $monProfil = $utilisateurObj->getUserBySecur($secur);
 $filleuls = $utilisateurObj->getFilleulsByReferal($secur);
 
+$effectif_reseau = 0;
+
+if (!$monProfil) {
+    $effectif_reseau = 1;
+}
+
 //Details pack parrain/Marraine
 $packParrainDetails = $packObj->getPackDetails($monProfil["secur_utilisateur"]);
 
@@ -41,9 +47,13 @@ $data = [
 
 foreach ($filleuls as $filleul) {
 
+
     //Vérfier si l filleul est actif
     $filleulActif = $packObj->isPackActive($filleul["secur_utilisateur"]);
     $packFilleulDetails = $packObj->getPackDetails($filleul["secur_utilisateur"]);
+    $filleulsNiveau3 = $utilisateurObj->getFilleulsByReferal($filleul["secur_utilisateur"]);
+
+    $nbre_filleuls = count($filleulsNiveau3);
 
     $data["filleuls"][] = [
         "id" => $filleul["id_utilisateur"],
@@ -53,8 +63,11 @@ foreach ($filleuls as $filleul) {
         "statut" => $filleulActif == true ? "Actif" : "Inactif",
         "referal" => $filleul["referal_utilisateur"],
         "secur" => $filleul["secur_utilisateur"],
+        "nbre_filleuls" => $nbre_filleuls,
         "est_moi" => false
     ];
+
+    $effectif_reseau++;
 }
 
 header("Content-Type: application/json");
