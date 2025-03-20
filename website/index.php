@@ -1,4 +1,5 @@
 <?php
+
 session_start();
 
 include 'header_site_index.php';
@@ -15,14 +16,58 @@ $_SESSION['ref'] = $referal_utilisateur;
     <title>CMDB | L'union fait la force</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/intro.js/7.0.1/introjs.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/intro.js/7.0.1/intro.min.js"></script>
     <link rel="stylesheet" href="site_css/accueil.css">
+    <style>
+        .introjs-tooltip {
+            background-color: #1f2937 !important;
+            /* Fond sombre */
+            color: #f3f4f6 !important;
+            /* Texte clair */
+            border-radius: 8px !important;
+            padding: 12px !important;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3) !important;
+        }
+
+        .introjs-tooltiptext {
+            color: #f3f4f6 !important;
+        }
+
+        .introjs-helperLayer {
+            background: rgba(31, 41, 55, 0.8) !important;
+            /* Assombrir la zone en surbrillance */
+        }
+
+        .introjs-button {
+            background-color: #4f46e5 !important;
+            /* Couleur primaire */
+            color: white !important;
+            border-radius: 6px !important;
+            padding: 6px 12px !important;
+        }
+
+        .introjs-prevbutton {
+            background-color: #374151 !important;
+            /* Gris foncé */
+        }
+
+        .introjs-disabled {
+            opacity: 0.5 !important;
+        }
+    </style>
 </head>
 
 <body class="bg-gray-900 text-white">
     <?php include 'include/header.php'; ?>
 
+    <!-- Bouton d'aide flottant -->
+    <button id="startIntro" class="fixed bottom-6 right-6 bg-indigo-600 text-white p-3 rounded-full shadow-lg">
+        ?
+    </button>
+
     <section class="relative text-center py-20 px-5 bg-cover bg-center" style="background-image: url('../assets/img/community_1.jpg');">
-        <div class="absolute inset-0 bg-black bg-opacity-50"></div> <!-- Overlay sombre pour améliorer la lisibilité -->
+        <div class="absolute inset-0 bg-black bg-opacity-50"></div>
 
         <div class="relative z-10">
             <h2 class="text-4xl font-bold text-white mb-4">Rejoignez la Révolution Financière</h2>
@@ -31,8 +76,64 @@ $_SESSION['ref'] = $referal_utilisateur;
         </div>
     </section>
 
+    <section id="qui-sommes-nous" class="bg-gray-800 p-10 text-center text-gray-300" data-intro="Découvrez qui nous sommes et comment nous aidons à améliorer vos finances." data-step="1">
+        <h2 class="text-3xl font-bold mb-6 text-white">Qui sommes-nous ?</h2>
 
-    <section id="comment-ca-marche" class="bg-gray-800 p-10 text-center relative">
+        <p class="text-lg text-justify mb-6">
+            <strong class="text-white">CMDB</strong> est bien plus qu'une simple plateforme : c'est une communauté internationale de <strong>solidarité financière</strong>.
+            Peu importe ton pays d’origine, ici, chacun a l’opportunité de <strong>transformer ses ambitions en réalité</strong>.
+            Avec une contribution unique de <strong>15$ (10 000 F CFA)</strong>, tu rejoins un réseau dynamique où l’entraide est la clé du succès.
+        </p>
+
+        <div class="mb-6">
+            <h3 class="text-2xl font-semibold text-white flex items-center justify-center">
+                <i class="fas fa-handshake mr-2"></i> Une avancée collective et équitable
+            </h3>
+            <p class="text-lg text-justify mt-2">
+                Nous partageons tous les mêmes <strong>défis financiers</strong>. C’est pourquoi la CMDB fonctionne comme une <strong>tontine évolutive</strong>,
+                mais avec un atout majeur : <strong>une seule participation suffit</strong> pour accéder à un système de progression permettant
+                de débloquer des niveaux et d’augmenter tes gains.
+            </p>
+        </div>
+
+        <div class="mb-6">
+            <h3 class="text-2xl font-semibold text-white flex items-center justify-center">
+                <i class="fas fa-shield-alt mr-2"></i> Sécurité et autonomie
+            </h3>
+            <p class="text-lg text-justify mt-2">
+                <strong>Tu es le seul à gérer ton compte</strong>, et chaque transaction est transparente et sécurisée.
+                Ici, pas d’intermédiaires : <strong>tu donnes et tu reçois</strong>, dans un cycle vertueux d’abondance et de prospérité.
+            </p>
+        </div>
+
+        <div class="mb-6">
+            <h3 class="text-2xl font-semibold text-white flex items-center justify-center">
+                <i class="fas fa-calendar-alt mr-2"></i> Des rencontres stratégiques pour avancer
+            </h3>
+            <p class="text-lg text-justify mt-2">
+                Pour t’accompagner, nous organisons des <strong>rencontres en ligne</strong> chaque soir, du lundi au vendredi, à <strong>20h GMT</strong>.
+                Un lien d’accès te sera envoyé quotidiennement pour découvrir nos <strong>stratégies gagnantes</strong>.
+                Notre objectif ? <strong>Te propulser rapidement vers un gain de 3 000$</strong> et t’offrir des opportunités exceptionnelles.
+            </p>
+        </div>
+
+        <div class="mb-6">
+            <h3 class="text-2xl font-semibold text-white flex items-center justify-center">
+                <i class="fas fa-plane mr-2"></i> Un voyage à Dubaï pour les plus engagés
+            </h3>
+            <p class="text-lg text-justify mt-2">
+                Ce mois de mars, nous offrons un <strong>voyage promotionnel à Dubaï</strong> aux membres les plus actifs. Une occasion unique de
+                célébrer nos réussites et d’échanger avec d’autres participants du monde entier.
+            </p>
+        </div>
+
+        <p class="text-lg text-center font-semibold text-white mt-8">
+            Il est temps de <strong>reprendre le contrôle de tes finances</strong> et de dire adieu aux difficultés économiques.
+            <strong>Rejoins-nous dès aujourd’hui</strong> et ensemble, <span class="text-yellow-400">révolutionnons notre avenir</span> !
+        </p>
+    </section>
+
+    <section id="comment-ca-marche" class="bg-gray-800 p-10 text-center relative" data-intro="Découvrez comment nous vous accompagnons chaque jour dans votre évolution." data-step="2">
         <h2 class="text-3xl font-bold mb-4">Comment ça marche ?</h2>
         <p class="text-lg text-gray-300 mb-6">
             Découvrez les étapes simples pour commencer à investir et gagner des revenus passifs.
@@ -103,7 +204,7 @@ $_SESSION['ref'] = $referal_utilisateur;
         </div>
     </section>
 
-    <section id="inscription" class="bg-gray-900 p-12 text-center rounded-lg shadow-lg">
+    <section id="inscription" class="bg-gray-900 p-12 text-center rounded-lg shadow-lg" data-intro="Remplissez vos informations pour créer votre compte." data-step="3">
         <h3 class="text-3xl font-bold text-white mb-8">Créez votre compte dès aujourd'hui</h3>
         <form id="inscriptionForm" class="max-w-lg mx-auto space-y-6">
             <!-- Champ Référent Utilisateur -->
@@ -192,7 +293,19 @@ $_SESSION['ref'] = $referal_utilisateur;
                     alert("Une erreur est survenue. Veuillez réessayer.");
                 });
         });
+
+        document.addEventListener("DOMContentLoaded", function() {
+            // introJs().setOptions({
+            //     showProgress: true,
+            //     showBullets: true,
+            //     nextLabel: 'Suivant →',
+            //     prevLabel: '← Précédent',
+            //     doneLabel: 'Terminer',
+            //     tooltipClass: 'bg-gray-900 text-white p-4 rounded-lg shadow-lg'
+            // }).start();
+        });
     </script>
+
 
 </body>
 

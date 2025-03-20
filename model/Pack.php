@@ -110,4 +110,13 @@ class Pack
             ':solde' => $new_balance
         ]);
     }
+
+
+    // Récupérer un pack par son ID
+    public function getPackAbonneById($id_pack_abonne)
+    {
+        $stmt = $this->pdo->prepare("SELECT * FROM pack_abonne WHERE id_pack_abonne = :id_pack_abonne");
+        $stmt->execute([':id_pack_abonne' => $id_pack_abonne]);
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
 }

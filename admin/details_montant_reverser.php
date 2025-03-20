@@ -24,7 +24,8 @@ include 'inc/header_admin.php';
                 <th class="p-3 border border-gray-600">Nom du Membre</th>
                 <th class="p-3 border border-gray-600">Montant</th>
                 <th class="p-3 border border-gray-600">Date</th>
-                <th class="p-3 border border-gray-600">Transaction ID</th>
+                <th class="p-3 border border-gray-600">Adresse du portefeuille BNB</th>
+                <th class="p-3 border border-gray-600">Actions</th>
             </tr>
         </thead>
         <tbody id="tableBody">
@@ -37,38 +38,63 @@ include 'inc/header_admin.php';
             fetch('../api/api_finance.php')
                 .then(response => response.json())
                 .then(data => {
-                    console.log(data); // Vérifier les données reçues
+                    // console.log(data); // Vérifier les données reçues
 
                     const tableBody = document.getElementById("tableBody");
                     tableBody.innerHTML = ""; // Vider le tableau avant de recharger les données
 
                     const demandesRetrait = data.demandesRetrait;
-                    const utilisateursActifs = data.listeUtilisateursActifs;
+                    const listePackAbonne = data.listePacksAbonne;
+                    const listeUtilisateursActifs = data.listeUtilisateursActifs;
+
+                    if (!demandesRetrait || demandesRetrait.length === 0) {
+                        tableBody.innerHTML = `<tr><td colspan="4" class="p-3 text-center text-gray-400">Aucune demande de retrait trouvée.</td></tr>`;
+                        return;
+                    }
 
                     demandesRetrait.forEach(demande => {
-                        // Trouver l'utilisateur correspondant
-                        const utilisateur = utilisateursActifs.find(user => user.secur_utilisateur === demande.abonne_secur);
 
-                        if (utilisateur) {
-                            const row = `
+                        // Trouver le pack correspondant
+                        const pack = listePackAbonne.find(p => p.id_pack_abonne === demande.pack_abonne_id);
+
+
+                        if (pack) {
+                            // Trouver l'utilisateur correspondant
+                            const utilisateur = listeUtilisateursActifs.find(user => user.secur_utilisateur === pack.abonne_secur);
+
+                            if (utilisateur) {
+                                const row = `
                                 <tr class="border border-gray-700">
                                     <td class="p-3 text-center">${utilisateur.nom_utilisateur}</td>
-                                    <td class="p-3 text-center text-red-500 font-bold">${demande.montant} FCFA</td>
-                                    <td class="p-3 text-center">${demande.date_demande}</td>
-                                    <td class="p-3 text-center text-blue-400">${demande.transaction_id}</td>
+                                    <td class="p-3 text-center text-red-500 font-bold">${demande.montant_demande_retrait} FCFA</td>
+                                    <td class="p-3 text-center">${demande.date_demande_retrait || 'Non spécifié'}</td>
+                                    <td class="p-3 text-center text-blue-400">${utilisateur.bnb_wallet_address || 'Non disponible'}</td>
+                                    <td class="p-3 text-center flex space-x-2 justify-center">
+                                            <!-- Bouton Décaisser -->
+                                            <a href="../request/valid_demande_retrait.php?id_demande_retrait=${demande.id_demande_retrait}" class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-3 rounded flex items-center">
+                                                <i class="fas fa-check-circle mr-2"></i> Décaisser
+                                            </a>
+                                                &nbsp;
+                                            <!-- Bouton Refuser -->
+                                            <a href="../request/refuse_demande_retrait.php?id_demande_retrait=${demande.id_demande_retrait}" class="bg-red-500 hover:bg-red-600 text-white font-bold py-2 px-3 rounded flex items-center">
+                                                <i class="fas fa-times-circle mr-2"></i> Refuser
+                                            </a>
+                                    </td>
                                 </tr>
                             `;
-                            tableBody.innerHTML += row;
+                                tableBody.innerHTML += row;
+                            }
                         }
                     });
                 })
                 .catch(error => console.error('Erreur de chargement des données:', error));
         }
 
-        // Charger les retraits toutes les 5 secondes
-        fetchWithdrawals(); // Lancer au chargement de la page
-        setInterval(fetchWithdrawals, 5000);
+        // Charger les retraits au chargement de la page
+        fetchWithdrawals();
     </script>
+
+
 
 </body>
 
