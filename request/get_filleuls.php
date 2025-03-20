@@ -27,6 +27,8 @@ if ($monProfil) {
     $effectif_reseau = 1;
 }
 
+
+
 //Details pack parrain/Marraine
 $packParrainDetails = $packObj->getPackDetails($monProfil["secur_utilisateur"]);
 
@@ -45,19 +47,22 @@ $data = [
     "filleuls" => []
 ];
 
+$nbre_filleuls_2 = 0;
+$nbre_filleuls_3 = 0;
+$nbre_filleuls_4 = 0;
+$nbre_filleuls_5 = 0;
+
 foreach ($filleuls as $filleul) {
-
-
-    //Vérfier si l filleul est actif
-    $filleulActif = $packObj->isPackActive($filleul["secur_utilisateur"]);
-    $packFilleulDetails = $packObj->getPackDetails($filleul["secur_utilisateur"]);
-    $filleulsNiveau3 = $utilisateurObj->getFilleulsByReferal($filleul["secur_utilisateur"]);
 
     $nbre_filleuls_2 = 0;
     $nbre_filleuls_3 = 0;
     $nbre_filleuls_4 = 0;
     $nbre_filleuls_5 = 0;
 
+    // Vérifier si le filleul est actif
+    $filleulActif = $packObj->isPackActive($filleul["secur_utilisateur"]);
+    $packFilleulDetails = $packObj->getPackDetails($filleul["secur_utilisateur"]);
+    $filleulsNiveau3 = $utilisateurObj->getFilleulsByReferal($filleul["secur_utilisateur"]);
 
     if ($filleulsNiveau3) {
         $nbre_filleuls_2 = count($filleulsNiveau3);
@@ -66,19 +71,17 @@ foreach ($filleuls as $filleul) {
 
             $filleulsNiveau4 = $utilisateurObj->getFilleulsByReferal($filleulniveau3["secur_utilisateur"]);
 
-            $nbre_filleuls_3++;
+            $nbre_filleuls_3 += count($filleulsNiveau4); // Correction
 
             if ($filleulsNiveau4) {
                 foreach ($filleulsNiveau4 as $filleulniveau4) {
 
                     $filleulsNiveau5 = $utilisateurObj->getFilleulsByReferal($filleulniveau4["secur_utilisateur"]);
 
-                    $nbre_filleuls_4++;
+                    $nbre_filleuls_4 += count($filleulsNiveau5); // Correction
 
                     if ($filleulsNiveau5) {
-                        foreach ($filleulsNiveau5 as $filleulNiveau5) {
-                            $nbre_filleuls_5++;
-                        }
+                        $nbre_filleuls_5 += count($filleulsNiveau5); // Correction
                     }
                 }
             }
@@ -104,6 +107,7 @@ foreach ($filleuls as $filleul) {
     $effectif_reseau += $nbre_filleuls_4;
     $effectif_reseau += $nbre_filleuls_5;
 }
+
 
 $data["effectif_reseau"] = $effectif_reseau;
 
