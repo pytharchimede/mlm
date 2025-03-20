@@ -23,7 +23,7 @@ $filleuls = $utilisateurObj->getFilleulsByReferal($secur);
 
 $effectif_reseau = 0;
 
-if (!$monProfil) {
+if ($monProfil) {
     $effectif_reseau = 1;
 }
 
@@ -55,6 +55,8 @@ foreach ($filleuls as $filleul) {
 
     $nbre_filleuls = count($filleulsNiveau3);
 
+    $effectif_reseau++;
+
     $data["filleuls"][] = [
         "id" => $filleul["id_utilisateur"],
         "nom" => $filleul["nom_utilisateur"],
@@ -67,8 +69,10 @@ foreach ($filleuls as $filleul) {
         "est_moi" => false
     ];
 
-    $effectif_reseau++;
+    $effectif_reseau += $nbre_filleuls;
 }
+
+$data["effectif_reseau"] = $effectif_reseau;
 
 header("Content-Type: application/json");
 echo json_encode($data);
