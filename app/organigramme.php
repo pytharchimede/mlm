@@ -8,11 +8,18 @@
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
-<body class="bg-gray-900 text-white p-10 flex flex-col items-center">
+<body class="bg-gray-900 text-white p-6 flex flex-col items-center">
 
-    <h1 class="text-center text-3xl font-bold mb-8">👥 Organigramme de Parrainage</h1>
+    <!-- Bouton Retour -->
+    <div class="w-full flex justify-start">
+        <a href="dashboard.php" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mb-4">
+            ⬅ Retour à l'accueil
+        </a>
+    </div>
 
-    <div id="organigramme" class="flex flex-col items-center space-y-4"></div>
+    <h1 class="text-center text-3xl font-bold mb-6">👥 Organigramme de Parrainage</h1>
+
+    <div id="organigramme" class="flex flex-col items-center space-y-4 w-full overflow-auto px-4"></div>
 
     <script>
         async function fetchFilleuls() {
@@ -37,7 +44,7 @@
 
             // 📌 Marraine tout en haut
             const marraineDiv = document.createElement("div");
-            marraineDiv.className = "bg-purple-700 text-white rounded-lg p-4 shadow-lg w-96 text-center font-bold";
+            marraineDiv.className = "bg-purple-700 text-white rounded-lg p-4 shadow-lg w-80 text-center font-bold";
             marraineDiv.innerHTML = `
                 <h2 class="text-2xl">${data.marraine.nom} (Marraine)</h2>
                 <p class="text-gray-300">${data.marraine.email}</p>
@@ -48,16 +55,16 @@
 
             // 📌 Trait reliant la marraine aux filleuls
             const ligneVerticale = document.createElement("div");
-            ligneVerticale.className = "w-1 h-10 bg-gray-400 mx-auto";
+            ligneVerticale.className = "w-1 h-8 bg-gray-400 mx-auto";
             container.appendChild(ligneVerticale);
 
-            // 📌 Filleuls alignés horizontalement
+            // 📌 Filleuls alignés horizontalement et responsive
             const filleulsDiv = document.createElement("div");
-            filleulsDiv.className = "flex space-x-4";
+            filleulsDiv.className = "flex flex-wrap justify-center gap-4 max-w-full";
 
             data.filleuls.forEach(filleul => {
                 const card = document.createElement("div");
-                card.className = "bg-gray-800 rounded-lg p-4 shadow-lg w-60 text-center relative";
+                card.className = "bg-gray-800 rounded-lg p-4 shadow-lg w-60 text-center";
                 card.innerHTML = `
                     <h2 class="text-xl font-bold">${filleul.nom}</h2>
                     <p class="text-sm text-gray-400">${filleul.email}</p>

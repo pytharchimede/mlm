@@ -100,7 +100,7 @@ include '../headers/header_dashboard.php';
                         <i class="fas fa-users text-5xl text-gray-300"></i>
                         <div class="mt-3 text-lg font-semibold">Inviter</div>
                     </a>
-                    <a href="javascript:void();" <?php echo ($is_active) ? 'id="openPopupButton"' : ''; ?> class="flex flex-col items-center p-6 bg-gray-800 rounded-lg <?php echo ($is_active) ? 'shadow-lg hover:bg-gray-700 transition' : 'opacity-50 cursor-not-allowed'; ?>">
+                    <a href="<?php echo ($is_active) ? 'organigramme.php' : 'javascript:void();'; ?>" class="flex flex-col items-center p-6 bg-gray-800 rounded-lg <?php echo ($is_active) ? 'shadow-lg hover:bg-gray-700 transition' : 'opacity-50 cursor-not-allowed'; ?>">
                         <i class="fas fa-sitemap text-5xl text-gray-300"></i>
                         <div class="mt-3 text-lg font-semibold">Réseau</div>
                     </a>
