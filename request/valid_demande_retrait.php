@@ -83,7 +83,7 @@ try {
 
     // Redirection en cas de succès
     $_SESSION['success_message'] = "Demande de retrait traitée avec succès.";
-    header('Location: ../admin/admin/details_montant_reverser.php');
+    header('Location: ../admin/details_montant_reverser.php');
     exit();
 } catch (Exception $e) {
     // Annuler la transaction en cas d'erreur
@@ -93,6 +93,6 @@ try {
 
     // Stocker l'erreur dans la session et rediriger
     $_SESSION['error_message'] = "Erreur : " . $e->getMessage();
-    header('Location: ../admin/admin/details_montant_reverser.php');
+    header('Location: ../admin/details_montant_reverser.php');
     exit();
 }
