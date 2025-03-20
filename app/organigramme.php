@@ -56,7 +56,7 @@
             //Affichage de leffectif 
             const effectifDiv = document.createElement("div");
             effectifDiv.className = "text-lg font-bold text-gray-300 mt-2";
-            effectifDiv.innerHTML = `Effectif total du réseau (niveaux 1-3) : <span class="text-green-400">${data.effectif_reseau}</span>`;
+            effectifDiv.innerHTML = `Effectif total du réseau (Niveaux 1-5) : <span class="text-green-400">${data.effectif_reseau}</span>`;
             container.appendChild(effectifDiv);
 
             console.log(data.marraine);

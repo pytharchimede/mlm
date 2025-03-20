@@ -53,7 +53,37 @@ foreach ($filleuls as $filleul) {
     $packFilleulDetails = $packObj->getPackDetails($filleul["secur_utilisateur"]);
     $filleulsNiveau3 = $utilisateurObj->getFilleulsByReferal($filleul["secur_utilisateur"]);
 
-    $nbre_filleuls = count($filleulsNiveau3);
+    $nbre_filleuls_2 = 0;
+    $nbre_filleuls_3 = 0;
+    $nbre_filleuls_4 = 0;
+    $nbre_filleuls_5 = 0;
+
+
+    if ($filleulsNiveau3) {
+        $nbre_filleuls_2 = count($filleulsNiveau3);
+
+        foreach ($filleulsNiveau3 as $filleulniveau3) {
+
+            $filleulsNiveau4 = $utilisateurObj->getFilleulsByReferal($filleulniveau3["secur_utilisateur"]);
+
+            $nbre_filleuls_3++;
+
+            if ($filleulsNiveau4) {
+                foreach ($filleulsNiveau4 as $filleulniveau4) {
+
+                    $filleulsNiveau5 = $utilisateurObj->getFilleulsByReferal($filleulniveau4["secur_utilisateur"]);
+
+                    $nbre_filleuls_4++;
+
+                    if ($filleulsNiveau5) {
+                        foreach ($filleulsNiveau5 as $filleulNiveau5) {
+                            $nbre_filleuls_5++;
+                        }
+                    }
+                }
+            }
+        }
+    }
 
     $effectif_reseau++;
 
@@ -65,11 +95,14 @@ foreach ($filleuls as $filleul) {
         "statut" => $filleulActif == true ? "Actif" : "Inactif",
         "referal" => $filleul["referal_utilisateur"],
         "secur" => $filleul["secur_utilisateur"],
-        "nbre_filleuls" => $nbre_filleuls,
+        "nbre_filleuls" => $nbre_filleuls_2,
         "est_moi" => false
     ];
 
-    $effectif_reseau += $nbre_filleuls;
+    $effectif_reseau += $nbre_filleuls_2;
+    $effectif_reseau += $nbre_filleuls_3;
+    $effectif_reseau += $nbre_filleuls_4;
+    $effectif_reseau += $nbre_filleuls_5;
 }
 
 $data["effectif_reseau"] = $effectif_reseau;
