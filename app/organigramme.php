@@ -89,8 +89,9 @@
                     subList.className = "mt-3 text-sm text-gray-300";
                     subList.innerHTML = `<b>Filleuls directs :</b>`;
                     subFilleuls.forEach(sub => {
+                        const nbFilleulsSub = data.filleuls_niveau4.filter(f => f.referal === sub.secur).length;
                         const li = document.createElement("li");
-                        li.innerHTML = `${sub.nom} - <span class="text-green-400 font-bold">${sub.solde} $</span>`;
+                        li.innerHTML = `${sub.nom} - ${nbFilleulsSub} Filleuls - <span class="text-green-400 font-bold">${sub.solde} $</span>`;
                         subList.appendChild(li);
                     });
                     card.appendChild(subList);
