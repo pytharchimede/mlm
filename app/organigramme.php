@@ -70,12 +70,13 @@
 
             data.filleuls_niveau2.forEach(filleul => {
                 const card = document.createElement("div");
+                const nbFilleuls = data.filleuls_niveau3.filter(f => f.referal === filleul.secur).length;
                 card.className = "bg-gray-800 rounded-lg p-6 shadow-lg w-60 text-center border border-gray-600 transform transition hover:scale-105 hover:border-green-400";
                 card.innerHTML = `
                     <h2 class="text-xl font-bold text-green-300">${filleul.nom}</h2>
                     <p class="text-sm text-gray-400">${filleul.email}</p>
                     <p class="text-green-400 font-bold">Solde: ${filleul.solde} $</p>
-                    <p class="text-sm text-gray-400"><b>${filleul.nbre_filleuls}</b> filleuls directs</p>
+                    <p class="text-sm text-gray-400"><b>${nbFilleuls}</b> filleuls directs</p>
                     <span class="text-xs px-3 py-1 rounded-full ${filleul.statut === 'Actif' ? 'bg-green-500' : 'bg-red-500'}">
                         ${filleul.statut}
                     </span>
