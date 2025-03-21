@@ -88,12 +88,60 @@
                     const subList = document.createElement("ul");
                     subList.className = "mt-3 text-sm text-gray-300";
                     subList.innerHTML = `<b>Filleuls directs :</b>`;
+
+
+                    const subListContainer = document.createElement("div");
+                    subListContainer.className = "overflow-hidden w-full relative"; // Cache les éléments hors de la vue
+
+                    const carousel = document.createElement("div");
+                    carousel.className = "flex gap-4 transition-transform duration-300 ease-in-out"; // Mouvement fluide
+
                     subFilleuls.forEach(sub => {
                         const nbFilleulsSub = data.filleuls_niveau4.filter(f => f.referal === sub.secur).length;
-                        const li = document.createElement("li");
-                        li.innerHTML = `${sub.nom} - ${nbFilleulsSub} Filleuls - <span class="text-green-400 font-bold">${sub.solde} $</span>`;
-                        subList.appendChild(li);
+
+                        const subCard = document.createElement("div");
+                        subCard.className = "bg-gray-800 rounded-lg px-3 py-2 shadow border border-gray-600 text-xs text-center flex flex-col items-center w-40 shrink-0"; // Cartes compactes
+
+                        subCard.innerHTML = `
+                            <h3 class="font-bold text-green-300 truncate w-full">${sub.nom}</h3>
+                            <p class="text-gray-400 flex items-center text-[10px]">
+                                <span class="mr-1">📧</span> ${sub.email}
+                            </p>
+                            <p class="text-green-400 font-bold flex items-center text-sm">
+                                <span class="mr-1">💰</span> ${sub.solde} $
+                            </p>
+                            <p class="text-gray-400 flex items-center text-xs">
+                                <span class="mr-1">👥</span> ${nbFilleulsSub} Filleuls
+                            </p>
+                            <span class="text-[10px] px-2 py-1 rounded-full ${sub.statut === 'Actif' ? 'bg-green-500' : 'bg-red-500'}">
+                                ${sub.statut}
+                            </span>
+                        `;
+
+                        carousel.appendChild(subCard);
                     });
+
+                    subListContainer.appendChild(carousel);
+
+                    // Ajoute les boutons de navigation
+                    const prevButton = document.createElement("button");
+                    prevButton.innerHTML = "⬅";
+                    prevButton.className = "absolute left-0 top-1/2 transform -translate-y-1/2 bg-gray-700 px-2 py-1 rounded shadow hover:bg-gray-500";
+                    prevButton.onclick = () => scrollCarousel(prevButton, -1);
+
+                    const nextButton = document.createElement("button");
+                    nextButton.innerHTML = "➡";
+                    nextButton.className = "absolute right-0 top-1/2 transform -translate-y-1/2 bg-gray-700 px-2 py-1 rounded shadow hover:bg-gray-500";
+                    nextButton.onclick = () => scrollCarousel(nextButton, 1);
+
+                    subListContainer.appendChild(prevButton);
+                    subListContainer.appendChild(nextButton);
+
+                    subList.appendChild(subListContainer);
+
+
+
+
                     card.appendChild(subList);
                 }
 
@@ -102,6 +150,31 @@
 
             container.appendChild(filleulsDiv);
         }
+
+
+        function scrollCarousel(button, direction) {
+            const carousel = button.parentElement.querySelector(".flex.transition-transform");
+            if (!carousel) return;
+
+            const cardWidth = 170; // Largeur d'une carte + espace entre elles
+            let scrollAmount = direction * cardWidth;
+
+            // Vérifier la position actuelle
+            let currentTransform = carousel.style.transform.match(/-?\d+/);
+            let currentPosition = currentTransform ? parseInt(currentTransform[0]) : 0;
+
+            // Vérifier les limites
+            const maxScrollLeft = 0;
+            const maxScrollRight = -(carousel.scrollWidth - carousel.clientWidth);
+
+            let newPosition = currentPosition - scrollAmount;
+            if (newPosition > maxScrollLeft) newPosition = maxScrollLeft;
+            if (newPosition < maxScrollRight) newPosition = maxScrollRight;
+
+            carousel.style.transform = `translateX(${newPosition}px)`;
+        }
+
+
 
         fetchFilleuls();
     </script>
