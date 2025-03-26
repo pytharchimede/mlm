@@ -46,7 +46,7 @@
             const marraineDiv = document.createElement("div");
             marraineDiv.className = "bg-purple-700 text-white rounded-lg p-6 shadow-xl w-80 text-center font-bold border-4 border-purple-500 transform transition hover:scale-105";
             marraineDiv.innerHTML = `
-                <h2 class="text-3xl">${data.marraine.nom} (Marraine)</h2>
+                <h2 class="text-3xl">${data.marraine.nom} (Moi)</h2>
                 <p class="text-gray-300">${data.marraine.email}</p>
                 <p class="text-green-300 font-bold">Solde: ${data.marraine.solde} $</p>
                 <span class="text-xs px-3 py-1 rounded-full bg-green-500">${data.marraine.statut}</span>
@@ -138,9 +138,6 @@
                     subListContainer.appendChild(nextButton);
 
                     subList.appendChild(subListContainer);
-
-
-
 
                     card.appendChild(subList);
                 }
