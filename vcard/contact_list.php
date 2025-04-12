@@ -16,7 +16,7 @@ if (isset($_GET['search'])) {
 // Récupérer les contacts depuis la base de données avec recherche
 $contacts = Contact::getBySearch($pdo, $searchTerm);  // Méthode de recherche dans la base de données
 
-// Lien d'invitation WhatsApp
+// Lien d'invitation WhatsApp (général pour le groupe)
 $whatsapp_link = "https://chat.whatsapp.com/CxKCksOoPwFBJ4zT0hYjx2";
 ?>
 
@@ -57,9 +57,10 @@ $whatsapp_link = "https://chat.whatsapp.com/CxKCksOoPwFBJ4zT0hYjx2";
                     </div>
 
                     <div class="flex justify-between items-center mt-4">
-                        <!-- Invitation button with message -->
-                        <a href="<?= $whatsapp_link ?>" target="_blank" class="bg-blue-500 text-white px-4 py-2 rounded-lg text-sm hover:bg-blue-600">
-                            Inviter au groupe
+                        <!-- Invitation button with dynamic message -->
+                        <a href="https://wa.me/<?= htmlspecialchars($contact['phone']) ?>?text=Salut%20<?= urlencode($contact['name']) ?>,%20Rejoins%20la%20communauté%20mondiale%20du%20bonheur%20qui%20est%20une%20plateforme%20d'entraide%20financière%20👉%20<?= urlencode($whatsapp_link) ?>"
+                            class="text-accent underline hover:text-accentHover transition-all duration-300">
+                            📩 Envoyer l'invitation
                         </a>
 
                         <!-- Invite message -->
