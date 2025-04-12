@@ -23,9 +23,24 @@ class Contact
         $this->phone = $phone;
     }
 
+    // Vérifier si le contact existe déjà
+    public function exists()
+    {
+        $stmt = $this->pdo->prepare("SELECT COUNT(*) FROM contacts WHERE phone = :phone");
+        $stmt->bindParam(':phone', $this->phone);
+        $stmt->execute();
+        return $stmt->fetchColumn() > 0;
+    }
+
     // Méthode pour sauvegarder le contact dans la base de données
     public function save()
     {
+
+        // Vérifier si le contact existe déjà
+        if ($this->exists()) {
+            return false; // Le contact existe déjà, ne pas l'ajouter
+        }
+
         try {
             $stmt = $this->pdo->prepare("INSERT INTO contacts (name, phone) VALUES (:name, :phone)");
             $stmt->bindParam(':name', $this->name);
