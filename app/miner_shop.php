@@ -19,14 +19,6 @@ include '../headers/header_miner_shop.php';
         <a href="dashboard.php">
             <img src="../assets/img/logo.png" alt="Logo" class="h-10">
         </a>
-        <!-- <div class="flex space-x-4">
-            <a href="https://wa.me/123456789" target="_blank" class="text-green-400 text-2xl">
-                <i class="fab fa-whatsapp"></i>
-            </a>
-            <a href="https://t.me/yourusername" target="_blank" class="text-blue-400 text-2xl">
-                <i class="fab fa-telegram"></i>
-            </a>
-        </div> -->
     </header>
 
     <div class="container mx-auto p-6">
@@ -40,15 +32,35 @@ include '../headers/header_miner_shop.php';
             <p class="text-3xl font-bold text-yellow-400">15$ soit <span id="bnb-equivalent">...</span></p>
         </div>
 
+        <h1 class="text-2xl font-semibold mt-6 text-center">Choisissez votre mode de paiement :</h1>
 
         <!-- Informations de paiement -->
         <div id="payment-info" class="text-center">
-            <h2 class="text-2xl font-semibold mb-4">Effectuez votre paiement</h2>
+
+            <!-- Paiement Mobile Money -->
+            <h2 class="text-2xl font-semibold mb-4">Paiement en Mobile Money</h2>
+
+            <p class="text-3xl font-bold text-yellow-400">Montant à envoyer : 15$ soit <span id="xaf-equivalent">...</span></p>
+
+            <div class="flex justify-center space-x-6 mt-4">
+                <div class="text-center">
+                    <img src="../assets/icon/payment/logo_om.png" alt="Orange Money" class="h-20 w-20 rounded-full mx-auto">
+                    <p class="mt-2">+237659248084</p>
+                    <a href="https://www.orange.ci" target="_blank" class="mt-2 text-yellow-400 hover:text-yellow-500">Payer via Orange Money</a>
+                </div>
+                <div class="text-center">
+                    <img src="../assets/icon/payment/logo_momo.png" alt="MTN Money" class="h-20 w-20 rounded-full mx-auto">
+                    <p class="mt-2">+237653749573</p>
+                    <a href="https://www.mtn.ci" target="_blank" class="mt-2 text-yellow-400 hover:text-yellow-500">Payer via MTN Money</a>
+                </div>
+            </div>
+
+            <!-- Paiement Cryptomonnaie -->
+            <h2 class="text-2xl font-semibold mb-4 mt-8">Paiement en Cryptomonnaie (BNB)</h2>
 
             <p class="text-center">
                 Envoyez le montant unique d'adhésion à l'adresse suivante :
             </p>
-
 
             <div class="flex items-center justify-center space-x-2 mt-2">
                 <p class="text-yellow-400 font-mono text-lg break-all" id="payment-address">
@@ -65,10 +77,42 @@ include '../headers/header_miner_shop.php';
                 <div id="qrcode" class="flex justify-center mt-3"></div>
             </div>
 
-            <button class="mt-6 px-6 py-2 border border-yellow-400 text-yellow-400 rounded-lg text-lg font-semibold hover:bg-yellow-400 hover:text-gray-900 transition" onclick="window.location.href='verif_payment.php'">
+            <!-- Bouton "J'ai payé" -->
+            <button id="pay-button" class="mt-6 px-6 py-2 border border-yellow-400 text-yellow-400 rounded-lg text-lg font-semibold hover:bg-yellow-400 hover:text-gray-900 transition text-lg">
                 J'ai payé
             </button>
+
         </div>
+    </div>
+
+    <!-- Fenêtre modale paiement -->
+    <div id="payment-modal" class="hidden fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center">
+        <div class="flex space-x-8">
+
+            <!-- Crypto (BNB) -->
+            <a href="verif_payment_bnb.php">
+                <img src="../assets/icon/payment/bnb.png" alt="Crypto"
+                    class="w-20 h-20 rounded-full shadow-lg hover:shadow-yellow-500 transition-all transform hover:scale-110">
+            </a>
+
+            <!-- Orange Money -->
+            <a href="verif_payment_om.php">
+                <img src="../assets/icon/payment/logo_om.png" alt="Orange Money"
+                    class="w-20 h-20 rounded-full shadow-lg hover:shadow-orange-500 transition-all transform hover:scale-110">
+            </a>
+
+            <!-- MTN Money -->
+            <a href="verif_payment_mtn.php">
+                <img src="../assets/icon/payment/logo_momo.png" alt="MTN Money"
+                    class="w-20 h-20 rounded-full shadow-lg hover:shadow-yellow-500 transition-all transform hover:scale-110">
+            </a>
+
+        </div>
+
+        <!-- Bouton de fermeture -->
+        <button id="close-modal" class="absolute top-10 right-10 text-white text-3xl font-bold hover:text-red-500 transition">
+            ✖
+        </button>
     </div>
 
     <script>
@@ -104,11 +148,48 @@ include '../headers/header_miner_shop.php';
                 .catch(error => console.error("Erreur lors de la récupération du prix BNB:", error));
         }
 
-        // Actualiser le prix toutes les 60 secondes
-        setInterval(updateBNBPrice, 30000);
+        function updateXAFPrice() {
+            fetch('https://api.exchangerate-api.com/v4/latest/USD')
+                .then(response => response.json())
+                .then(data => {
+                    let usdToXaf = data.rates.XAF; // Correct
+                    let equivalentXAF = (15 * usdToXaf).toFixed(0); // Conversion 15$ → XAF
 
-        // Charger le prix immédiatement au chargement de la page
+                    // Mise à jour de l'affichage
+                    document.getElementById("xaf-equivalent").innerText = equivalentXAF + " XAF";
+                })
+                .catch(error => console.error("Erreur lors de la récupération du prix XAF:", error));
+        }
+
+        // Actualiser le prix toutes les 30 secondes
+        setInterval(updateXAFPrice, 30000);
+        updateXAFPrice();
+        setInterval(updateBNBPrice, 30000);
         updateBNBPrice();
+
+        // Gestion du bouton "J'ai payé"
+        document.addEventListener("DOMContentLoaded", function() {
+            const payButton = document.getElementById("pay-button");
+            const modal = document.getElementById("payment-modal");
+            const closeModal = document.getElementById("close-modal");
+
+            if (payButton && modal && closeModal) {
+                payButton.addEventListener("click", function() {
+                    modal.classList.remove("hidden");
+                });
+
+                closeModal.addEventListener("click", function() {
+                    modal.classList.add("hidden");
+                });
+
+                // Fermer la modale si l'utilisateur clique en dehors
+                window.addEventListener("click", function(event) {
+                    if (event.target === modal) {
+                        modal.classList.add("hidden");
+                    }
+                });
+            }
+        });
     </script>
 
 </body>
