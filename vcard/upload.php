@@ -70,48 +70,57 @@ $allContacts = Contact::getAll($pdo);
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Inviter à WhatsApp</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    <link href="css/contact_upload.css" rel="stylesheet">
 </head>
 
-<body class="bg-gray-100 dark:bg-darkbg flex items-center justify-center min-h-screen transition-all duration-500">
-    <div class="bg-white dark:bg-darkcard p-6 rounded-2xl shadow-lg w-full max-w-lg transition-all duration-500">
-        <h2 class="text-xl font-semibold text-gray-700 dark:text-darktext mb-4 text-center">📢 Inviter les contacts</h2>
+<body class="flex items-center justify-center min-h-screen transition-all duration-500">
 
-        <div class="mb-4 text-center">
-            <p class="text-gray-700 dark:text-darktext">💬 **Lien du groupe WhatsApp** :</p>
-            <a href="<?= $whatsapp_link ?>" target="_blank" class="inline-block mt-2 px-4 py-2 bg-accent text-white rounded-lg hover:bg-accentHover transition-all duration-300">
+    <div class="bg-darkcard p-8 rounded-3xl shadow-xl w-full max-w-4xl transition-all duration-500">
+        <h2 class="text-3xl font-semibold text-center text-darktext mb-6">📢 Inviter les contacts à WhatsApp</h2>
+
+        <div class="mb-6 text-center">
+            <p class="text-darktext">💬 **Lien du groupe WhatsApp** :</p>
+            <a href="<?= $whatsapp_link ?>" target="_blank" class="inline-block mt-4 px-6 py-3 bg-accent text-white rounded-full hover:bg-accentHover transition-all duration-300">
                 🔗 Rejoindre le groupe
             </a>
         </div>
 
         <?php if (!empty($allContacts)): ?>
-            <ul class="list-none text-gray-600 dark:text-darktext" id="contactList">
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6" id="contactList">
                 <?php foreach ($allContacts as $contact): ?>
-                    <li class="py-2 px-4 bg-gray-200 dark:bg-darkbg rounded-md my-1 transition-all duration-300 hover:scale-105">
-                        <?= htmlspecialchars($contact['name']) ?> -
+                    <div class="card-hover bg-darkbg p-6 rounded-xl shadow-lg hover:scale-105 transition-all duration-300">
+                        <div class="flex justify-between items-center mb-4">
+                            <div class="flex flex-col">
+                                <span class="text-xl font-semibold text-darktext"><?= htmlspecialchars($contact['name']) ?></span>
+                                <span class="text-sm text-gray-400"><?= $contact['phone'] ?></span>
+                            </div>
+                            <i class="fas fa-user-circle text-2xl text-gray-500 dark:text-gray-400 mr-4"></i>
+                        </div>
                         <a href="https://wa.me/<?= $contact['phone'] ?>?text=Salut%20<?= urlencode($contact['name']) ?>,%20Rejoins%20la%20communauté%20mondiale%20du%20bonheur%20qui%20est%20une%20plateforme%20d'entraide%20financière%20👉%20<?= urlencode($whatsapp_link) ?>"
-                            class="text-blue-500 underline" target="_blank">
+                            class="text-accent underline hover:text-accentHover transition-all duration-300">
                             📩 Envoyer l'invitation
                         </a>
-                    </li>
+                    </div>
                 <?php endforeach; ?>
-            </ul>
+            </div>
 
-            <div class="mt-4">
-                <textarea id="numbers" class="w-full p-2 border rounded-lg text-sm bg-gray-200 dark:bg-darktext dark:text-black" readonly>
+            <div class="mt-6">
+                <textarea id="numbers" class="w-full p-4 border rounded-lg text-sm bg-gray-900 text-white" readonly>
                     <?= implode(", ", array_column($allContacts, 'phone')) ?>
                 </textarea>
-                <button id="copyButton" class="w-full bg-accent text-white py-2 rounded-lg mt-2 hover:bg-accentHover transition-all duration-300">
+                <button id="copyButton" class="w-full bg-accent text-white py-3 rounded-lg mt-4 hover:bg-accentHover transition-all duration-300">
                     Copier les numéros
                 </button>
             </div>
 
-            <div class="mt-4">
-                <a href="index.php" class="block text-center text-blue-500 hover:underline">Importer un autre fichier</a>
+            <div class="mt-4 text-center">
+                <a href="index.php" class="text-accent hover:underline">Importer un autre fichier</a>
             </div>
 
         <?php else: ?>
             <p class="text-red-500 text-center">Aucun contact trouvé.</p>
-            <a href="index.php" class="block text-center mt-4 text-blue-500 hover:underline">Retour</a>
+            <a href="index.php" class="block text-center mt-4 text-accent hover:underline">Retour</a>
         <?php endif; ?>
     </div>
 
@@ -124,6 +133,7 @@ $allContacts = Contact::getAll($pdo);
             alert("Numéros copiés !");
         });
     </script>
+
 </body>
 
 </html>

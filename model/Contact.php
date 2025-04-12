@@ -67,4 +67,15 @@ class Contact
         $stmt->execute();
         return $stmt->fetch(PDO::FETCH_ASSOC); // Récupère un contact par son numéro de téléphone
     }
+
+    // Nouvelle méthode statique pour rechercher les contacts
+    public static function getBySearch($pdo, $searchTerm)
+    {
+        // Utilisation de LIKE pour rechercher par nom ou téléphone
+        $stmt = $pdo->prepare("SELECT * FROM contacts WHERE name LIKE :searchTerm OR phone LIKE :searchTerm");
+        $searchTerm = "%" . $searchTerm . "%"; // Ajout des jokers pour la recherche partielle
+        $stmt->bindParam(':searchTerm', $searchTerm);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC); // Retourne les contacts correspondants
+    }
 }
