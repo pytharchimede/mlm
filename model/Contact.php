@@ -78,4 +78,63 @@ class Contact
         $stmt->execute();
         return $stmt->fetchAll(PDO::FETCH_ASSOC); // Retourne les contacts correspondants
     }
+
+
+    //sauvegarde du click sur un contact
+    public static function saveClick($pdo, $contact_id, $ip_address, $port, $user_agent, $date)
+    {
+        $stmt = $pdo->prepare("INSERT INTO clicks_invitation (contact_id, ip_address, port, user_agent, click_date) VALUES (?, ?, ?, ?, ?)");
+        $stmt->execute([$contact_id, $ip_address, $port, $user_agent, $date]);
+    }
+
+    // Méthode pour mettre à jour les informations d'invitation d'un contact
+    public static function updateInvitation($pdo, $contact_id, $invited_by, $invited_at)
+    {
+        try {
+            // Préparation de la requête SQL pour mettre à jour les informations d'invitation
+            $stmt = $pdo->prepare("UPDATE contacts SET invited_by = :invited_by, invited_at = :invited_at WHERE id = :contact_id");
+            $stmt->bindParam(':contact_id', $contact_id, PDO::PARAM_INT);
+            $stmt->bindParam(':invited_by', $invited_by);
+            $stmt->bindParam(':invited_at', $invited_at);
+            $stmt->execute();
+            return true; // Retourne true si la mise à jour est réussie
+        } catch (PDOException $e) {
+            return false; // Retourne false en cas d'erreur
+        }
+    }
+
+    public static function getStatistics()
+    {
+        $database = new Database();
+        $pdo = $database->getConnection();
+
+        // Nombre total d'invités
+        $stmt = $pdo->prepare("SELECT COUNT(*) as total_invited FROM contacts WHERE invited_at IS NOT NULL");
+        $stmt->execute();
+        $result = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        // Nombre d'invités aujourd'hui
+        $stmt_today = $pdo->prepare("SELECT COUNT(*) as invited_today FROM contacts WHERE invited_at IS NOT NULL AND DATE(created_at) = CURDATE()");
+        $stmt_today->execute();
+        $today = $stmt_today->fetch(PDO::FETCH_ASSOC);
+
+        // Nombre d'invités par jour de la semaine (du lundi à aujourd'hui)
+        $invites_per_day = [];
+        $days_of_week = ['Lundi', 'Mardi', 'Mercredi', 'Jeudi', 'Vendredi', 'Samedi', 'Dimanche'];
+
+        // Récupérer les invitations pour chaque jour de la semaine
+        foreach ($days_of_week as $index => $day) {
+            $stmt_day = $pdo->prepare("SELECT COUNT(*) as day_invites FROM contacts WHERE invited_at IS NOT NULL AND DAYOFWEEK(created_at) = :day_of_week");
+            $stmt_day->bindValue(':day_of_week', $index + 1, PDO::PARAM_INT); // Utilisation de bindValue() au lieu de bindParam()
+            $stmt_day->execute();
+            $invites_per_day[] = $stmt_day->fetch(PDO::FETCH_ASSOC)['day_invites'];
+        }
+
+        return [
+            'total_invited' => $result['total_invited'],
+            'invited_today' => $today['invited_today'],
+            'invites_per_day' => $invites_per_day,  // Données par jour
+            'labels' => $days_of_week // Labels pour le graphique
+        ];
+    }
 }

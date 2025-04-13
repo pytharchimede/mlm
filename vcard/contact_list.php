@@ -58,10 +58,12 @@ $whatsapp_link = "https://chat.whatsapp.com/CxKCksOoPwFBJ4zT0hYjx2";
 
                     <div class="flex justify-between items-center mt-4">
                         <!-- Invitation button with dynamic message -->
-                        <a href="https://wa.me/<?= htmlspecialchars($contact['phone']) ?>?text=Salut%20<?= urlencode($contact['name']) ?>,%20Rejoins%20la%20communauté%20mondiale%20du%20bonheur%20qui%20est%20une%20plateforme%20d'entraide%20financière%20👉%20<?= urlencode($whatsapp_link) ?>"
-                            class="text-accent underline hover:text-accentHover transition-all duration-300">
+                        <a href="https://wa.me/<?= htmlspecialchars($contact['phone']) ?>?text=Salut%20<?= urlencode($contact['name']) ?>,%20Découvre%20une%20communauté%20d’entrepreneurs%20passionnés%20où%20la%20collaboration,%20le%20crowdfunding%20et%20l’accélération%20des%20revenus%20sont%20au%20cœur%20de%20l’action.%20Rejoins-nous%20et%20booste%20tes%20projets%20avec%20le%20soutien%20d’un%20réseau%20ambitieux%20!%20👉%20<?= urlencode($whatsapp_link) ?>%20On%20avance%20ensemble%20🚀🤝"
+                            class="text-accent underline hover:text-accentHover transition-all duration-300 invite-btn"
+                            data-contact-id="<?= $contact['id'] ?>">
                             📩 Envoyer l'invitation
                         </a>
+
 
                         <!-- Invite message -->
                         <div class="text-sm text-gray-300 ml-4">
@@ -90,6 +92,55 @@ $whatsapp_link = "https://chat.whatsapp.com/CxKCksOoPwFBJ4zT0hYjx2";
                 }
             });
         }
+
+        // Fonction pour enregistrer le clic
+        function saveClick(contactId) {
+            console.log("Enregistrement du clic pour le contact ID : " + contactId); // Débogage pour vérifier que la fonction est appelée
+
+            // Crée une requête AJAX
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', 'save_click.php', true);
+            xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+
+            // Définir les données à envoyer
+            var data = 'contact_id=' + contactId;
+
+            // Gérer la réponse du serveur
+            xhr.onload = function() {
+                if (xhr.status === 200) {
+                    var response = JSON.parse(xhr.responseText);
+                    if (response.status === 'success') {
+                        console.log('Clic enregistré avec succès');
+                    } else {
+                        console.log('Erreur lors de l\'enregistrement', response.message);
+                    }
+                } else {
+                    console.log('Erreur AJAX : ' + xhr.status);
+                }
+            };
+
+            // Gérer les erreurs de requête
+            xhr.onerror = function() {
+                console.log('Erreur de connexion');
+            };
+
+            // Envoyer la requête avec les données
+            xhr.send(data);
+        }
+
+        // Ajouter un événement de clic sur chaque bouton d'invitation
+        document.querySelectorAll('.invite-btn').forEach(function(button) {
+            button.addEventListener('click', function(event) {
+                event.preventDefault(); // Empêche le lien de se suivre et d'ouvrir WhatsApp directement
+
+                var contactId = this.getAttribute('data-contact-id'); // Récupérer l'ID du contact depuis un attribut data
+                saveClick(contactId); // Enregistrer le clic via AJAX
+
+                // Ouvrir WhatsApp après l'enregistrement
+                var phone = this.href.split('?')[0]; // Récupérer le numéro de téléphone
+                window.location.href = this.href; // Ouvrir le lien WhatsApp
+            });
+        });
     </script>
 
 </body>
