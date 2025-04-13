@@ -137,4 +137,35 @@ class Contact
             'labels' => $days_of_week // Labels pour le graphique
         ];
     }
+
+    public function getAllAvailable()
+    {
+        $stmt = $this->pdo->query("SELECT * FROM contacts WHERE invited_by IS NULL AND buyer_id=0 ");
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function buyContact($pdo, $contactId, $buyerId)
+    {
+        $stmt = $this->pdo->prepare("UPDATE contacts SET buyer_id = :buyer_id, sold_at = NOW() WHERE id = :id AND invited_by IS NULL AND buyer_id IS NULL");
+        $stmt->bindParam(':buyer_id', $buyerId);
+        $stmt->bindParam(':id', $contactId);
+        $stmt->execute();
+        return $stmt->rowCount() > 0;
+    }
+
+    public function getUserContacts($pdo, $userId)
+    {
+        $stmt = $this->pdo->prepare("SELECT * FROM contacts WHERE buyer_id = :user_id");
+        $stmt->bindParam(':user_id', $userId);
+        $stmt->execute();
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+    public function getContact($pdo, $contactId)
+    {
+        $stmt = $this->pdo->prepare("SELECT * FROM contacts WHERE id = :id");
+        $stmt->bindParam(':id', $contactId);
+        $stmt->execute();
+        return $stmt->fetch(PDO::FETCH_ASSOC);
+    }
 }
