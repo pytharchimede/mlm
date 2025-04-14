@@ -14,7 +14,7 @@ $utilisateurObj = new Utilisateur();
 $contactObj = new Contact($pdo);
 
 //Récupérer la liste des contacts pas encore vendus
-$contactsDispos = $contactObj->getAllAvailable();
+$contactsDispos = $contactObj->getAllAvailableWithLimit(0, 50);
 
 
 // var_dump($listeContactsDispos);

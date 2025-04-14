@@ -144,6 +144,23 @@ class Contact
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
+    public function getAllAvailableWithLimit($offset, $limit)
+    {
+        // Utilisation de prepare() pour préparer la requête avec des paramètres nommés
+        $stmt = $this->pdo->prepare("SELECT * FROM contacts WHERE invited_by IS NULL AND buyer_id = 0 LIMIT :limit OFFSET :offset");
+
+        // Liaison des paramètres limit et offset
+        $stmt->bindValue(':limit', (int)$limit, PDO::PARAM_INT);
+        $stmt->bindValue(':offset', (int)$offset, PDO::PARAM_INT);
+
+        // Exécution de la requête préparée
+        $stmt->execute();
+
+        // Retourne les résultats
+        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+    }
+
+
     public function buyContact($pdo, $contactId, $buyerId)
     {
         $stmt = $this->pdo->prepare("UPDATE contacts SET buyer_id = :buyer_id, sold_at = NOW() WHERE id = :id AND invited_by IS NULL AND buyer_id IS NULL");

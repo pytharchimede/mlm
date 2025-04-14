@@ -1,4 +1,4 @@
-<?php include 'header/header_contact_shop.php'; ?>
+<?php require_once 'header/header_contact_shop.php'; ?>
 <!DOCTYPE html>
 <html lang="fr" class="dark">
 
@@ -35,6 +35,11 @@
             Boutique de Contacts WhatsApp
         </h1>
 
+        <div id="loader" class="text-center py-4 hidden">
+            <span class="text-gray-400">Chargement...</span>
+        </div>
+
+
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
             <?php foreach ($contactsDispos as $contactsDispo): ?>
                 <!-- Carte contact -->
@@ -61,11 +66,43 @@
     </div>
 
     <script>
-        function toggleDarkMode() {
-            document.documentElement.classList.toggle('dark');
-        }
         lucide.createIcons();
+
+        let offset = 50;
+        const limit = 50; // ✅ Déclarer la variable limit ici
+        let isLoading = false;
+
+        const loader = document.getElementById('loader');
+
+        window.addEventListener('scroll', () => {
+            if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight - 100 && !isLoading) {
+                isLoading = true;
+                loader.classList.remove('hidden');
+
+                console.log(`URL appelée : api/load_contacts.php?offset=${offset}&limit=${limit}`);
+
+                fetch(`api/load_contact.php?offset=${offset}&limit=${limit}`)
+                    .then(response => response.text())
+                    .then(data => {
+                        if (data.trim() !== "") {
+                            const grid = document.querySelector(".grid");
+                            grid.insertAdjacentHTML('beforeend', data);
+                            lucide.createIcons(); // Recharger les icônes
+                            offset += limit; // ✅ Incrémenter selon limit
+                        }
+                        isLoading = false;
+                        loader.classList.add('hidden');
+                    })
+                    .catch(err => {
+                        console.error("Erreur lors du chargement des contacts :", err);
+                        isLoading = false;
+                        loader.classList.add('hidden');
+                    });
+            }
+        });
     </script>
+
+
 </body>
 
 </html>
