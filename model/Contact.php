@@ -185,4 +185,22 @@ class Contact
         $stmt->execute();
         return $stmt->fetch(PDO::FETCH_ASSOC);
     }
+
+    public function deleteByIds(array $ids): bool
+    {
+        if (empty($ids)) {
+            return false;
+        }
+
+        $placeholders = implode(',', array_fill(0, count($ids), '?'));
+        $sql = "DELETE FROM contacts WHERE id IN ($placeholders)";
+        $stmt = $this->pdo->prepare($sql);
+        return $stmt->execute($ids);
+    }
+
+    public function prefixAllNamesWithCMDB(): bool
+    {
+        $sql = "UPDATE contacts SET name = CONCAT('CMDB_', name) WHERE name NOT LIKE 'CMDB_%'";
+        return $this->pdo->exec($sql) !== false;
+    }
 }

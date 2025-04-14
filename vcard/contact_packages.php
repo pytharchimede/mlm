@@ -69,11 +69,32 @@ $totalPackages = ceil($totalContacts / $contactsPerPackage);
 
     <script>
         // Supprimer visuellement un package
-        function markAsSold(id) {
-            const el = document.getElementById("pack" + id);
-            if (el) el.remove();
-            // Ici tu peux faire un fetch AJAX si tu veux sauvegarder cette info côté serveur
+        function markAsSold(packId) {
+            if (!confirm("Confirmer la suppression des contacts de ce package ?")) return;
+
+            fetch('mark_package_sold.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded'
+                    },
+                    body: 'pack=' + encodeURIComponent(packId)
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        const el = document.getElementById("pack" + packId);
+                        if (el) el.remove();
+                        alert(`Le package #${packId} a été supprimé (${data.deleted} contacts).`);
+                    } else {
+                        alert("Erreur lors de la suppression.");
+                    }
+                })
+                .catch(error => {
+                    console.error("Erreur AJAX :", error);
+                    alert("Erreur réseau.");
+                });
         }
+
 
         // Activer les icônes Lucide
         lucide.createIcons();
