@@ -203,4 +203,14 @@ class Contact
         $sql = "UPDATE contacts SET name = CONCAT('CMDB_', name) WHERE name NOT LIKE 'CMDB_%'";
         return $this->pdo->exec($sql) !== false;
     }
+
+    public function registerPackageSale(int $packageNumber, int $totalContacts): bool
+    {
+        $sql = "INSERT INTO package_sales (package_number, total_contacts) VALUES (:pack, :total)";
+        $stmt = $this->pdo->prepare($sql);
+        return $stmt->execute([
+            ':pack' => $packageNumber,
+            ':total' => $totalContacts
+        ]);
+    }
 }
